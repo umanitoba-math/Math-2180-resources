@@ -1,0 +1,49 @@
+\section{Stronger notions of continuity}
+\label{sec:strong_cts}
+In this brief section, we introduce various different stronger notions of continuity. We leave as informative exercises the comparison between them.
+\begin{defn}[Uniform continuity]
+	\label{defn:unif_cty}
+	A function $f:X\to Y$ between two metric spaces $(X,d_X)$ and $(Y,d_Y)$ is said to be \textit{uniformly continuous} provided the following holds true:
+	\[
+		\forall \varepsilon>0,\exists \delta>0\text{ s.t. }\forall a,b\in X, \, d_X(a,b) < \delta \implies d_Y(f(a),f(b))<\varepsilon.
+	\]
+\end{defn}
+\begin{defn}[H\"older and Lipschitz continuity]
+	\label{defn:holder}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be two metric spaces. Let $\alpha \in (0,1]$. A function $f: X\to Y$ is said to be \textit{H\"older continuous with exponent $\alpha$} provided there exists a constant $C>0$ such that
+	\[
+	d_Y(f(a),f(b))\le C\left(d_X(a,b)\right)^\alpha,\quad \forall a,b\in X.
+	\]
+	When $\alpha =1$, we refer to such functions as \textit{Lipschitz continuous}.
+\end{defn}
+\begin{lemma}[H\"older $\implies$ uniform continuity $\implies$ continuity]
+	\label{lem:cty_hierarchy}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be two metric spaces. Let $\alpha \in (0,1]$ and $f:X\to Y$.
+	\begin{enumerate}
+		\item \label{unif_imp_vanilla} If $f$ is uniformly continuous, then $f$ is continuous.
+		\item \label{hold_imp_unif} If $f$ is H\"older continuous with exponent $\alpha$, then $f$ is uniformly continuous.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\ref{unif_imp_vanilla}: \textcolor{blue}{Fix any $\varepsilon>0$ and $a\in X$.} Since $f$ is uniformly continuous, \textcolor{blue}{there exists $\delta>0$} such that any $x_1,x_2\in X$ satisfying $d_X(x_1,x_2)<\delta$ implies $d_Y(f(x_1),f(x_2))<\varepsilon$. In particular, \textcolor{blue}{for any $x\in X$}, set $x_1 = x$ and $x_2 = a$ to see that
+	{\color{blue}
+	\[
+	d_X(x,a)<\delta \implies d_Y(f(x),f(a))<\varepsilon.
+	\]
+	}
+	This shows that $f$ is continuous at $a\in X$. Since $a\in X$ was arbitrary, we see that $f$ is continuous.
+	
+	\ref{hold_imp_unif}:\textcolor{blue}{Fix any $\varepsilon>0$.} Since $f$ is H\"older continuous, there exists $C>0$ such that
+	\[
+	d_Y(f(a),f(b))\le C\left(d_X(a,b)\right)^\alpha,\quad \forall a,b\in X.
+	\]
+	\textcolor{blue}{We define $\delta = \left(\frac{\varepsilon}{C}\right)^\frac{1}{\alpha}>0$. Then, for any $a,b\in X$ satisfying $d_X(a,b)<\delta$, we have
+	}
+	\[
+	\textcolor{blue}{d_Y(f(a),f(b))}\le C\left(d_X(a,b)\right)^\alpha \textcolor{blue}{<}C\left(\left(\frac{\varepsilon}{C}\right)^\frac{1}{\alpha}\right)^\alpha = \textcolor{blue}{\varepsilon.}
+	\]
+\end{proof}
+\begin{ex}
+	\label{ex:cts_counter}
+	Can either implications in~\Cref{lem:cty_hierarchy} be reversed? In other words, does continuity imply uniform continuity? Does uniform continuity imply H\"older continuity?
+\end{ex}

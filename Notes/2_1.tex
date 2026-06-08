@@ -1,0 +1,17 @@
+\section{Continuous functions}
+\label{sec:2_1}
+In this section, we will always refer to $(X,d_X)$ and $(Y,d_Y)$ as two metric spaces i.e. $d_X$ is the metric associated to $X$ and $d_Y$ is the metric associated to $Y$.
+\begin{defn}[Continuous functions]
+\label{defn:cty}
+Let $f:X\to Y$ be a function.
+\begin{itemize}
+	\item For $x_0\in X$, we say that $f$ is \textit{continuous at $x_0$} iff
+	\[
+	\forall \varepsilon>0,\exists \delta>0\text{ s.t. }\forall x\in X\text{ satisfying }d_X(x,x_0)<\delta,\text{ we have }d_Y(f(x),f(x_0))<\varepsilon.
+	\]
+	\item We saw that $f$ is \textit{continuous (on $X$)} iff $f$ is continuous at every $x_0\in X$.
+\end{itemize}
+\end{defn}
+\begin{ex}
+Suppose $f:X\to Y$ and $K\subset X$. Show that the restriction $f|_K:K\to Y$ of $f$ to $K$ is also continuous.
+\end{ex}

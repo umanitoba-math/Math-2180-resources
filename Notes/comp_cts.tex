@@ -1,0 +1,52 @@
+\section{Continuous functions on complete spaces}
+\label{sec:comp_cts}
+A significant result in Analysis is~\Cref{thm:banach} below.
+\begin{thm}[Banach's fixed point / Contraction Mapping theorem]
+	\label{thm:banach}
+	Let $(X,d)$ be a non-empty complete metric space. Let $f:X\to X$ and $\kappa \in (0,1)$ be such that
+	\begin{equation}
+		\label{eq:contract}
+		d(f(a),f(b))\le \kappa d(a,b),\quad \forall a,b\in X.
+	\end{equation}
+	Then, there exists a unique element $p\in X$ such that $f(p) = p$.
+\end{thm}
+\begin{rem}
+	\begin{itemize}
+		\item A function satisfying~\eqref{eq:contract} is sometimes called a \textit{(strict) contraction.}
+		\item A point satisfying $p = f(p)$ is called a \textit{fixed point of $f$}.
+		\item The assumption of~\eqref{eq:contract} \textbf{cannot} be weakened (exercise) to merely
+		\[
+		d(f(a),f(b))<d(a,b),\quad \forall a,b\in X.
+		\]
+	\end{itemize}
+\end{rem}
+\begin{proof}[Proof of~\Cref{thm:banach}]
+	\ul{Uniqueness:} Let us first prove that, if fixed points exist, they must be unique. Let $p_1,p_2\in X$ be such that $f(p_i)=p_i$ for $i=1,2$. By~\eqref{eq:contract}, we have
+	\[
+	d(p_1,p_2) = d(f(p_1),f(p_2)) \le \kappa d(p_1,p_2)\implies (1-\kappa)d(p_1,p_2)\le 0.
+	\]
+	Since $\kappa<1$, this can only happen when $d(p_1,p_2) = 0$ which implies, by~\ref{m:pos}, that $p_1=p_2$.
+	
+	\ul{Existence:} Since $X$ is non-empty, it contains an element which we call $x_0 \in X$. We define a sequence $(x_n)_{n\in\N}$ by iteratively applying $f$:
+	\[
+	x_n := f(x_{n-1}),\quad \forall n\in\N.
+	\]
+	Suppose $n,m\in \N$ and $n<m$. By the triangle inequality and inductively applying~\eqref{eq:contract}, we have
+	\begin{align}
+		\label{eq:contract_estimate}
+		\begin{split}
+		d(x_n,x_m) &\le \sum_{j=n}^{m-1}d(x_j,x_{j+1}) = \sum_{j=n}^{m-1}d(f(x_{j-1}),f(x_j)) 	\\
+		&\le \sum_{j=n}^{m-1}\kappa^{j-1}d(x_0,x_1) < d(x_0,x_1)\sum_{j=n}^\infty \kappa^{j-1} = \frac{d(x_0,x_1)}{1-\kappa}\kappa^{n-1}.
+		\end{split}
+	\end{align}
+	In~\eqref{eq:contract_estimate} above, we used the geometric series with $\kappa\in(0,1)$. This estimate shows that $(x_n)_{n\in\N}$ is Cauchy. Indeed, fix any $\varepsilon>0$. Since $\kappa^{n-1}\overset{n\to \infty}{\to}0$, we can find $N\in\N$ large enough such that
+	\[
+	n\ge N \implies \kappa^{n-1} < \frac{1-\kappa}{1 + d(x_0,x_1)}\varepsilon.
+	\]
+	Then, for any $m>n\ge N$, we see from the above and~\eqref{eq:contract_estimate} that $d(x_n,x_m)<\varepsilon$. Since $X$ is complete, we deduce that $(x_n)_{n\in\N}$ is convergent to \textcolor{blue}{some limit $p\in X$}. Going back to the construction of the sequence, we pass to the limit to obtain
+	\[
+	x_n = f(x_{n-1})\implies \lim_{n\to \infty} x_n = \lim_{n\to \infty}f(x_{n-1}) \implies p = f\left(\lim_{n\to \infty}x_{n-1}\right) \iff \textcolor{blue}{p = f(p)}.
+	\]
+	The second implication $\lim_{n\to \infty}f(x_{n-1}) = f\left(\lim_{n\to \infty}x_{n-1}\right)$ comes from the fact that $f$ is continuous (why? Hint: \Cref{prop:cty_cvg_seq}). 
+\end{proof}
+\Cref{thm:banach} is a very important result with many applications. We shall investigate one of those applications later on in the context of solving differential equations.

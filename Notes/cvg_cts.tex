@@ -1,0 +1,170 @@
+\section{Notions of convergence}
+\label{sec:cvg_cts}
+Let $S$ be a set and, for $n\in\N$, let $f_n:S \to \R$ be a function so that we have a sequence of functions $(f_n)_{n\in\N}$. For every $x\in S$, we obtain a sequence of real numbers $(f_n(x))_{n\in\N}$. By looking at this sequence for each $x\in S$, we can immediately lift~\Cref{defn:cvg_real} to our first notion of convergence of functions.
+\begin{defn}[Pointwise convergence]
+	\label{defn:ptwise}
+	Let $S$ be a set. Let $f:S\to \R$ and $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$. We say that $f_n$ \textit{converges pointwise to $f$ on $S$} provided the following holds:
+	\[
+	\forall \varepsilon>0,\,\forall x\in S,\, \exists N\in\N\text{ s.t. }n\ge N \implies |f_n(x) - f(x)|<\varepsilon.
+	\]
+	We also write
+	\[
+	f(x) = \lim_{n\to \infty} f_n(x).
+	\]
+\end{defn}
+The notion of pointwise convergence may seem very natural. In practice, it is extremely poor for our purposes. This is somewhat remedied when one considers the context of measure theory, but this is beyond the scope of these notes. The following examples illustrate the general flaw of~\Cref{defn:ptwise}: The sequence $(f_n)_{n\in\N}$ might satisfy a certain property, but the pointwise limit $f$ can fail to satisfy that property.
+\begin{ex}[Pointwise limit of bounded functions]
+	Let $S = [0,1]$ and consider the sequence of functions
+	\[
+	f_n(x):=\left\{
+	\begin{array}{cl}
+		\min \left(n,\frac{1}{x}\right), 	&\text{if }0<x\le 1 	\\
+		0, 	&\text{if }x=0
+	\end{array}
+	\right.,\quad n\in\N.
+	\]
+	Denote
+	\[
+	f(x) := \left\{
+	\begin{array}{cl}
+		\frac{1}{x},	&\text{if }0<x\le 1 	\\
+		0, 	&\text{if }x=0
+	\end{array}
+	\right..
+	\]
+	Prove the following:
+	\begin{itemize}
+		\item For every $n\in\N$, the function $f_n$ is bounded. i.e. show that $f_n([0,1])$ is a bounded subset of $\R$.
+		\item $f_n$ converges pointwise to $f$ on $S$.
+		\item $f$ is an unbounded function.
+	\end{itemize}
+\end{ex}
+\begin{ex}[Pointwise limit of continuous functions]
+	Let $S = [0,1]$ and consider the sequence of functions
+	\[
+	f_n(x) := x^n,\quad \forall x\in [0,1],\,\forall n\in\N,
+	\]
+	together with the function
+	\[
+	f(x) :=\left\{
+	\begin{array}{cl}
+		0, 	&\text{if }x \neq 1 	\\
+		1, 	&\text{if }x = 1
+	\end{array}
+	\right..
+	\]
+	Notice that, for every $n\in\N$, $f_n$ is continuous on $[0,1]$, but $f$ is not. Prove that $f_n$ converges pointwise to $f$ on $[0,1]$.
+\end{ex}
+\begin{ex}[Pointwise limit of integrable functions]
+	\label{ex:pt_int}
+	Let $S = [0,1]$ and consider the sequence of functions
+	\[
+	f_n(x):= \left\{
+	\begin{array}{cl}
+		n, 	&\text{if }0 < x < \frac{1}{n} 	\\
+		0, 	&\text{otherwise}
+	\end{array}
+	\right.,\quad x\in [0,1],\,n\in\N.
+	\]
+	Prove the following:
+	\begin{itemize}
+		\item Show that $f_n$ converges pointwise to $0$ in $[0,1]$. Here, the limit is the function which is identically zero on $[0,1]$.
+		\item Calculate and compare
+		\[
+		\lim_{n\to \infty}\left(\int_0^1f_n(x)\,\mathrm{d}x\right)\quad\text{versus}\quad \int_0^1\left(\lim_{n\to\infty}f_n(x)\right)\,\mathrm{d}x.
+		\]
+		Are their values the same or different?
+	\end{itemize}
+\end{ex}
+All the previous examples are meant to illustrate the deficiency of pointwise convergence in a variety of situations. The stronger and more useful notion is the following.
+\begin{defn}[Uniform convergence]
+	\label{defn:unif_cvg}
+	Let $S$ be a set. Let $f:S\to \R$ and $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$. We say that $f_n$ \textit{converges uniformly to $f$ on $S$} provided the following holds:
+	\[
+	\forall \varepsilon>0,\,\exists N\in\N\text{ s.t. }\forall x \in S, n\ge N \implies |f_n(x) - f(x)|<\varepsilon.
+	\]
+	In this case, we also write `$f_n\to f$ uniformly on $S$ (as $n\to \infty$).'
+\end{defn}
+Notice the placement of `$\forall x \in S$' in~\Cref{defn:ptwise} and~\Cref{defn:unif_cvg}! In~\Cref{defn:ptwise}, the chosen $N\in \N$ may change depending on $x\in S$. By contrast in~\Cref{defn:unif_cvg}, the chosen $N\in\N$ does not depend on $x\in S$. This is the main crucial difference and it is what makes uniform convergence more advantageous than pointwise convergence.
+\begin{ex}
+	Revisit the previous examples demonstrating the failure of pointwise convergence. Show, in each of those examples, that the sequence of functions does not converge uniformly to the stated limit functions.
+\end{ex}
+\begin{rem}[Equivalence of~\Cref{defn:unif_cvg} with sup]
+	\label{rem:sup_unif_cvg}
+	Notice (exercise) the following equivalence
+	\[
+	|f_n(x) - f(x)|<\varepsilon,\,\forall x \in S \iff \sup_{x\in S}|f_n(x) - f(x)|.
+	\]
+	Hence, we could have formulated~\Cref{defn:unif_cvg} to say
+	\[
+	\forall \varepsilon>0,\exists N\in \N\text{ s.t. }n\ge N\implies \sup_{x\in S}|f_n(x) - f(x)|<\varepsilon.
+	\]
+	This is a purely cosmetic distinction which does not change the mathematics whatsoever. We will use the supremum convention almost exclusively much later on.
+\end{rem}
+Let us clarify that uniform convergence is actually stronger than pointwise convergence.
+\begin{lemma}[Uniform implies pointwise]
+	Let $S$ be a set. Let $f:S\to \R$ and $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$. Suppose that $f_n$ converges uniformly to $f$ on $S$. Then, $f_n$ converges pointwise to $f$ on $S$ as well.
+\end{lemma}
+\begin{proof}
+	Exercise.
+\end{proof}
+We will begin our specialisation to continuous functions.
+\begin{prop}[Uniform limit of continuous functions]
+	\label{prop:unif_cvg_cts}
+	Let $(S,d)$ be a metric space and $f:S\to \R$. Let $(f_n)_{n\in\N}$ be a sequence of continuous functions $f_n:S\to \R$ for each $n\in\N$. Suppose that $f_n$ converges uniformly to $f$ on $S$. Then, $f$ is continuous.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix any $c \in S$ and $\varepsilon>0$.} Owing to the uniform convergence, we know that there exists $N\in \N$ such that
+	\[
+	n\ge N\implies |f_n(x) - f(x)|<\frac{\varepsilon}{3},\quad \forall x \in S.
+	\]
+	In particular, since $f_N$ is continuous, we know that \textcolor{blue}{there exists $\delta>0$} such that, for any $x \in S$, we have
+	\[
+	d(x,c)<\delta\implies |f_N(x) - f_N(c)|<\frac{\varepsilon}{3}.
+	\]
+	We combine the previous statements. \textcolor{blue}{Fix any $x\in S$ such that $d(x,c)<\delta$.} The triangle inequality yields
+	\begin{align*}
+		\textcolor{blue}{|f(x)-f(c)|}&\le |f(x) - f_N(x)| + |f_N(x) - f_N(c)| + |f_N(c) - f(c)| 	\\
+		&\textcolor{blue}{<} \frac{\varepsilon}{3}+\frac{\varepsilon}{3}+\frac{\varepsilon}{3} = \textcolor{blue}{\varepsilon.}
+	\end{align*}
+\end{proof}
+We end this section with a useful result.
+\begin{thm}[Cauchy criterion for uniform convergence]
+	\label{thm:unif_cauchy}
+	Let $S$ be a set and let $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$. TFAE:
+	\begin{itemize}
+		\item There exists a function $f:S\to \R$ such that $f_n$ converges to $f$ uniformly on $S$.
+		\item $\forall \varepsilon>0, \exists N\in\N$ such that
+		\[
+		m,n\ge N\implies |f_n(x) - f_m(x)|<\varepsilon,\quad \forall x\in S.
+		\]
+	\end{itemize}
+\end{thm}
+\begin{proof}
+	\ul{$\implies$:} \textcolor{blue}{Fix any $\varepsilon>0$.} By the assumption of uniform convergence, \textcolor{blue}{there exists $N\in \N$} such that
+	\[
+	n\ge N \implies |f_n(x) - f(x)|<\frac{\varepsilon}{2},\quad \forall x \in S.
+	\]
+	In particular, the triangle inequality gives the following:
+	\begin{align*}
+		\textcolor{blue}{n,m\ge N\implies|f_n(x) - f_m(x)|} &\le |f_n(x) - f(x)| + |f_m(x) - f(x)| \\
+		&\textcolor{blue}{<}\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon}.
+	\end{align*}
+	\ul{$\impliedby$:} For any $x\in S$, consider the sequence of real numbers $(f_n(x))_{n\in\N}$. By assumption, we see that this is a Cauchy sequence. Hence, we can define a function $f:S\to \R$ by
+	\[
+	f(x) = \lim_{n\to \infty}f_n(x),\quad \forall x\in S.
+	\]
+	We aim now to prove that $f_n$ converges uniformly to $f$. \textcolor{blue}{Fix any $\varepsilon>0$.} By assumption, \textcolor{blue}{there exists $N\in \N$} such that
+	\[
+	m,n\ge N\implies |f_n(x) - f_m(x)|< \frac{\varepsilon}{2},\quad \forall x \in S.
+	\]
+	In particular, \textcolor{blue}{fix any $x\in S$} and let $M\ge N$ be such that
+	\[
+	m \ge M \implies |f_m(x) - f(x)| < \frac{\varepsilon}{2}.
+	\]
+	By the triangle inequality, \textcolor{blue}{for any $n\ge N$, we have}
+	\[
+	\textcolor{blue}{|f_n(x) - f(x)|} \le |f_n(x) - f_M(x)| + |f_M(x) - f(x)| \textcolor{blue}{<}\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon}.
+	\]
+\end{proof}
+The usefulness of~\Cref{thm:unif_cauchy} comes from the fact that that the second point makes no explicit mention of a limit function $f$. Hence, the Cauchy criterion can be used to prove uniform convergence of a sequence of functions without relying on knowing the limit.

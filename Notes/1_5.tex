@@ -1,0 +1,288 @@
+\section{Compact metric spaces}
+\label{sec:cpct_met_spaces}
+We now come to one of the most important concepts in point-set topology which is central to many areas of research. Just to motivate this discussion from the previous concepts of subsequences, suppose you are trying to approximate a function $f$ (which many people do in machine learning, partial differential equations, optimisation, \dots). Suppose you have a (computer) algorithm which can generate a sequence of functions $(f_n)_{n\in\N}$. You believe, to some extent, that $f_n$ should converge to $f$ thereby validating your approximation. But how can you prove this convergence? In general, this is quite difficult. Perhaps you would be satisfied if only a \textit{subsequence} $(f_{n_j})_{j\in\N}$ converges. This is not as good as convergence of the full sequence, but we have more tools available that can yield positive answers to convergence along subsequences. This is expressed in the following idea of `sequential compactness' (although, at first glance, it might not appear so).
+\begin{defn}[Sequential compactness]
+\label{defn:seq_cpct}
+Let $(X,d)$ be a metric spaces with $Y\subset X$. We say that
+\begin{itemize}
+	\item $(X,d)$ is \textit{sequentially compact} iff every sequence in $X$ admits at least one convergent subsequence.
+	\item the subset $Y$ is \textit{sequentially compact in $X$} iff $(Y,d|_{Y\times Y})$ is sequentially compact.
+\end{itemize}
+\end{defn}
+\begin{rem}
+\begin{itemize}
+	\item The notion of sequential compactness is \textit{intrinsic}. This property, unlike open and closedness, does not change depending on the ambient space. For this reason, we will usually just say $Y$ is sequentially compact when $Y$ is sequentially compact \textit{in $X$}.
+	\item To clarify, in sequential compactness, the limit of the convergent subsequence \textbf{must also belong in that set}.
+	\item Another way of looking at sequential compactness is the following: sequentially compact spaces are those for which every subset is guaranteed to have at least one limit point.
+\end{itemize}
+\end{rem}
+In Math 131A, you learned the famous Bolzano-Weierstrass theorem which we remind ourselves now.
+\begin{thm}[Bolzano-Weierstrass]
+\label{thm:bw}
+Let $(a_n)_{n\in\N}\subset \R$ be a bounded sequence. Then, it admits at least one convergent subsequence.
+\end{thm}
+\begin{cor}
+	\label{cor:bw}
+On $\R$, every closed and bounded set is sequentially compact.
+\end{cor}
+\begin{proof}
+	This is an exercise. Use~\Cref{thm:bw} and~\Cref{lem:closed_lim}.
+\end{proof}
+The previous example suggest that sequential compactness and boundedness are both connected to each other. On $\R$, it is easy to describe what it means for a set to be bounded and we generalise this to metric spaces.
+\begin{defn}[Bounded]
+Let $(X,d)$ be a metric space with $Y\subset X$. We say that:
+\begin{itemize}
+	\item $Y$ is \textit{bounded} iff $\forall x\in X, \exists r>0$ such that $Y\subset B_r(x)$.
+	\item $(X,d)$ is \textit{bounded} iff $X$ is bounded.
+\end{itemize}
+\end{defn}
+\begin{ex}
+Let $(X,d)$ be a non-empty metric space with non-empty $Y\subset X$. Show that TFAE:
+\begin{enumerate}
+	\item $Y$ is bounded.
+	\item $\exists x\in X, r>0$ such that $Y\subset B_r(x)$.
+\end{enumerate}
+\textit{Hint: Notice the change in quantifier. Use~\ref{m:tri}.}
+\end{ex}
+\begin{prop}[Sequentially compact $\implies$ complete and bounded]
+	\label{prop:seq_cpct_cmpl_bdd}
+Let $(X,d)$ be a sequentially compact metric space. Then, $(X,d)$ is both complete and bounded.
+\end{prop}
+\begin{proof}
+\ul{Complete:} \textcolor{blue}{Fix any Cauchy sequence $(x_n)_{n\in\N}\subset X$.} Since $X$ is sequentially compact, \Cref{defn:seq_cpct} tells us that there is a subsequence $(x_{n_j})_{j\in\N}\subset (x_n)_{n\in\N}$ which is convergent to some limit $x\in X$. According to~\Cref{lem:cauchy_sub_cvg}, \textcolor{blue}{the original sequence $(x_n)_{n\in\N}$ converges to $x$}.
+
+\ul{Bounded:} \textcolor{blue}{Assume, for a contradiction, that $X$ is not bounded.} This means that there exists some $x\in X$ such that, for every $r>0$, we have $X \nsubseteq B_r(x)$. Alternatively, for every $r>0$, there exists some element $x_r \in X$ (this element depends on $r>0$) but $x_r \notin B_r(x)$. In particular,
+\begin{enumerate}
+	\item For $r=1$, there exists $x_1 \in X$ such that $x_1 \notin B_1(x)$ i.e. $d(x_1,x)\ge 1$.
+	\item For $r=2$, there exists $x_2 \in X$ such that $x_2 \notin B_2(x)$ i.e. $d(x_2,x) \ge 2$.
+	\item Repeating this process, for $r = n\in\N$, there exists $x_n\in X$ such that $d(x_n,x)\ge n$.
+\end{enumerate}
+We have therefore constructed a sequence $(x_n)_{n\in \N}\subset X$ such that $d(x_n,x)\ge n$ for every $n\in\N$. Since $(X,d)$ is sequentially compact, there must exist a subsequence $(x_{n_j})_{j\in\N}\subset (x_n)_{n\in\N}$ which is convergent to some limit $y\in X$. Let us denote $r:= d(x,y)\ge 0$. Since $x_{n_j}\overset{j\to \infty}{\to} y$ ($r$ does not depend on $n\in\N$), we can find $J_1\in \N$ such that
+\[
+j\ge J_1 \implies d(x_{n_j},y)<1.
+\]
+Now, let us take $J_2\in\N$ large such that $n_{J_2} - r \ge 1$ (why does this exist? Exercise). Let us define $J = \max (J_1,J_2)$. On the one hand, by construction of the sequence $(x_n)_{n\in\N}$ and~\ref{m:tri}, since $J\ge J_2$ we have
+\[
+\textcolor{blue}{1\le} n_{J} - r \le d(x_{n_J},x) - d(x,y) \le  \textcolor{blue}{d(x_{n_J},y)}.
+\]
+On the other hand, since $x_{n_j}\overset{j\to \infty}{\to}y$ and $J \ge J_1$, we have
+\[
+\textcolor{blue}{d(x_{n_J},y)<1.}
+\]
+The text in \textcolor{blue}{blue} reaches the desired contradiction.
+\end{proof}
+\begin{cor}[Sequentially compact $\implies$ closed and bounded]
+\label{cor:seq_cpct_clos_bdd}
+Let $(X,d)$ be a metric space and $Y\subset X$ is sequentially compact. Then, $Y$ is closed (in $X$) and bounded (in $X$).
+\end{cor}
+\begin{proof}
+This is an exercise. Use~\Cref{prop:seq_cpct_cmpl_bdd} and~\Cref{prop:comp_clos}.
+\end{proof}
+The above~\Cref{cor:seq_cpct_clos_bdd} is one half of the famous Heine-Borel theorem. The other direction is only true in $\R^n$.
+\begin{thm}[Heine-Borel]
+	\label{thm:hb_real}
+Consider $(\R^n,d)$ with the metric being either $d=d_1,d_2,$ or $d=d_\infty$. Let $E\subset \R^n$. The following are equivalent.
+\begin{enumerate}
+	\item \label{hb_real_1} $E$ is sequentially compact.
+	\item \label{hb_real_2} $E$ is closed and bounded.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\ref{hb_real_1} $\implies$ \ref{hb_real_2} comes for free from~\Cref{cor:seq_cpct_clos_bdd}. We show the other direction only for $d=d_2$ and leave the other metrics as an exercise.
+
+\ref{hb_real_2} $\implies$ \ref{hb_real_1}: The idea here is to apply~\Cref{thm:bw} to each coordinate. Since $E$ is bounded, there must exist $R>0$ such that
+\begin{align*}
+E \subset B_R(0) &= \left\{
+x=(x_1,x_2,\dots, x_n)\in \R^n \, : \, d_2(x,0)<R
+\right\} 	\\
+&= \left\{
+x=(x_1,x_2,\dots, x_n)\in \R^n \, : \, x_1^2 + x_2^2 + \dots+ x_n^2 < R^2
+\right\}.
+\end{align*}
+In particular, if we consider the cube $Q = [-R,R]^n$, we see that $E\subset B_R(0) \subset Q$. Now, let us \textcolor{blue}{fix a sequence $(x^j)_{j\in \N}\subset E$} (the index is a superscript). Since $E\subset Q$, each component satisfies
+\[
+x_i^j \in [-R,R],\quad \forall i=1,2,\dots, n.
+\]
+\begin{enumerate}
+	\item Let us focus on the $i=1$ component $(x_1^j)_{j\in\N}\subset [-R,R]\subset \R$. This sequence is bounded, so~\Cref{thm:bw} yields a convergent subsequence (which we do not relabel) such that $x_1^j \to x_1$ for some $x_1\in \R$ as $j\to \infty$. We do not write the relabeled subsequence to keep the notation as light as possible.
+	\item Let us focus on the $i=2$ component $(x_2^j)\subset [-R,R]\subset \R$ \textbf{along the subsequence indexed by $j$ from the previous step}. Using~\Cref{thm:bw} again, we obtain \textit{yet another convergent subsequence (not relabeled)} such that $x_2^j \to x_2$ for some $x_2 \in \R$ as $j\to \infty$. Along this (further) subsequence, we still have $x_1^j \to x_1$ as $j\to \infty$.
+	\item Let us focus on the $i=3$ component $(x_3^j)\subset [-R,R]\subset \R$ \textbf{along the subsequence indexed by $j$ from the previous step}. Using~\Cref{thm:bw} again, we obtain \textit{yet another convergent subsequence (not relabeled)} such that $x_3^j \to x_3$ for some $x_3 \in \R$ as $j\to \infty$. Along this (further) subsequence, we still have $x_1^j\to x_1$ and $x_2^j \to x_2$ as $j\to \infty$.
+	\item We repeat this all the way down to the last $i=n$ component to find, for some $x = (x_1,x_2,\dots, x_n)\in \R^n$ that
+	\[
+	x_i^j \to x_i,\quad\text{as }j\to \infty,\quad \forall i=1,\dots, n.
+	\]
+	Again, this convergence is along some subsequence (we took a subsequence of a subsequence $n$ times) which we do not label for notational convenience.
+\end{enumerate}
+Each component of the original sequence admits a convergent subsequence
+\[
+x_i^j\overset{j\to \infty}{\to} x_i,\quad \forall i=1,\dots, n.
+\]
+\textcolor{blue}{Along the subsequence} above, this is equivalent (exercise) to the convergence
+\[
+\textcolor{blue}{x^j \overset{j\to \infty}{\to} x} = (x_1,x_2,\dots, x_n)\in \R^n.
+\]
+Finally, since $E$ is closed, we use~\Cref{lem:closed_lim} to deduce that \textcolor{blue}{$x\in E$.} The text in \textcolor{blue}{blue} shows that $E$ is sequentially compact.
+\end{proof}
+\begin{rem}
+	\Cref{thm:hb_real} is \textbf{not} true for more general metric spaces. One needs to replace closed and boundedness with stronger notions (c.f.~\Cref{thm:hb_gen} and problem sheets).
+\end{rem}
+\begin{ex}
+Consider the integers $\mathbb{Z}$ equipped with the discrete metric $d_\text{disc}$.
+\begin{itemize}
+	\item Show that $(\mathbb{Z},d_\text{disc})$ is a closed and bounded metric space.
+	\item Show that $(\mathbb{Z},d_\text{disc})$ is not sequentially compact.
+\end{itemize}
+\end{ex}
+As the above exercise demonstrates, closed and boundedness are not enough to guarantee sequential compactness. These must be replaced with stronger conditions to give the following result.
+\begin{defn}[Totally bounded]
+\label{defn:tot_bdd}
+We say that a metric space $(X,d)$ is \textit{totally bounded} iff for every $\varepsilon>0$, there exists a finite number of points $x^{(1)},x^{(2)},\dots, x^{(N)}$ for some $N\in\N$ such that
+\[
+X = \bigcup_{i=1}^NB_\varepsilon(x^{(i)}).
+\]
+\end{defn}
+\begin{thm}[Heine-Borel (general)]
+\label{thm:hb_gen}
+Let $(X,d)$ be a metric space. TFAE:
+\begin{enumerate}
+	\item \label{hb_1} $X$ is sequentially compact.
+	\item \label{hb_2} $X$ is complete and totally bounded.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+	See problem sheet for a guided proof.
+\end{proof}
+
+\subsection{Compactness (independent of sequences)}
+There is a more `fundamental' notion of compactness which does not involve sequences and does not rely on the metric. We introduce it here but we first need some preliminary definitions.
+\begin{defn}[Covers]
+Let $Y\subset X$ be two sets. Let $\{V_\alpha\}_{\alpha \in A}$ be a collection of subsets $V_\alpha \subset X$ indexed by $\alpha \in A$.
+\begin{itemize}
+	\item We say that $\{V_\alpha\}_{\alpha\in A}$ is \textit{finite} iff the index set $A$ is a finite set.
+	\item We say that $\{V_\alpha\}_{\alpha \in A}$ \textit{covers / is a cover for $Y$} iff $Y \subset \bigcup_{\alpha \in A}V_\alpha.$
+	\item For $B\subset A$, we say that $\{V_\alpha\}_{\alpha \in B}$ is a \textit{subcover for $Y$} iff $\{V_\alpha\}_{\alpha \in B}$ is a cover for $Y$.
+\end{itemize}
+\end{defn}
+\begin{eg}
+Let $X = \R$ and $Y = (-1,1)$. Let's define $A = (0,2)$ and $V_\alpha = (-\alpha,\alpha)$ for $\alpha \in A$. It is clear to see that $\{V_\alpha\}_{\alpha \in A}$ is a cover of $Y$ because
+\[
+(-1,1) = Y \subset \bigcup_{\alpha \in A} V_\alpha = \bigcup_{\alpha \in (0,2)}(-\alpha,\alpha)
+\]
+In this example, the index set $A$ is infinite. But we could just as easily consider $B = \{2\}$ so that
+\[
+\bigcup_{\alpha \in B}V_\alpha = (-2,2) \cap Y.
+\]
+So $\{V_\alpha\}_{\alpha \in B}$ is a finite cover of $Y$.
+Exercise: What is the set $\bigcup_{\alpha \in (0,2)}(-\alpha,\alpha)$?
+\end{eg}
+\begin{eg}
+Let $X = \R$ and $Y = (-\infty, 0)$. Let's define $A = \N$ and $V_\alpha = (-\alpha - 2, -\alpha+1)$ for $\alpha \in A$. Then (exercise), $\{V_\alpha\}_{\alpha \in A}$ is a cover of $Y$.
+\end{eg}
+\begin{defn}[Compact]
+	\label{defn:cpct}
+Let $(X,d)$ be a metric space with $Y\subset X$. We say that
+\begin{itemize}
+	\item $(X,d)$ is \textit{compact} iff the following holds. Let $\{V_\alpha\}_{\alpha \in A}$ be any collection of open subsets of $X$ which cover $X$ i.e.
+	\[
+	V_\alpha\text{ is open }\forall \alpha \in A\text{ and }\bigcup_{\alpha \in A}V_\alpha = X.
+	\]
+	Then, there exists a finite subset $F\subset A$ such that $\{V_\alpha\}_{\alpha \in F}$ also covers $X$.
+	\item $Y$ is \textit{compact} iff $(Y,d|_{Y\times Y})$ is compact.
+\end{itemize}
+\end{defn}
+\Cref{defn:cpct} is usually expressed in an abbreviated way by saying `$X$ is compact iff every open cover of $X$ admits a finite subcover.' As remarked in~\Cref{defn:seq_cpct}, the notion of compactness is \textit{intrinsic} -- this property does not change even when the ambient space changes.
+\begin{lemma}
+\label{lem:cpct_int}
+Let $(X,d)$ be a metric space with $Y\subset X$. TFAE:
+\begin{enumerate}
+	\item \label{cpct_int_1} $Y$ is compact.
+	\item \label{cpct_int_2} If $\{V_\alpha\}_{\alpha \in A}$ is a collection of open subsets of $X$ which cover $Y$, then there exists a finite subset $F\subset A$ such that $\{V_\alpha\}_{\alpha \in F}$ also covers $Y$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+\ref{cpct_int_1} $\implies$ \ref{cpct_int_2}: Assume $Y$ is compact and let us \textcolor{blue}{fix any collection $\{V_\alpha\}_{\alpha \in A}$ of open subsets of $X$ which cover $Y$.} In other words,
+\[
+V_\alpha\text{ is open in $X$ for every $\alpha \in A$ and }\bigcup_{\alpha \in A}V_\alpha \supset Y.
+\]
+We define the collection $\{W_\alpha\}_{\alpha \in A}$ of subsets of $Y$ by
+\[
+W_\alpha = V_\alpha \cap Y,\quad \forall \alpha \in A.
+\]
+According to~\Cref{prop:rel_top}, all these sets $W_\alpha$ are (relatively) open in $Y$. Moreover, they form a cover of $Y$ because
+\[
+Y\subset \bigcup_{\alpha \in A}V_\alpha \implies Y = Y\cap Y \subset \left(\bigcup_{\alpha \in A}V_\alpha\right)\cap Y = \bigcup_{\alpha \in A} (V_\alpha \cap Y) = \bigcup_{\alpha \in A}W_\alpha.
+\]
+Since $Y$ is compact, \textcolor{blue}{there exists a finite subset $F\subset A$} such that
+\[
+Y\subset \bigcup_{\alpha \in F}W_\alpha = \bigcup_{\alpha \in F}(V_\alpha \cap Y) = \left(\bigcup_{\alpha \in F}V_\alpha\right)\cap Y.
+\]
+This implies (exercise) that \textcolor{blue}{$Y \subset \bigcup_{\alpha \in F}V_\alpha$.} The text in \textcolor{blue}{blue} is what we wanted to prove.
+
+\ref{cpct_int_2} $\implies$ \ref{cpct_int_1}: \textcolor{blue}{Fix any collection $\{W_\alpha\}_{\alpha \in A}$ of (relatively) open subsets of $(Y,d|_{Y\times Y})$ which cover $Y$.} In other words,
+\[
+W_\alpha\text{ is relatively open in $Y$ for every $\alpha \in A$ and }Y = \bigcup_{\alpha \in A}W_\alpha = Y.
+\]
+By~\Cref{prop:rel_top}, we can find $V_\alpha \in X$ such that
+\[
+V_\alpha \text{ is open in $X$ for every $\alpha \in A$ and }W_\alpha = V_\alpha \cap Y.
+\]
+Since $\{W_\alpha\}_{\alpha \in A}$ is a cover for $Y$, we also see that $\{V_\alpha\}_{\alpha \in A}$ covers $Y$ (and is a collection of open subsets of $X$) because (exercise)
+\[
+Y = \bigcup_{\alpha \in A}W_\alpha = \left(\bigcup_{\alpha \in A}V_\alpha\right)\cap Y \implies Y \subset \bigcup_{\alpha \in A}V_\alpha.
+\]
+Using the assumption~\ref{cpct_int_2}, \textcolor{blue}{there must exist a finite subset $F\subset A$} such that $\{V_\alpha\}_{\alpha \in F}$ covers $Y$ i.e.
+\[
+Y \subset \bigcup_{\alpha \in F}V_\alpha.
+\]
+This implies that \textcolor{blue}{$\{W_\alpha\}_{\alpha \in F}$ also covers $Y$} since
+\[
+Y = Y\cap Y \subset \left(\bigcup_{\alpha \in A}V_\alpha\right)\cap Y = \bigcup_{\alpha \in A}W_\alpha.
+\]
+The text in \textcolor{blue}{blue} is what we wanted to prove.
+\end{proof}
+From now on, if we want to check that $Y$ is compact as a subset of an ambient metric space $(X,d)$, we will check~\ref{cpct_int_2} in light of~\Cref{lem:cpct_int}.
+\begin{eg}
+Suppose $(X,d)$ is a non-empty metric space with $x\in X$. Then, the singleton $\{x\}$ is a compact set.
+\begin{proof}
+	\textcolor{blue}{Fix any open cover $\{V_\alpha\}_{\alpha \in A}$ of $\{x\}$.} By definition, we must have
+	\[
+	\{x\}\subset \bigcup_{\alpha \in A}V_\alpha \implies x\in \bigcup_{\alpha \in A}V_\alpha.
+	\]
+	Hence, there must exist an index $\beta\in A$ such that $x \in V_\beta$. \textcolor{blue}{Let us define the finite set $F = \{\beta\}$}. We then see that
+	\[
+	x \in V_\beta \implies x \in \bigcup_{\alpha \in F}V_\alpha \implies \textcolor{blue}{\{x\}\subset \bigcup_{\alpha \in F}V_\alpha}.
+	\]
+	The text in \textcolor{blue}{blue} gives~\ref{cpct_int_2} which is equivalent to saying $\{x\}\subset X$ is compact.
+\end{proof}
+\end{eg}
+\begin{eg}
+$\R$ is \textbf{not} compact.
+\begin{proof}
+We can exhibit an open cover of $\R$ which does not have a finite subcover. Namely, consider
+\[
+V_\alpha = (-\alpha,\alpha),\quad \alpha \in A = \mathbb{N}.
+\]
+It is easy to see (exercise) that $\R = \bigcup_{\alpha \in A}V_\alpha$. However, suppose $F\subset A$ is any finite (non-empty) subset of $\mathbb{N}$. Let us refer to $f := \max F < +\infty$. We see that
+\[
+\bigcup_{\alpha \in F}V_\alpha \subset (-f,f) \neq \R.
+\]
+In other words, no finite subset of $\{V_\alpha\}_{\alpha \in A}$ is a cover of $\R$.
+\end{proof}
+\end{eg}
+Although~\Cref{defn:cpct} might seem weird an abstract, it turns out that it is equivalent to~\Cref{defn:seq_cpct} \textit{for metric spaces.}
+\begin{thm}
+\label{thm:cpct_equiv}
+Let $(X,d)$ be a metric space. TFAE:
+\begin{enumerate}
+	\item \label{cpct_equiv_1} $(X,d)$ is compact.
+	\item \label{cpct_equiv_2} $(X,d)$ is sequentially compact.
+\end{enumerate}
+\end{thm}
+\begin{proof}[Proof]
+Refer to either 
+\begin{itemize}
+	\item Sutherland's `Introduction to Metric and Topological Spaces' (2nd edition) Theorem 14.10 or
+	\item Terence Tao's `Analysis II' Theorem 1.5.8 and Exercise 1.5.11 or
+	\item a guided proof on a problem sheet.
+\end{itemize}
+\end{proof}

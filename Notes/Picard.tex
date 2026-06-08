@@ -1,0 +1,191 @@
+\section{ODE application: Picard's theorem}
+\label{sec:Picard}
+Using what we have learned about complete metric spaces, we can now present an important basic application for solving differential equations. Fix $T>0, x_0\in\R$, and let $f:[0,T]\times\R\to\R$ be a function. We would like to ascertain when we can solve the following differential equation
+\begin{equation}
+	\label{eq:ODE}
+	\frac{d}{dt}x(t) = f(t,x(t)),\quad t\in (0,T),\quad x(0) = x_0.
+\end{equation}
+We have deliberately written~\eqref{eq:ODE} with the unknown being $x$ as a function of $t$ to evoke the following understanding from physics: Typically, $x(t)$ represents a particle's position (in space) at time $t$. Physics, in particular classical mechanics, is able to provide many rules relating a particle's velocity (or even acceleration) with forces exerted on it. To be precise, the time derivative $\frac{dx}{dt}$ represents the velocity of the particle and classical mechanics can describe how this relates to various effects experienced by the particle. The question that physics seeks to answer is the following: given full knowledge on the forces that a particle experiences (i.e. given a differential equation relating velocity with forces), can we deduce what the position of the particle is? In abstract mathematical formality, this motivates trying to solve~\eqref{eq:ODE}
+
+There are many points to clarify. When we say `solve~\eqref{eq:ODE}' we mean to answer several questions, the first of which is given below.
+\begin{q}[Existence]
+	Does there exist a differentiable function $x:[0,T]\to \R$ such that
+	\[
+	\frac{d}{dt}x(t) = f(t,x(t)),\quad \forall t\in(0,T)
+	\]
+	and $x(0) = x_0$?
+\end{q}
+The equation $\frac{d}{dt}x(t) = f(t,x(t))$ is referred to as the `differential equation' whereas the pointwise evaluation $x(0) = x_0$ is the `initial condition.'
+\begin{eg}
+	Let $x_0 = 0$ and $f(t,x) = t$. The function $x(t) = \frac{1}{2}t^2$ satisfies
+	\[
+	\frac{d}{dt}x(t) = t\quad\text{and}\quad x(0) = 0.
+	\]
+\end{eg}
+\begin{eg}
+	Let $x_0 = 1$ and $f(t,x) = x$. Then the function $x(t) = e^t$ satisfies
+	\[
+	\frac{d}{dt}x(t) = x(t)\quad\text{and}\quad x(0) = 1.
+	\]
+\end{eg}
+\begin{eg}
+	Let $x_0 = 1$ and $f(t,x) = -xt$. Then the function $x(t) = e^{-\frac{1}{2}t^2}$ satisfies
+	\[
+	\frac{d}{dt}x(t) = -tx(t)\quad\text{and}\quad x(0) = 1.
+	\]
+\end{eg}
+In your previous courses in differential equations, you learned many techniques to explicitly write down a formula for the solution of~\eqref{eq:ODE}. The purpose of this section is to illustrate that solving~\eqref{eq:ODE} does not necessarily mean finding equations.
+\begin{eg}
+	Does a differentiable function $x(t)$ exist such that its derivative is given by
+	\[
+	\frac{d}{dt}x(t) = \sin(\cos(\cos t))
+	\]
+	and it satisfies the initial condition $x(0) = 5$? An application of~\Cref{thm:Picard} will answer this example. For now, can you summon up the tools and tricks you've learned to solve this example?
+\end{eg}
+Another aspect which may have been ignored in your differential equations classes is whether the techniques you learned capture \textit{all} possible solutions or if they miss out on \textit{some} solutions. For example, how do you know that the method of separation of varriables / variation of parameters / undetermined coefficients / etc\dots applied to differential equations will yield the `correct' solution? This is summarised in the following question.
+\begin{q}[Uniqueness]
+	Suppose $x_1,x_2:[0,T]\to \R$ are differentiable functions which both satisfy
+	\[
+	\frac{d}{dt}x(t) = f(t,x(t)),\quad \forall t\in(0,T)\quad\text{and}\quad x(0) = x_0,
+	\]
+	with $x(t) = x_1(t)$ or $x(t) = x_2(t)$. Can we conclude $x_1(t) = x_2(t)$ for every $t\in[0,T]$? Is it possible that $x_1\neq x_2$?
+\end{q}
+We will be able to answer both existence and uniqueness for~\eqref{eq:ODE} by reformulating the problem and making precise assumptions on $f$ below in~\Cref{thm:Picard}. The first assumption (which we will eventually strengthen) is that $f$ is a \textbf{continuous} function. 
+\begin{prop}[Integral form of~\eqref{eq:ODE}]
+	\label{prop:ODE_int}
+	Let $f:[0,T]\times\R\to\R$ be continuous. TFAE:
+	\begin{itemize}
+		\item $x:[0,T]\to \R$ is a continuously differentiable solution to~\eqref{eq:ODE}.
+		\item \[
+		x(t) = x_0 + \int_0^t f(s,x(s))\,\mathrm{d}s.
+		\]
+	\end{itemize}
+\end{prop}
+\begin{proof}
+	This equivalence is immediate from integrating~\eqref{eq:ODE} and the Fundamental Theorem of Calculus (exercise).
+\end{proof}
+The simple equivalence in~\Cref{prop:ODE_int} gives us an iterated formula for solutions to~\eqref{eq:ODE}. With this in mind, let us think more abstractly in terms of metric spaces, specifically with $C([0,T])$. We define the map
+\[
+I:C([0,T])\to C([0,T])
+\]
+by the following way: Given any $x\in C([0,T])$, $I[x]$ belongs to $C([0,T])$ and it is defined as
+\[
+I[x](t):= x_0 + \int_0^tf(s,x(s))\,\mathrm{d}s.
+\]
+Here, we are using square brackets $I[x]$ to mean that $I$ takes the function $x$ as an input and the output is the function $I[x](t)$.
+\begin{ex}
+	Let $f:[0,T]\times \R\to\R$ be continuous. Verify that $I:C([0,T])\to C([0,T])$ described above is well-defined.
+\end{ex}
+With this setting, another way of describing solutions to~\eqref{eq:ODE} according to~\Cref{prop:ODE_int} is by searching for \textbf{fixed points} of the map $I$. Indeed, suppose $x\in C([0,T])$ is a fixed point of $I$. This gives
+\[
+I[x](t) = x(t),\quad\forall t\in[0,T]\overset{\Cref{prop:ODE_int}}{\iff} x\text{ is a solution to~\eqref{eq:ODE}.}
+\]
+Our strategy for analysing existence and uniqueness of solutions to~\eqref{eq:ODE} consists now of finding fixed points to the map $I$. Here, we will rely on~\Cref{thm:banach}.
+\begin{thm}[Picard-Lindel\"of / Cauchy-Lipschitz]
+	\label{thm:Picard}
+	Fix $T>0, x_0\in\R$ and a continuous function $f:[0,T]\times\R\to \R$. Assume that $f$ satisfies the following uniform Lipschitz property:
+	\[
+	\exists L> 0\text{ s.t. }\forall t\in[0,T],\,\forall x,y\in \R,\text{ we have }|f(t,x)-f(t,y)|\le L|x-y|.
+	\]
+	Then, there exists a unique continuously differentiable function $x:[0,T]\to \R$ such that~\eqref{eq:ODE} is satisfied.
+\end{thm}
+\begin{proof}
+	\ul{Short-time solution:} From~\Cref{prop:C^0_complete}, we see that \textcolor{blue}{$C([0,\tau])$ is a complete metric space for any $\tau>0$.} We will eventually explicitly choose $0 < \tau \ll T$. Specifically, $\tau$ will be chosen to make $I:C([0,\tau])\to C([0,\tau])$ a contraction. Fix any $x_1,x_2\in C([0,\tau])$ and we calculate
+	\[
+		I[x_1](t) - I[x_2](t) = \int_0^t f(s,x_1(s)) - f(s,x_2(s))\,\mathrm{d}s,\quad \forall t\in[0,\tau].
+	\]
+	By the triangle inequality and the uniform Lipschitz assumption on $f$, for any $t\in [0,\tau]$, we have that
+	\begin{align*}
+		|I[x_1](t) - I[x_2](t)| &\le \int_0^t |f(s,x_1(s)) - f(s,x_2(s))|\,\mathrm{d}s 	\\
+		&\le L\int_0^t |x_1(s) - x_2(s)|\,\mathrm{d}s 	\\
+		&\le L\int_0^t \left(\sup_{s\in[0,\tau]}|x_1(s)-x_2(s)|\right)\,\mathrm{d}s 	\\
+		&\le Lt \|x_1-x_2\|_{C([0,\tau])}.
+	\end{align*}
+	Since this inequality is true for any arbitrary $t\in[0,\tau]$, we obtain
+	\[
+	\|I[x_1]-I[x_2]\|_{C([0,\tau])}\le L \tau \|x_1-x_2\|_{C([0,\tau])}.
+	\]
+	In particular, whenever $\tau < \frac{1}{L}$ (for example, set $\tau = \frac{1}{2L+1}$), this estimate shows \textcolor{blue}{$I:C([0,\tau])\to C([0,\tau])$ is a contraction.} The text in \textcolor{blue}{blue} shows that we are in a position to apply~\Cref{thm:banach}: There exists a unique $x\in C([0,\tau])$ such that
+	\[
+	I[x](t) = x(t),\quad \forall t\in[0,\tau].
+	\]
+	Owing to the discussion before this result, we see that this function $x$ is a solution to the ODE \textit{but only for times} $0 < t < \tau$. We next seek to extend the time horizon to $T$.
+	
+	\ul{Extension to global time:} We repeat the previous argument for $[\tau,2\tau]$. Let
+	\[
+	S:C([\tau,2\tau])\to C([\tau,2\tau])
+	\]
+	be defined by
+	\[
+	S[y](t):= x(\tau) + \int_\tau^{2\tau}f(s,y(s))\,\mathrm{d}s,\quad t\in[\tau,2\tau].
+	\]
+	By exactly the same arguments as before, we see that there exists a unique $y\in C([\tau,2\tau])$ such that
+	\[
+	\frac{d}{dt}y(t) = f(t,y(t)),\quad \forall t\in[\tau,2\tau],\quad y(\tau) = x(\tau).
+	\]
+	We extend $x\in C([0,\tau])$ from the previous paragraph by defining
+	\[
+	x(t) := y(t),\quad t\in[\tau,2\tau].
+	\]
+	This can be repeated on intervals of the form $[n\tau,(n+1)\tau]$ for $n\in\N$ until $x$ is extended to $[0,T]$. Finally, we discuss uniqueness.
+	
+	\ul{Uniqueness:} Suppose $x_1,x_2:[0,T]\to\R$ are continuously differentiable functions solving~\eqref{eq:ODE}. Using the uniform Lipschitz property of $f$, we have
+	\[
+	\frac{d}{dt}\frac{1}{2}|x_1(t)-x_2(t)|^2 = (x_1(t)-x_2(t))(f(t,x_1(t))-f(t,x_2(t)))\le L|x_1(t)-x_2(t)|^2,\quad \forall t\in[0,T].
+	\]
+	For simplicity, let us set $y(t) = \frac{1}{2}|x_1(t)-x_2(t)|^2$ so that the differential inequality above reads
+	\[
+	\frac{d}{dt}y(t) \le 2Ly(t),\quad \forall t\in[0,T].
+	\]
+	By introducing the integrating factor of $e^{-2Lt}$, we see that
+	\[
+	\frac{d}{dt}\left( e^{-2Lt}y(t) \right)\le 0 \implies e^{-2Lt}y(t) \le y(0)\implies y(t) \le y(0) e^{2Lt},\quad \forall t\in[0,T].
+	\]
+	However, since $x_1,x_2$ both satisfy the same initial condition, we have $y(0) = \frac{1}{2}|x_1(0)-x_2(0)|^2 = 0$ and so we deduce (by definition, $y(t) \ge 0$ for all $t$)
+	\[
+	y(t) = 0,\quad \forall t\in[0,T].
+	\]
+	In terms of $x_1$ and $x_2$, this shows that $x_1 = x_2$.
+\end{proof}
+\begin{rem}
+	The technique for proving uniqueness above is a specific demonstration of what is generally known as applying \textit{Gr\"onwall's inequality / lemma.}
+\end{rem}
+There are many generalizations of~\Cref{thm:Picard}, some of which are described in a problem sheet. The main crucial point is the Lipschitz property of $f$ with respect to its second argument.
+\begin{eg}[An application]
+	Let $x_0 = 1$ and $f(t,x) = t\cos(\cos x)$. Can you write down the formula for $x(t)$ where $x(t)$ satisfies
+	\[
+	\frac{d}{dt}x(t) = f(t,x(t)),\quad \forall t\in(0,T),\quad x(0) = 1?
+	\]
+	I certainly don't know enough tricks to explicitly solve this differential equation. Nevertheless, I know because of~\Cref{thm:Picard} that this differential equation admits a unique solution.
+	
+	\ul{Lipschitz:} Fix any $x,y\in \R$ and $t\in[0,T]$ and consider
+	\[
+	f(t,x) - f(t,y) = t \left(\cos(\cos x) - \cos(\cos y)\right).
+	\]
+	Owing to the Mean Value Theorem, there is some $\xi$ between $x$ and $y$ such that
+	\[
+	f(t,x) - f(t,y) = t\left[\sin(\cos \xi)\right]\left[\sin \xi\right] (x-y).
+	\]
+	We know that $|\sin z| \le 1$ for every $z\in\R$ so the above equation implies
+	\[
+	|f(t,x) - f(t,y)| \le T|x-y|,\quad \forall x,y\in \R,\,\forall t\in[0,T].
+	\]
+	Hence, we see that $f$ satisfies the desired criteria and so~\Cref{thm:Picard} applies.
+\end{eg}
+\begin{eg}[Lipschitz is essential]
+	Let us consider $x_0 = 0$ and $f(t,x) = x^\frac{1}{2}$. This is slightly improper compared to~\Cref{thm:Picard} because $f(t,\cdot)$ is only defined on $[0,+\infty)$. However, there is a version of~\Cref{thm:Picard} which allows to consider the domain of $f(t,\cdot)$ as a strict subset of $\R$. Consider the following differential equation
+	\begin{equation}
+		\label{eq:ODE_root}
+		\frac{d}{dt}x(t) = x(t)^\frac{1}{2},\quad x(0) = 0.
+	\end{equation}
+	We will demonstrate \textit{infinitely} many solutions to~\eqref{eq:ODE_root}. First and foremost is the trivial solution $x(t) \equiv 0$. The next obvious one (using familiar techniques) is $x(t) = \frac{1}{4}t^2$. These two solutions can be combined to create infinitely many more in the following way: Let $\tau>0$ be any positive number, define
+	\[
+	x_\tau(t):=\left\{
+	\begin{array}{cc}
+		0, 	&\text{if }t\le \tau 	\\
+		\frac{1}{4}(t - \tau)^2, 	&\text{if }t > \tau
+	\end{array}
+	\right..
+	\]
+	The function $x_\tau$ satisfies~\eqref{eq:ODE_root} for every $\tau>0$.
+\end{eg}

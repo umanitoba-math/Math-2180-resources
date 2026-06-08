@@ -1,0 +1,397 @@
+We use the tools we have learned from sequences to study convergence properties of infinite series. In your mathematical careers, you may have come across expressions like
+\[
+\sum_{n=1}^N a_n = a_1 + a_2 + \dots + a_N.
+\]
+We study such objects, in particular we investigate
+\[
+\lim_{N\to\infty} \sum_{n=1}^N a_n.
+\]
+\section{Summation notation}
+Just to fix some notation, we recall that $\sum_{k=m}^na_k$ is just short hand for
+\[
+\sum_{k=m}^na_k = a_m + a_{m+1}+ \dots + a_n.
+\]
+The symbol $\sum_{k=m}^na_k$ tells us to add the terms $a_k$ starting from $k=m$ and increasing the value of $k$ by 1 until we reach the index $k=n$. We emphasise that the subscript $k$ in this summation is just a dummy variable. All of the following expressions equal each other
+\[
+\sum_{\heartsuit=m}^n a_\heartsuit =\sum_{j=m}^n a_j = \sum_{k=m}^na_k = a_m + a_{m+1}+ \dots + a_n.
+\]
+\begin{eg}
+	For $n\in\N$, the symbol $\sum_{k=0}^n2^{-k}$ is just shorthand for
+	\[
+	\sum_{k=0}^n2^{-k} = 1 + \frac{1}{2} + \frac{1}{4} + \dots + \frac{1}{2^n}.
+	\]
+\end{eg}
+\section{Infinite series}
+We want to study \textbf{infinite series} which take the form $\sum_{j=1}^\infty a_j$. To be precise about what this means, we consider the sequence of \textbf{partial sums} given by
+\[
+s_n = \sum_{j=1}^n a_j = a_0 + a_1 + a_2 + \dots + a_n.
+\]
+\begin{defn}
+	We say that the infinite series $\sum_{j=1}^\infty a_j$ \textbf{converges} if the sequence of partial sums $s_n = \sum_{j=1}^n a_j$ converges to a real number $S$. In this case, we write $\sum_{j=1}^\infty a_j = S$.
+\end{defn}
+In other words, the infinite series $\sum_{j=1}^\infty a_j$ is just a glorified limit of the sequence of partial sums
+\[
+\sum_{j=1}^\infty a_j = S \iff \lim_{n\to \infty}\left(\sum_{j=1}^n a_j\right)= S.
+\]
+A series that does not converge is said to \textbf{diverge}. Often, we will be concerned with properties of infinite series besides their exact values or what the starting index is. In other words, sometimes I will write $\sum a_j$ in place of $\sum_{j=m}^\infty a_j$.
+
+If $(a_n)$ is a sequence of non-negative numbers, then the partial sums $s_n = \sum_{j=1}^n a_j$ form an increasing sequence. We know from Math 2080 that, if $(s_n)_{n\in\N}$ is bounded above, then $s_n \overset{n\to \infty}{\to}\sup_{n\in\N}s_n$.
+\begin{defn}
+	\label{defn:abscvgseries}
+	We say that the infinite series $\sum a_j$ \textbf{converges absolutely} or is \textbf{absolutely convergent} if the infinite series $\sum |a_j|$ converges.
+\end{defn}
+We will see later on that absolute convergence implies convergence. Moreover, absolutely convergent series are very special and are much nicer than merely convergent series.
+\begin{eg}
+	[Geometric series]
+	\label{eg:geoseries}
+	One particular class of series of significance is \textbf{geometric series}. These are expressions of the form $\sum_{n=0}^\infty ar^n$ where $a$ and $r$ are real numbers. When $r\neq 1$ an explicit formula for the partial sums and infinite series is easy to obtain. The partial sums look like
+	\begin{equation}
+		\label{eq:geopartial}
+		\sum_{j=0}^n ar^j = a\frac{1-r^{n+1}}{1-r}.
+	\end{equation}
+	An easy proof of~\eqref{eq:geopartial} goes as follows.
+	\begin{align*}
+		(1-r)\sum_{j=0}^n ar^j &= \sum_{j=0}^n ar^j - \sum_{j=0}^n ar^{j+1} 	\\
+		&= a + ar + ar^2 + \dots + ar^n \\
+		&\quad - (ar + ar^2 + ar^3 + \dots + ar^{n+1}) 	\\
+		&= a - ar^{n+1}.
+	\end{align*}
+	When $|r|<1$, then we have (exercise) $\lim_{n\to\infty} r^{n+1} =0$. Under this assumption, we can pass to the limit $n\to \infty$ in~\eqref{eq:geopartial} to get
+	\begin{equation}
+		\label{eq:geoinf}
+		|r|<1 \implies \sum_{n=0}^\infty ar^n = \frac{a}{1-r}.
+	\end{equation}
+\end{eg}
+\begin{eg}
+	We will prove later that
+	\begin{equation}
+		\label{eq:powerrecip}
+		\sum_{n=1}^\infty \frac{1}{n^p} \quad \text{converges if and only if }p>1.
+	\end{equation}
+	In particular, when $0 \le p \le 1$, we have $\sum n^{-p}=+\infty$. There are exact values for this series when $p$ is even. For example,
+	\[
+	\sum_{n=1}^\infty \frac{1}{n^2}=\frac{\pi^2}{6}, \quad \sum_{n=1}^\infty \frac{1}{n^4} = \frac{\pi^4}{90}.
+	\]
+	We will not prove these formulas, instead we will refer to Fourier analysis for one possible technique to verify these formulas.
+\end{eg}
+We now introduce an important (and hopefully familiar) concept.
+\begin{defn}
+	[Cauchy criterion]
+	\label{defn:cauchysum}
+	Let $s_n = \sum_{j=1}^n a_j$ be the sequence of partial sums of $\sum a_j$. We say that the series $\sum a_j$ satisfies the \textbf{Cauchy criterion} if $(s_n)_{n\in\N}$ is a Cauchy sequence.
+\end{defn}
+In full detail, the Cauchy criterion means
+\[
+\forall \epsilon>0, \exists N\in\N \text{ such that }n,m\ge N \implies |s_n - s_m | <\epsilon.
+\]
+The roles of $n,m$ above are completely arbitrary so we may as well assume $n> m$. Moreover, whenever $m>N$ it is certainly true that $m-1\ge N$ so the statement above is equivalent to
+\[
+\forall \epsilon>0, \exists N\in\N \text{ such that }n\ge m>N \implies |s_n - s_{m-1} | <\epsilon.
+\]
+Finally, since $s_n- s_{m-1} = \sum_{j=1}^n a_j - \sum_{j=1}^{m-1}a_j = \sum_{j=m}^na_j$, we can rewrite the Cauchy criterion as
+\begin{equation}
+	\label{eq:cauchysum}
+	\forall \epsilon>0, \exists N\in\N \text{ such that }n\ge m>N \implies \left|
+	\sum_{j=m}^n a_j
+	\right| <\epsilon.
+\end{equation}
+We will usually use~\eqref{eq:cauchysum} when referring to the \textbf{Cauchy criterion}.
+\begin{thm}
+	\label{thm:cauchysum}
+	A series converges if and only if it satisfies the Cauchy criterion.
+\end{thm}
+\begin{proof}
+	After unpacking the definitions, this follows from the fact that, on $\R$, Cauchy sequences are the same as convergent sequences.
+\end{proof}
+\begin{cor}
+	\label{cor:summandvanish}
+	Let $(a_n)_{n\in\N}$ be a sequence of real numbers. The following implication is true.
+	\begin{equation}
+		\label{eq:summandvanish}
+		\sum_{n=1}^\infty a_n \quad \text{converges }\implies \lim_{n\to\infty}a_n = 0.
+	\end{equation}
+\end{cor}
+Before we prove~\Cref{cor:summandvanish} it is important to discuss the direction of the implication in~\eqref{eq:summandvanish}. In particular, I will now point out a common misinterpretation/misuse. \textbf{\Cref{cor:summandvanish} does NOT say `$\lim_{n\to \infty}a_n = 0 \implies \sum_{n=1}^\infty a_n$ converges' because this is, in general, false.} We will see in~\Cref{eg:harmseries} on that $\sum_{n=1}^\infty \frac{1}{n} = +\infty$ even though $\frac{1}{n}\to 0$.
+\begin{proof}
+	[Proof of~\Cref{cor:summandvanish}]
+	Assume $\sum_{n=1}^\infty a_n$ converges to some $S\in\R$. By definition, we have
+	\[
+	\lim_{n\to \infty} \sum_{j=1}^n a_j = S = \lim_{n\to \infty} \sum_{j=1}^{n-1}a_j.
+	\]
+	We can write $a_n$ as a difference of these partial sums and pass to the limit $n\to \infty$ to obtain
+	\begin{align*}
+		a_n 	& = \sum_{j=1}^n a_j - \sum_{j=1}^{n-1}a_j 	\\
+		\implies \lim_{n\to \infty} a_n 	&= \lim_{n\to \infty}\left(\sum_{j=1}^n a_j\right) - \lim_{n\to \infty}\left(\sum_{j=1}^{n-1} a_j\right) = S - S = 0.
+	\end{align*}
+\end{proof}
+\begin{cor}
+	[Absolute convergence $\implies$ convergence]
+	\label{cor:abscvgseries}
+	Let $\sum a_n$ be an absolutely convergent series. Then, $\sum a_n$ is also a convergent series.
+\end{cor}
+\begin{proof}
+	\textcolor{blue}{Fix any $\varepsilon>0$.} Now, $\sum a_n$ being absolutely convergent is equivalent to $\sum |a_n|$ being convergent. According to~\Cref{thm:cauchysum}, this is equivalent to $\sum |a_n|$ satisfying the Cauchy criterion. Hence, \textcolor{blue}{there exists some $N\in\N$} such that
+	\[
+	\forall n\ge m>N,\text{ we have }\left|\sum_{j=m}^n|a_j|\right| <\varepsilon.
+	\]
+	In particular, \textcolor{blue}{for any $n\ge m>N$}, the triangle inequality gives
+	\[
+	\textcolor{blue}{\left|\sum_{j=m}^na_j\right|} \le \sum_{j=m}^n |a_j| = \left|\sum_{j=m}^n|a_j|\right| \textcolor{blue}{< \varepsilon.}
+	\]
+\end{proof}
+\section{Tests for convergence}
+Next we list some tests for determining whether a series converges or not.
+\begin{thm}
+	[Comparison test]
+	\label{thm:comptest}
+	Let $(a_n)$ be a sequence where $a_n \ge 0$ for all $n\in\N$. Let $(b_n)$ be a sequence.
+	\begin{enumerate}[label=\textbf{C\arabic*)}]
+		\item \label{comp1} Assume $\sum a_n$ converges and $|b_n| \le a_n$ for all $n\in\N$. Then, $\sum b_n$ converges absolutely.
+		\item \label{comp2} Assume $\sum a_n = +\infty$ and $b_n \ge a_n$ for every $n\in\N$. Then, $\sum b_n = +\infty$.
+	\end{enumerate}
+\end{thm}
+\begin{rem}
+	\ref{comp2} has an analogue when a series diverges to $-\infty$. The precise statement is that if $b_n\le a_n$ for every $n\in\N$ and $\sum a_n = -\infty$, then we have
+	\[
+	\sum b_n = -\infty.
+	\]
+\end{rem}
+\begin{proof}
+	\begin{enumerate}[label=\textbf{C\arabic*)}]
+		\item We will show that $\sum |b_n|$ satisfies the Cauchy criterion~\eqref{eq:cauchysum} which, by~\Cref{thm:cauchysum}, is equivalent to proving $\sum |b_n|$ converges. This, of course, means that $\sum b_n$ converges absolutely. Fix $\epsilon>0$ and since $\sum a_n$ converges, it also satisfies the Cauchy criterion. Therefore, there exists $N\in\N$ such that
+		\[
+		n\ge m > N \implies \left|
+		\sum_{j=m}^n a_j
+		\right|<\epsilon.
+		\]
+		However, by definition of the absolute value and the assumption that $|b_j| \le a_j$, we also have
+		\[
+		\left|
+		\sum_{j=m}^n |b_j|
+		\right| = \sum_{j=m}^n |b_j| \le \sum_{j=m}^n a_j = \left|
+		\sum_{j=m}^n a_j
+		\right|.
+		\]
+		Therefore, the series $\sum |b_j|$ also fulfills the Cauchy criterion. Hence, by~\Cref{thm:cauchysum}, the series $\sum |b_j|$ is convergent which is equivalent to saying that $\sum b_j$ is absolutely convergent.
+		\item Denote by $s_n$ and $t_n$ the partial sums of $\sum a_n$ and $\sum b_n$ i.e.
+		\[
+		s_n = \sum_{j=1}^n a_j, \quad t_n = \sum_{j=1}^n b_j.
+		\]
+		Since $b_n \ge a_n$, we also get $t_n \ge s_n$ for every $n\in\N$. Since $\lim_{n\to \infty} s_n = \sum_{j=1}^\infty a_j = +\infty$, we also see $\lim_{n\to\infty} t_n = +\infty$.
+	\end{enumerate}
+\end{proof}
+\begin{eg}
+	[Divergence of harmonic series]
+	\label{eg:harmseries}
+	We will use the Comparison Test to prove that $\sum \frac{1}{n}$ diverges. We set $a_n = \frac{1}{n}$ and we compare it to another sequence $b_n$ defined as follows
+	\[
+	\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c}
+		n &1	&2	&3	&4	&5	&6	&7	&8	&9	&10 &\dots	\\\hline
+		a_n 	&1	&\frac{1}{2}	&\frac{1}{3}	&\frac{1}{4}	&\frac{1}{5}	&\frac{1}{6}	&\frac{1}{7}	&\frac{1}{8}	&\frac{1}{9}	&\frac{1}{10}  	&\dots	\\\hline
+		b_n 	&1	&\frac{1}{2} 	&\frac{1}{4}	&\frac{1}{4}	&\frac{1}{8}	&\frac{1}{8} 	&\frac{1}{8} 	&\frac{1}{8} 	&\frac{1}{16} 	&\frac{1}{16} 	&\dots
+	\end{array}
+	\]
+	So $b_n$ is identically equal to $2^{-n}$ for $2^{n-1}$ consecutive terms when $n\ge 2$. A more precise definition of $b_n$ for $n\ge 2$ goes as follows. Whenever $n\ge 2$, there exists a unique $k\in\N$ such that
+	\[
+	2^{k-1} < n \le 2^k.
+	\]
+	Therefore, for fixed $n\ge 2$, take the unique $k\in \N$ satisfying the inequalities above and define 
+	\[
+	b_1 := 1, \quad b_n := 2^{-k}.
+	\]
+	By construction (see also the table above), we easily see that $a_n \ge b_n >0$ for every $n\in\N$. The series $\sum b_n$ diverges because, when $N\in\N$ is a large natural number, the partial sums look like
+	\begin{align*}
+		\sum_{n=1}^N b_n &= 1 + \frac{1}{2} + \left(\frac{1}{4} + \frac{1}{4}\right) + \left(\frac{1}{8}+ \frac{1}{8}+ \frac{1}{8}+ \frac{1}{8}\right) + \dots + b_N 	\\
+		&= 1 + \frac{1}{2} + 2*\frac{1}{4} + 4*\frac{1}{8} + \dots + b_N 	\\
+		&= 1 + \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \dots + b_N.
+	\end{align*}
+	Explicitly, this expression of the partial sums shows that $\sum b_n$ adds the number $\frac{1}{2}$ \textit{infinitely many times.} In particular, $\sum b_n$ diverges to $+\infty$ and by the Comparison Test~\Cref{thm:comptest}, we see that $\sum \frac{1}{n}$ also diverges to $+\infty$.
+\end{eg}
+The comparison test in~\Cref{thm:comptest} requires knowing a priori that a related series converges. The next few tests we list allow us to calculate directly from $\sum a_n$ whether this series converges.
+\begin{thm}
+	[Root test]
+	\label{thm:rootttest}
+	Let $(a_n)_{n\in\N}$ be a sequence and set $\alpha = \limsup_{n\to\infty} |a_n|^\frac{1}{n}$.
+	\begin{enumerate}[label=\textbf{Root \arabic*)}]
+		\item $\alpha <1 \implies \sum a_n$ converges absolutely.
+		\item $\alpha >1 \implies \sum a_n$ diverges.
+		\item $\alpha =1$ gives no information.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	Throughout, we denote $\alpha = \limsup_{n\to\infty} |a_n|^\frac{1}{n}$.
+	\begin{enumerate}[label=\textbf{Root \arabic*)}]
+		\item Assuming $\alpha<1$, the Archimedean property guarantees the existence of $\epsilon>0$ such that $\alpha + \epsilon<1$ (check). Then, by the definition of limit superior, there exists $N\in\N$ such that
+		\[
+		\sup\{ |a_n|^\frac{1}{n} \, : \, n \ge N\} < \alpha + \epsilon.
+		\]
+		In particular, whenever $n\ge N$ we have $|a_n|^\frac{1}{n} < \alpha + \epsilon$ and raising this inequality to the $n$th exponent yields
+		\[
+		n\ge N \implies |a_n| < (\alpha + \epsilon)^n.
+		\]
+		Since $0 < \alpha + \epsilon<1$, the geometric series $\sum_{n=N}^\infty (\alpha + \epsilon)^n$ converges absolutely and the comparison test~\Cref{thm:comptest} ensures $\sum_{n=N}^\infty a_n$ converges. We conclude (exercise) that the full series $\sum_{n=1}^\infty a_n = \sum_{n=1}^{N-1}a_n + \sum_{n=N}^\infty a_n$ converges.
+		\item We assume that $\alpha>1$. By definition of $\alpha$, this means that
+		\[
+		1 < \inf_{n\in\N} \sup_{j\ge n} |a_j|^\frac{1}{j}.
+		\]
+		Therefore, we get
+		\[
+		1 < \sup_{j\ge n} |a_j|^\frac{1}{j}, \quad \forall n\in\N.
+		\]
+		This inequality shows (exercise) that there are infinitely many natural numbers $n\in\N$ such that $|a_n|^\frac{1}{n}>1$. Taking $n$th powers, there are an infinite number of natural numbers $n\in\N$ such that $|a_n|>1$. In particular, the sequence $(a_n)$ cannot converge to 0 (exercise), so by (the contrapositive of)~\Cref{cor:summandvanish}, the series $\sum a_n$ diverges.
+		\item For both of the series $\sum \frac{1}{n}$ and $\sum \frac{1}{n^2}$, the value of $\alpha$ is identically equal to 1. However, the former series diverges according to~\Cref{eg:harmseries} while the latter converges (we will show this later). Hence, nothing can be concluded in this case.
+	\end{enumerate}
+\end{proof}
+\begin{thm}
+	[Ratio test]
+	\label{thm:ratiotest}
+	Let $(a_n)_{n\in\N}$ be a sequence such that $a_n \neq 0$ for every $n\in\N$.
+	\begin{enumerate}[label=\textbf{Ratio \arabic*)}]
+		\item $\limsup_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right| <1 \implies \sum a_n$ converges absolutely.
+		\item $\liminf_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right| >1 \implies \sum a_n$ diverges.
+		\item Otherwise, $\liminf_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right| \le 1 \le \limsup_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right|$ and no information is given.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	Following the notation from the Root test~\Cref{thm:rootttest}, we set $\alpha = \limsup_{n\to\infty} |a_n|^\frac{1}{n}$. \textcolor{red}{MAKE REFERENCE TO~\eqref{eq:ratioroot} IN A PROBLEM SHEET OR INCLUDE PROOF}
+	\begin{equation}
+		\label{eq:ratioroot}
+		\liminf_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right| \le \alpha \le \limsup_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right|.
+	\end{equation}
+	\begin{enumerate}[label=\textbf{Ratio \arabic*)}]
+		\item If $\limsup_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right| <1$, then~\eqref{eq:ratioroot} ensures $\alpha <1$, so the Root test~\Cref{thm:rootttest} ensures that $\sum a_n$ converges absolutely.
+		\item If $\liminf_{n\to \infty}\left|\frac{a_{n+1}}{a_n}\right|>1$, then~\eqref{eq:ratioroot} ensures $\alpha >1$, so the Root test~\Cref{thm:rootttest} ensures that $\sum a_n$ diverges.
+		\item Consider again $\sum \frac{1}{n}$ and $\sum \frac{1}{n^2}$.
+	\end{enumerate}
+\end{proof}
+Before we see how the previous Comparison, Root, and Ratio tests are used in many examples, we point out that the Root and Ratio tests are `blunt' tools. These are blunt tools in the sense that, a series can converge without the first conditions being true. For example, $\sum \frac{1}{n^2}$ is a convergent series however $\alpha = \limsup_{n\to \infty}|a_n|^\frac{1}{n} = 1$. In other words, a convergent series need not satisfy the condition $\alpha<1$.
+\section{Examples}
+We will see how the Comparison, Root, and Ratio tests can apply (or fail) to some examples. To save some space with notation, we will consider series of the form
+\[
+\sum a_n
+\]
+and we define $\alpha := \limsup_{n\to \infty}|a_n|^\frac{1}{n}$.
+\begin{eg}
+	Consider the series 
+	\begin{equation}
+		\label{eq:egseries1}
+		\sum_{n=2}^\infty \left(-\frac{1}{3}\right)^n = \frac{1}{9} - \frac{1}{27} +\frac{1}{81} - \dots
+	\end{equation}
+	This is a geometric series so we can apply~\eqref{eq:geoinf} (since $r = -1/3$ verifies $|r|<1$) and so the limit is $1/12$.
+	
+	Alternatively, the series~\eqref{eq:egseries1} can be shown to converge by all of the previous tests. One could use the comparison test with the series $\sum 3^{-n}$. Moreover (exercise), for $a_n = (-1/3)^n$, the corresponding value of $\alpha$ is $\alpha = 1/3$. Since $\alpha<1$, the Root and Ratio test allow us to conclude that $\sum (-3)^{-n}$ converges.
+\end{eg}
+\begin{eg}
+	Consider the series
+	\begin{equation}
+		\label{eq:egseries2}
+		\sum \frac{n}{n^2+3}.
+	\end{equation}
+	This series diverges to $+\infty$ by the Comparison test, which we shall prove. Firstly, just to get some intuition, when $n$ takes on very large values, each summand `looks' like $\frac{1}{n}$. We know from~\Cref{eg:harmseries} that the harmonic series diverges so by comparison, the series in~\eqref{eq:egseries2} should also diverge.
+	
+	The intuitive discussion from the previous discussion is not rigorous so we translate the ideas there into a proper proof. Now, whenever $n\ge 1$, it is certainly true that
+	\[
+	n^2 + 3 \le n^2 + 3n^2 = 4n^2.
+	\]
+	Hence, by taking reciprocals, we see that
+	\[
+	n\ge 1 \implies \frac{n}{n^2 + 3}\ge \frac{n}{4n^2} = \frac{1}{4n}.
+	\]
+	Therefore, we have $\sum \frac{n}{n^2+3}\ge \frac{1}{4}\sum \frac{1}{n} = +\infty$ so the series in~\eqref{eq:egseries2} diverges to $+\infty$.
+	
+	Let us see what the Ratio and Root tests can tell us with $a_n = \frac{n}{n^2+3}$ for the series in~\eqref{eq:egseries2}. We have
+	\[
+	\frac{a_{n+1}}{a_n} = \frac{n+1}{(n+1)^2+3}\frac{n^2+3}{n} =\frac{n+1}{n}\frac{n^2+3}{n^2+2n+4} \to 1\quad \text{as }n\to\infty.
+	\]
+	Therefore, $\alpha=1$ and neither the Ratio nor Root test would have told us~\eqref{eq:egseries2} diverged.
+\end{eg}
+\begin{eg}
+	Consider the series
+	\begin{equation}
+		\label{eq:egseries3}
+		\sum \frac{n}{3^n}.
+	\end{equation}
+	Using the Ratio or Root test, we take $a_n = \frac{n}{3^n}$ and calculate
+	\[
+	\frac{a_{n+1}}{a_n}=\frac{n+1}{3^{n+1}}\frac{3^n}{n} = \frac{n+1}{3n} \to \frac{1}{3}\quad \text{as }n\to\infty.
+	\]
+	Therefore, by the Ratio test, we conclude~\eqref{eq:egseries3} converges.
+\end{eg}
+\begin{eg}
+	Consider the series
+	\begin{equation}
+		\label{eq:egseries4}
+		\sum\left(
+		\frac{2}{(-1)^n-3}
+		\right)^n.
+	\end{equation}
+	We see $a_n = \left(
+	\frac{2}{(-1)^n-3}
+	\right)^n$ and since it is raised to an $n$th power, it seems like the Root Test could help here. In particular, we see that
+	\[
+	|a_n|^\frac{1}{n} = \left\{
+	\begin{array}{ll}
+		1 	&n\text{ even}\\
+		\frac{1}{2} 	&n\text{ odd}
+	\end{array}
+	\right.\implies \alpha = \limsup_{n\to\infty}|a_n|^\frac{1}{n}=1.
+	\]
+	Unfortunately, since $\alpha =1$, we cannot conclude anything by the Root Test (nor Ratio Test).
+	
+	However, if we were a bit more clever about the values of $a_n$ depending on the parity of $n$, we would notice
+	\[
+	a_n = \left\{
+	\begin{array}{cl}
+		1 	&n\text{ even} 	\\
+		-\frac{1}{2^n} 	&n\text{ odd}
+	\end{array}
+	\right..
+	\]
+	This implies that the sequence $a_n$ cannot converge to zero, hence by (the contrapositive of)~\Cref{cor:summandvanish}, the series in~\eqref{eq:egseries4} must diverge.
+\end{eg}
+\begin{eg}
+	[Difference between the ratio and root tests]
+	Consider the series
+	\begin{equation}
+		\label{eq:egseries5}
+		\sum_{n=0}^\infty 2^{(-1)^n - n}.
+	\end{equation}
+	\ul{Comparison test:} We set $a_n = 2^{(-1)^n - n}$ and it is easy to see that $a_n \le 2^{-n+1}$ so by comparing~\eqref{eq:egseries5} with the appropriate geometric series, we conclude that~\eqref{eq:egseries5} converges.
+	
+	\ul{Ratio test:} We see that
+	\[
+	\frac{a_{n+1}}{a_n} = \frac{2^{(-1)^{n+1}-(n+1)}}{2^{(-1)^n - n}} = 2^{-1-2(-1)^n} = \left\{
+	\begin{array}{cc}
+		\frac{1}{8} 	&n\text{ even} 	\\
+		2 	&n\text{ odd}
+	\end{array}
+	\right..
+	\]
+	Therefore, we can only conclude
+	\[
+	\frac{1}{8} = \liminf_{n\to\infty}\left|
+	\frac{a_{n+1}}{a_n}
+	\right|< 1< \limsup_{n\to\infty}\left|
+	\frac{a_{n+1}}{a_n}
+	\right| = 2,
+	\]
+	and this gives us no information according to the Ratio test.
+	
+	\ul{Root test:} We see that
+	\[
+	|a_n|^\frac{1}{n} = 2^{\frac{(-1)^n}{n}-1} = \left\{
+	\begin{array}{cc}
+		2^{\frac{1}{n}-1} 	&n\text{ even} 	\\
+		2^{-\frac{1}{n}-1}  	&n\text{ odd}
+	\end{array}
+	\right..
+	\]
+	Regardless of the parity of $n\in\N$, we nevertheless see $\lim_{n\to\infty} |a_n|^\frac{1}{n} = \alpha = \limsup_{n\to\infty}|a_n|^\frac{1}{n} = \frac{1}{2}<1$. Hence, by the Root test, we can conclude that~\eqref{eq:egseries5} converges.
+\end{eg}
+\section{Riemann's rearrangement theorem}
+\label{sec:rearrange}
+In this section, we prove a seemingly surprising result by Riemann.
+\begin{thm}[Riemann's rearrangement theorem]
+	\label{thm:rearrange}
+	Let $\sum a_n$ be a convergent, but not absolutely convergent series.
+\end{thm}

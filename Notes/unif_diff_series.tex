@@ -1,0 +1,91 @@
+\section{Uniform convergence with derivatives}
+\label{sec:unif_diff}
+\Cref{prop:unif_cvg_cts} illustrated how uniform convergence preserves continuity. In this section, we will explore uniform convergence with derivatives of functions, function series, and their combination.
+\begin{thm}[Uniform convergence of differentiable functions]
+	\label{thm:unif_cvg_diff}
+	Let $(a,b)\subset \R$ be an open and bounded interval. Let $(f_n)_{n\in\N}$ be a sequence of functions $f_n:(a,b)\to \R$ satisfying the following assumptions:
+	\begin{enumerate}[label = \textbf{A\roman*)}]
+		\item \label{unif_cvg_diff_1} For every $n\in\N$, the function $f_n$ is differentiable on $(a,b)$.
+		\item \label{unif_cvg_diff_2} There exists a point $x_0 \in (a,b)$ such that the sequence $(f_n(x_0))_{n\in\N}$ is convergent.
+		\item \label{unif_cvg_diff_3} There exists a function $g:(a,b)\to \R$ such that $f_n'$ converges uniformly to $g$ on $(a,b)$.
+	\end{enumerate}
+	Then, we obtain the following:
+	\begin{enumerate}[label = \textbf{C\roman*)}]
+		\item \label{unif_cvg_diff_C1} There exists a function $f:(a,b)\to \R$ such that $f_n$ converges uniformly to $f$ on $(a,b)$.
+		\item \label{unif_cvg_diff_C2} The function $f$ is differentiable on $(a,b)$ and $f' = g$.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	For every $c\in (a,b)$ and $n\in N$, we define
+	\[
+	g_n^c(x):= \left\{
+	\begin{array}{cl}
+		\frac{f_n(x)-f_n(c)}{x-c}, 	&\text{if }x\neq c 	\\
+		f_n'(c), 	&\text{if }x=c
+	\end{array}
+	\right.,\quad x\in (a,b).
+	\]
+	Notice that $g_n^c(x)$ is continuous at $x=c$ and $\lim_{n\to\infty} g_n^c(c) = \lim_{n\to\infty}f_n'(c) = g(c)$ by~\ref{unif_cvg_diff_3}. 
+	
+	\ul{$(g_n^c)_{n\in\N}$ is uniformly convergent:} \textcolor{blue}{Fix any $\varepsilon>0$.} Owing to~\ref{unif_cvg_diff_3}, \textcolor{blue}{there exists $N\in \N$} such that
+	\[
+	m,n\ge N\implies |f_n'(x) - f_m'(x)|<\varepsilon,\quad \forall x\in (a,b).
+	\]
+	Now, for any $m,n\in\N$ and $x\in (a,b)$ with $c\neq c$, the Mean-Value Theorem (applied to the function $f_n(x) - f_m(x)$) gives the existence of some $\xi$ between $x$ and $c$ such that
+	\begin{align*}
+	g_n^c(x) - g_m^c(x) &= \frac{f_n(x)-f_n(c)}{x-c} - \frac{f_m(x)-f_m(c)}{x-c} = \frac{[f_n(x) - f_m(x)] - [f_n(c) - f_m(c)]}{x-c} 	\\
+	&= f_n'(\xi) - f_m'(\xi).
+	\end{align*}
+	In particular, \textcolor{blue}{for any $m,n\ge N$,} the previous points yield
+	\[
+	\textcolor{blue}{|g_n^c(x) - g_m^c(x)|} = |f_n'(\xi) - f_m'(\xi)| \textcolor{blue}{< \varepsilon.\quad \forall x\in (a,b)\text{ s.t. }x\neq c.}
+	\]
+	Recall that $g_n^c(c) \overset{n\to \infty}{\to} g(c)$. The text in \textcolor{blue}{blue} allows us to apply the Cauchy criterion from~\Cref{thm:unif_cauchy}. Specifically, for every $c\in (a,b)$, we know that there exists some function $G^c:(a,b)\to \R$ such that $g_n^c$ converges uniformly to $G^c$ on $(a,b)$.
+	
+	\ul{Construction of $f$:} From above, we set $c = x_0$ and we write
+	\[
+	f_n(x) = f_n(x_0) + g_n^{x_0}(x)(x-x_0),\quad \forall n\in\N,\,\forall x\in(a,b).
+	\]
+	\textcolor{blue}{Fix any $\varepsilon>0$.} According to~\ref{unif_cvg_diff_2}, there exists $N_1\in\N$ such that
+	\[
+	m,n\ge N_1\implies |f_n(x_0) - f_m(x_0)|<\frac{\varepsilon}{2}.
+	\]
+	By what we have just done with $g_n$, we also know that there exists some $N_2\in\N$ such that
+	\[
+	m,n\ge N_2\implies |g_n^{x_0}(x) - g_m^{x_0}(x)|<\frac{\varepsilon}{2(1 + b-a)},\quad \forall x \in (a,b).
+	\]
+	\textcolor{blue}{Define $N:= \max(N_1,N_2)$} We combine the previous deductions to see that, \textcolor{blue}{for any $m,n\ge N$ and $x\in (a,b)$, we have}
+	\begin{align*}
+		\textcolor{blue}{|f_n(x) - f_m(x)|} &\le |f_n(x_0) - f_m(x_0)| + |x-x_0||g_n^{x_0}(x) - g_m^{x_0}(x)| 	\\
+		&\le |f_n(x_0) - f_m(x_0)| + (b-a)|g_n^{x_0}(x) - g_m^{x_0}(x)| 	\\
+		&< \frac{\varepsilon}{2} + \left(\frac{b-a}{1 + b-a}\right)\frac{\varepsilon}{2} \textcolor{blue}{< \varepsilon.}
+	\end{align*}
+	Again, the text in \textcolor{blue}{blue} allows us to apply the Cauchy criterion from~\Cref{thm:unif_cauchy} to deduce the existence of a function $f:(a,b)\to \R$ such that $f_n$ converges uniformly to $f$ on $(a,b)$. This achieves~\ref{unif_cvg_diff_C1}.
+	
+	\ul{Derivative of $f$:} Recall that~\ref{unif_cvg_diff_1} yields continuity of $g_n^c$, particularly at the point $x=c$, so that
+	\[
+	\lim_{x\to c}g_n^c(x) = g_n^c(c) = f_n'(c).
+	\]
+	Applying~\Cref{prop:unif_cvg_cts} gives that $G^c$ is continuous, also particularly at the point $x=c$. Together with uniform convergence, we get
+	\[
+	\lim_{x\to c}G^c(x) = G^c(c) = \lim_{n\to \infty}g_n^c(c) = \lim_{n\to \infty}f_n'(c) = g(c).
+	\]
+	On the other hand, for every $x\neq c$, we have
+	\[
+	G^c(x) = \lim_{n\to \infty}g_n^c(x) = \lim_{n\to \infty}\frac{f_n(x)-f_n(c)}{x-c} = \frac{f(x) - f(c)}{x-c}.
+	\]
+	Putting the previous two points together implies that
+	\[
+	g(c) = \lim_{x\to c}\frac{f(x)-f(c)}{x-c},
+	\]
+	which establishes~\ref{unif_cvg_diff_C2}.
+\end{proof}
+We mentioned in~\Cref{sec:intro} that, for a function series given by
+\[
+f(x) = \sum_{n=1}^\infty f_n(x),
+\]
+an attractive identity would be
+\[
+f'(x) \overset{!}{=} \sum_{n=1}^\infty f_n'(x).
+\]
+Again, the exclamation point is meant to emphasise that this is not true in general! The derivative of an infinite series is not necessarily the same as the infinite series of derivatives. Nevertheless, \Cref{thm:unif_cvg_diff} gives a crucial ingredient into proving the case where this is true. To get there, we will first need to develop some preliminaries for function series.

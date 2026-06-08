@@ -1,0 +1,154 @@
+\section{Continuous functions and connected spaces}
+\label{sec:connected_cts}
+This section discusses the relation between connected spaces and continuous functions. In this discussion, we will refer to $\{0,1\}$ as the \textit{two-point space} and we will endow it with the discrete metric. In this setting, the open sets of the two-point space are
+\[
+\{0,1\},\,\{1\},\,\{0\},\text{ and }\emptyset.
+\]
+Recall also that we say $f:X\to Y$ is a \textit{surjection} provided
+\[
+\forall y\in Y,\exists x\in X\text{ s.t. }f(x) = y.
+\]
+\begin{prop}
+	\label{prop:connected_two-point}
+	Let $(X,d)$ be a metric space. TFAE:
+	\begin{itemize}
+		\item $X$ is connected.
+		\item There are no continuous surjections from $X$ to the two-point space.
+	\end{itemize}
+\end{prop}
+This result formally says that a connected space is one that `cannot be continuously split into two distinct parts.'
+\begin{proof}
+	\ul{$\implies$:} Assume, for a contradiction, that $X$ is connected, but there exists a continuous surjection $f:X \to \{0,1\}$. \textcolor{blue}{Define $A:= f^{-1}(\{0\})$ and $B:= f^{-1}(\{1\})$.} According to~\Cref{prop:cts_pre_open}, we see that $A,B \subset X$ are \textcolor{blue}{non-empty and open and $A,B\neq X$}. However, since $f^{-1}(C)\cup f^{-1}(D) = f^{-1}(C\cup D)$ and similarly for intersections, we deduce \textcolor{blue}{both
+	\[
+	A \cup B = X\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+	}
+	\ul{$\impliedby$:} Assume, for a contradiction, that $X$ is not connected. This means that we can find non-empty $A,B\subsetneq X$ which are open such that
+	\[
+	A\cup B = X\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+	We define $f:X\to \{0,1\}$ by
+	\[
+	f:=\left\{
+	\begin{array}{cc}
+		0,	&\text{if }x\in A 	\\
+		1, 	&\text{if }x \in B
+	\end{array}
+	\right..
+	\]
+	Clearly, we see that $f$ is a surjection. As we mentioned before this result, all the open sets of the two-point space are
+	\[
+	\{0,1\},\,\{1\},\,\{0\},\text{ and }\emptyset.
+	\]
+	Their respective pre-images through $f$ are
+	\[
+	X,\,A,\,B,\text{ and }\emptyset,
+	\]
+	which are all open sets. Hence $f$ is continuous, by~\Cref{prop:cts_pre_open}, which is a contradiction.
+\end{proof}
+\begin{ex}
+	\begin{itemize}
+		\item Let $X$ be a non-empty finite set with at least two elements endowed with the discrete metric. Prove that $X$ cannot be connected.
+		\item Let $X$ be a countable set endowed with the discrete metric. Prove that $X$ cannot be connected.
+	\end{itemize}
+\end{ex}
+\begin{prop}[Continuous image of a connected set is connected]
+	\label{prop:cts_im_connect}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\to Y$ is a continuous function. If $X$ is connected, then $f(X)$ is connected.
+\end{prop}
+\begin{proof}
+	We show that we can reduce to the case that $f$ is surjective, wlog. Suppose we know~\Cref{prop:cts_im_connect} is true for continuous surjections. In the case when $f$ is not surjective, we can consider $f_1: X \to f(X)$ defined by $f_1(x) = f(x)$ for all $x\in X$. The map $f_1$ is a continuous surjection by construction and so~\Cref{prop:cts_im_connect} for continuous surjections says that $f_1(X)$ is connected. But we also know that $f_1(X) = f(X)$ which shows that $f(X)$ is connected.
+	
+	Now we assume that $f$ is a surjection so that $Y = f(X)$. Suppose, for a contradiction, that $Y$ is not connected. This means that there exists non-empty and open $U,V\subset Y$ such that
+	\[
+	U\cup V = Y\quad\text{and}\quad U\cap V = \emptyset.
+	\]
+	\textcolor{blue}{We define $A:= f^{-1}(U)$ and $B := f^{-1}(V)$.} Since $U,V$ are non-empty and open, the continuity of $f$ (c.f.~\Cref{prop:cts_pre_open}) gives that \textcolor{blue}{$A,B$ are also non-empty and open and $A,B\neq X$.} In particular, we have
+	\[
+	\textcolor{blue}{A \cup B = }f^{-1}(U)\cup f^{-1}(V) = f^{-1}(U\cup V) = f^{-1}(Y) = \textcolor{blue}{X}
+	\]
+	and
+	\[
+	\textcolor{blue}{A\cap B = }f^{-1}(U)\cap f^{-1}(V) = f^{-1}(U\cap V) = f^{-1}(\emptyset) = \textcolor{blue}{\emptyset}.
+	\]
+	The text in \textcolor{blue}{blue} contradicts the assumption that $X$ is connected.
+\end{proof}
+In the particular case when $Y = \R$, we can give a proof of the intermediate value theorem for general metric space domains.
+\begin{thm}[Intermediate Value Theorem]
+	\label{thm:IVT}
+	Let $(X,d)$ be a connected metric space and $f:X\to \R$ be a continuous function. Let $y_1,y_2\in f(X)$. Then, for every $y\in \R$ between $y_1,y_2$ (meaning $y_1\le y\le y_2$ if $y_1 \le y_2$ or $y_1 \ge y \ge y_2$ if $y_1 \ge y_2$), there exists $\xi \in X$ such that $f(\xi) = y$.
+\end{thm}
+\begin{proof}
+	According to~\Cref{prop:cts_im_connect}, we know that $f(X)$ is a connected subset of $\R$. Hence, by~\Cref{thm:connected_interval} we see that $f(X)$ must be an interval. Moreover, according to~\Cref{prop:char_int} since $y_1,y_2 \in f(X)$ and $y$ is between $y_1$ and $y_2$, we must also have that $y \in f(X)$. By definition, this implies \textcolor{blue}{there exists some $\xi \in X$ such that $f(\xi) = y$.}
+\end{proof}
+The next result discusses how adding limit points does not change the connectedness of a set.
+\begin{prop}
+	Let $(X,d)$ be a metric space and suppose $A\subset X$ is a connected set. Suppose $B\subset X$ satisfies $A\subset B \subset \bar{A}$. Then, $B$ is connected.
+\end{prop}
+\begin{proof}
+	Assume, for a contradiction, that $B$ is not connected. According to~\Cref{prop:connected_two-point}, there exists some continuous surjection $f:B\to \{0,1\}$. Since $A$ is connected, we must have that $f|_A$ is a constant. Suppose, wlog, that
+	\[
+	f(a) = 0,\quad\forall a\in A,
+	\]
+	otherwise, exchange the roles of $0$ and $1$. Now, since we assume that $f:B\to \{0,1\}$ is a surjection, \textcolor{blue}{there must exist some $b\in B\setminus A$ such that $f(b) = 1$.} Since $B\subset \overline{A}$, we see that $b$ is a limit point of $A$. According to~\Cref{lem:lim_pts}, there exists a sequence $(a_n)_{n\in\N}\subset A$ such that $a_n \overset{n\to\infty}{\to} b$. By continuity of $f$, we obtain the following contradiction:
+	\[
+	0 = f(a_n) \overset{n\to\infty}{\to} f(b) = 1.
+	\]
+\end{proof}
+We next investigate a notion which can lead to the beginnings of algebraic topology. For our purposes, it is a specific case of connectedness.
+\subsection{Path-Connectedness}
+\label{sec:path_connect}
+\begin{defn}[Path-connectedness]
+	Let $(X,d)$ be a non-empty metric space. We say that $X$ is \textit{path-connected} provided the following holds true: For any $x,y\in X$, there exists a continuous map $f:[0,1]\to X$ such that $f(0) = x$ and $f(1) = y$. We refer to such an $f$ as a \textit{path (joining $x$ to $y$)}.
+\end{defn}
+\begin{eg}
+	$\R^d$ is path-connected for any $d\in\N$. Indeed, given $x,y\in\R^d$, one can define
+	\[
+	f(t) := (1-t)x + ty.
+	\]
+\end{eg}
+\begin{prop}[Path-connected implies connected]
+	\label{prop:path_connect_implies_connect}
+	Let $(X,d)$ be a path-connected metric space. Then, $X$ is also connected.
+\end{prop}
+\begin{proof}
+	We will use~\Cref{prop:connected_two-point} for this. Suppose, for a contradiction that there exists a continuous surjection $g:X\to \{0,1\}$. There must exist $x,y\in X$ such that $g(x) = 0$ and $g(y) = 1$. By assumption that $X$ is path-connected, let $f$ be a path joining $x$ to $y$. Owing to~\Cref{prop:comp_cts}, the composition $g\circ f:[0,1]\to \{0,1\}$ must be continuous and surjective. Appealing to~\Cref{thm:connected_interval}, this contradicts the fact that $[0,1]$ is connected.
+\end{proof}
+The converse to~\Cref{prop:path_connect_implies_connect} is not, however, true in general.
+\begin{eg}[Connected does not imply path-connected]
+	\label{eg:top_sine}
+	Define the following function
+	\[
+	g(x):=\left\{
+	\begin{array}{cc}
+		0, 	&\text{if }x=0 	\\
+		\sin \frac{1}{x},	&\text{if }x >0
+	\end{array}
+	\right..
+	\]
+	This is known as the \textit{topologist's sine curve} and a guided analysis will be carried through on a problem sheet.
+\end{eg}
+Despite~\Cref{eg:top_sine}, for open subsets of $\R^d$, the result is true.
+\begin{thm}
+	\label{thm:open_connected_real}
+	Let $S\subset \R^d$ be (non-empty) open and connected. Then $S$ is path-connected.
+\end{thm}
+\begin{proof}
+	Fix $x\in S$. We partition $S$ into $A\subset S$ where
+	\[
+	A:= \left\{
+	y \in S \, | \, \exists\text{ continuous path between $x$ and $y$ lying in $S$}
+	\right\}
+	\]
+	and $B:= S\setminus A$. Clearly, we have
+	\[
+	S = A\cup B\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+	We will demonstrate that $A = S$ which, since $x\in S$ was arbitrary, will prove that $S$ is path-connected. 
+	
+	To this aim, we prove that $A,B$ are open. Fix $a\in A$. By definition, there exists a continuous path between $x$ and $a$ in $S$. Since $a\in S$ and $S$ is open, there exists $r>0$ such that $B_r(a) \subset S$. For every $y \in B_r(a)$, one can create a continuous path between $x$ and $y$ by concatenating first the path between $x$ and $a$ and then the straight line between $a$ and $y$ (exercise). Hence, we obtain $y\in A$ and, moreover, $B_r(a) \subset A$.
+	
+	Fix any $b\in B$. Again, since $S$ is open, there exists $r>0$ such that $B_r(b) \subset S$. If there was $y\in B_r(b)$ such that a continuous path between $x$ and $y$ existed, then one can build from this (in a similar way as in the previous paragraph) a continuous path between $x$ and $b$. Hence, no continuous path between $x$ and any $y\in B_r(b)$ can exist and so $B_r(b)\subset B$.
+	
+	The previous two paragraphs showed that $A,B$ are open. Recall from construction that that $A\cup B = S$ and $A\cap B = \emptyset$. Since $S$ is connected, this can only happen when $\{A,B\} = \{S,\emptyset\}$. $A$ cannot be empty because $x\in A$ (the trivial path staying at $x$ is continuous), hence $B = \emptyset$. Therefore, we obtain $A = S$.
+\end{proof}

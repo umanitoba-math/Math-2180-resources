@@ -1,0 +1,99 @@
+\section{Uniform convergence and integration}
+\label{sec:unif_int}
+We have seen in~\Cref{ex:pt_int} how interchanging limits with integration can be false for pointwise convergent sequences of functions. In this short section, we prove a result which guarantees when this is valid.
+
+We first recall some concepts about integration and integrability.
+\begin{defn}[Riemann sums, integrability]
+	\label{defn:riemann}
+	For a closed and bounded interval $[a,b]\subset\R$, a \textit{partition} of $[a,b]$ is any finite set of the form
+	\[
+	P = \{x_0,x_1,\dots, x_n\},\quad a = x_0 < x_1 < \dots < x_n = b.
+	\]
+	Given a bounded function $f:[a,b]\to \R$ and a partition $P = \{x_i\}_{i=0}^n$ of $[a,b]$, its \textit{upper Riemann sum} is
+	\[
+	U(f,P) = \sum_{i=1}^n (x_i-x_{i-1})\left(\sup_{x_{i-1}\le x \le x_i}f(x)\right).
+	\]
+	The corresponding \textit{lower Riemann sum} is
+	\[
+	L(f,P) = \sum_{i=1}^n (x_i-x_{i-1})\left(\inf_{x_{i-1}\le x \le x_i}f(x)\right).
+	\]
+	We say that a (bounded) function $f:[a,b]\to \R$ is \textit{(Riemann) integrable on $[a,b]$} provided the following is true
+	\[
+	\sup_{P\subset [a,b]}L(f,P) = \inf_{P\subset [a,b]}U(f,P).
+	\]
+	Above, the supremum / infimum runs over all partitions $P$ of $[a,b]$.
+\end{defn}
+An important result to determine Riemann integrability is the following. \textcolor{blue}{A proof of this can be found in an earlier course.}
+\begin{thm}[Cauchy criterion for Riemann integrability]
+	\label{thm:cauchy_int}
+	Let $f:[a,b]\to\R$ be bounded. TFAE
+	\begin{itemize}
+		\item $f$ is integrable on $[a,b]$.
+		\item For every $\varepsilon>0$, there exists a partition $P$ of $[a,b]$ such that
+		\[
+		U(f,P) - L(f,P)<\varepsilon.
+		\]
+	\end{itemize}
+\end{thm}
+Before we proceed to the main theorem of this section, we present a preliminary result in the same theme as~\Cref{prop:unif_cvg_cts} -- uniform convergence preserves properties of the function sequence.
+\begin{prop}
+	Let $-\infty < a < b < +\infty$. For every $n\in\N$, let $f_n:[a,b]\to\R$ be a bounded function. Moreover, assume that there exists $f:[a,b]\to\R$ such that $f_n$ converges uniformly to $f$ on $[a,b]$. Then, the function $f$ is also bounded.
+\end{prop}
+\begin{proof}
+	With $\varepsilon=1$, the uniform convergence assumption guarantees the existence of $N\in\N$ such that
+	\[
+	n\ge N \implies \sup_{x\in[a,b]}|f_n(x) - f(x)|<1.
+	\]
+	The boundedness assumption applied particularly to $f_N$ guarantees the existence of $\tilde{M}>0$ such that
+	\[
+	\sup_{x\in[a,b]}|f_N(x)|\le \tilde{M}.
+	\]
+	\textcolor{blue}{We define $M:= \tilde{M}+1$. For any $x\in[a,b]$,} we deduce from the triangle inequality and the previous deductions that
+	\[
+	\textcolor{blue}{|f(x)| \le} |f(x) - f_N(x)| + |f_N(x)| \le 1 + \tilde{M} = \textcolor{blue}{M}.
+	\]
+\end{proof}
+This result says that we can calculate the Riemann sums of a uniform limit of bounded functions. We want to say more with respect to integration.
+\begin{thm}
+	\label{thm:unif_int}
+	Let $-\infty<a<b<+\infty$ and $f_n:[a,b]\to\R$ be a sequence of bounded functions for $n\in\N$. Assume, moreover that $f_n$ is integrable on $[a,b]$ for every $n\in\N$ and that there exists $f:[a,b]\to\R$ such that $f_n$ converges uniformly to $f$ on $[a,b]$. Then, we have the following:
+	\begin{enumerate}
+		\item $f$ is integrable on $[a,b]$.
+		\item The integral is given by
+		\[
+		\int_a^bf(x)\,\mathrm{d}x = \lim_{n\to\infty}\int_a^b f_n(x)\,\mathrm{d}x.
+		\]
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	We will use~\Cref{thm:cauchy_int}.
+	\begin{enumerate}
+		\item \textcolor{blue}{Fix any $\varepsilon>0$.} Since $f_n$ converges uniformly to $f$ on $[a,b]$, we know that there exists some $N\in\N$ such that
+		\[
+		n\ge N\implies |f_n(x) - f(x)|<\frac{\varepsilon}{3(b-a)},\quad \forall x\in[a,b].
+		\]
+		In particular, for any partition $Q$ of $[a,b]$, we can deduce from this statement that (exercise)
+		\[
+		\left|U(f-f_N,Q)\right| < \frac{\varepsilon}{3}\text{ and }\left|L(f-f_N,Q)\right| < \frac{\varepsilon}{3}.
+		\]
+		Since $f_N$ is integrable, we know from~\Cref{thm:cauchy_int} that \textcolor{blue}{there exists a partition $P$ of $[a,b]$} such that
+		\[
+		U(f_N,P) - L(f_N,P)< \frac{\varepsilon}{3}.
+		\]
+		The previous deductions give
+		\begin{align*}
+			&\quad \textcolor{blue}{U(f,P)-L(f,P)} \le U(f-f_N,P) + U(f_N,P) - L(f-f_N,P) - L(f_N,P) \\
+			&\le \left|U(f-f_N,Q)\right| +\left|L(f-f_N,Q)\right| + U(f_N,P) - L(f_N,P) \textcolor{blue}{<} \frac{\varepsilon}{3} + \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \textcolor{blue}{\varepsilon.} 
+		\end{align*}
+		Hence, $f$ satisfies the Cauchy criterion for integrability and so, by~\Cref{thm:cauchy_int}, we have established that $f$ is integrable on $[a,b]$.
+		\item We will show that the sequence of numbers $\left(\int_a^bf_n(x)\,\mathrm{d}x\right)_{n\in\N}$ converges to $\int_a^b f(x)\,\mathrm{d}x$. \textcolor{blue}{Fix any $\varepsilon>0$.} Since $f_n$ converges uniformly to $f$ on $[a,b]$, we know that \textcolor{blue}{there exists some $N\in\N$} such that
+		\[
+		n\ge N\implies |f_n(x) - f(x)|<\frac{\varepsilon}{b-a},\quad\forall x\in[a,b].
+		\]
+		\textcolor{blue}{For any $n\ge N$, }we apply the triangle inequality for integrals to see that
+		\begin{align*}
+			&\quad \textcolor{blue}{\left|\int_a^b f_n(x)\,\mathrm{d}x - \int_a^b f(x)\,\mathrm{d}x\right|} = \left|\int_a^bf_n(x) - f(x)\,\mathrm{d}x\right| \le \int_a^b\left|f_n(x) - f(x)\right| \,\mathrm{d}x \\
+			&\textcolor{blue}{<}\int_a^b\frac{\varepsilon}{b-a}\,\mathrm{d}x = \frac{\varepsilon}{b-a}\int_a^b\,\mathrm{d}x = \textcolor{blue}{\varepsilon}.
+		\end{align*}
+	\end{enumerate}
+\end{proof}

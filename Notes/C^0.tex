@@ -1,0 +1,139 @@
+\section{The space of continuous functions}
+\label{sec:C^0}
+From now on, we will focus our attention to the space of continuous functions. To be specific, we will analyse a metric space whose elements are functions. To fix notation, given a metric space $(X,d)$, we denote the set
+\[
+C(X):=\{\text{continuous functions }f:X\to \R\}.
+\]
+We will endow $C(X)$ with a metric, but our standing assumption throughout the rest of these notes is to take $X$ to be \textbf{compact}. In applications, we will usually be explicit about $X$ as a compact subset of $\R$ or $\R^d$, but we keep it general for now. In this setting, we define the \textit{sup metric}
+\[
+d_\infty(f,g):= \sup_{x\in X}|f(x) - g(x)|,\quad f,g\in C(X).
+\]
+Based on notational preference, we may also refer to this with the \textit{sup norm} which is any of
+\[
+\|f-g\|,\,\|f-g\|_{\infty},\,\text{or }\|f-g\|_{C(X)},
+\]
+all of the above referring to $d_\infty(f,g)$. Let us first confirm that we are working with a valid metric space.
+\begin{prop}[$C(X)$ is a metric space]
+	Let $X$ be a compact metric space. The pair $(C(X),\,d_\infty)$ as defined above is a metric space.
+\end{prop}
+\begin{proof}
+	We need to check that $d_\infty$ satisfies the criteria in~\Cref{defn:metric} of being a metric. First, let us check that it is well-defined as a map from $C(X)\times C(X)$ with values in $[0,+\infty)$. For any $f,g \in C(x)$, the Extreme Value Theorem from~\Cref{thm:EVT} yields that $\sup_{x\in X}|f(x) - g(x)|$ is a real and non-negative number. Hence, $d_\infty :C(X)\times C(X)\to [0,+\infty)$ is well-defined.
+	
+	By definition, we see that $d_\infty(f,g)\ge 0$ for every $f,g\in C(X)$. We have
+	\[
+	d_\infty(f,g) = 0 \iff \sup_{x\in X}|f(x) - g(x)| = 0 \iff f(x) = g(x),\, \forall x \in X \iff f = g.
+	\]
+	This verifies~\ref{m:pos}. The symmetry condition in~\ref{m:sym} is also immediate because
+	\[
+	d_\infty(f,g) = \sup_{x\in X}|f(x) - g(x)| = \sup_{x\in X}|g(x) - f(x)| = d_\infty(g,f).
+	\]
+	As for the triangle inequality in~\ref{m:tri}, for any fixed $f,g,h\in C(X)$ and any $x\in X$, the usual triangle inequality for real numbers gives
+	\[
+	|f(x) - g(x)| \le |f(x) - h(x)| + |h(x) - g(x)|.
+	\]
+	On the right-hand side, we have $|f(x) - h(x)| \le \sup_{x\in X}|f(x) - h(x)|$ and $|h(x) - g(x)| \le \sup_{x\in X}|h(x) - g(x)|$ so we get
+	\[
+	|f(x) - g(x)| \le d_\infty(f,h) + d_\infty (h,g).
+	\]
+	Since this inequality is true for all $x\in X$, in particular, we obtain
+	\[
+	d_\infty(f,g) \le d_\infty(f,h) + d_\infty(h,g).
+	\]
+	We will prove that $C(X)$ enjoys more metric properties. For now, let us comment on the crucial connection with uniform convergence. Suppose $(f_n)_{n\in\N}\subset C(X)$ is a sequence converging to $f \in C(X)$ with respect to the metric $d_\infty$. Let's unpack this definition. According to~\Cref{defn:cvg_metric}, this means that
+	\[
+	\forall \varepsilon>0,\exists N\in\N\text{ s.t. }n\ge N \implies d_\infty(f_n,f)<\varepsilon.
+	\]
+	Based on how we've defined $d_\infty$, we have
+	\begin{align*}
+		d_\infty(f_n,f)<\varepsilon &\iff \sup_{x\in X}|f_n(x) - f(x)|<\varepsilon 	\\
+		&\iff |f_n(x) - f(x)|<\varepsilon,\,\forall x\in X.
+	\end{align*}
+	So convergence in $C(X)$ is the same as uniform convergence in~\Cref{defn:unif_cvg} (c.f.~\Cref{rem:sup_unif_cvg} as well)!
+\end{proof}
+We will conclude this introductory section on $C(X)$ by showing that it is complete.
+\begin{prop}[$C(X)$ is complete]
+	\label{prop:C^0_complete}
+	Let $X$ be a compact metric space. The metric space $(C(X),d_\infty)$ as defined above is complete.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix $(f_n)_{n\in\N}\subset C(X)$ to be a Cauchy sequence.} Our goal is to construct a limit in $C(X)$ for this sequence. For every $x \in X$, we see that the sequence of real numbers $(f_n(x))_{n\in\N}$ is Cauchy. Since $\R$ is complete, $(f_n(x))_{n\in\N}$ is a convergent sequence for every $x\in X$. Since the limit depends on $x\in X$, \textcolor{blue}{we construct $f:X\to \R$} as the pointwise limit by
+	\[
+	f(x) := \lim_{n\to \infty}f_n(x),\quad \forall x \in X.
+	\]
+	\ul{Uniform convergence:} Fix any arbitrary $x\in X$. Owing to the construction above, we see that
+	\begin{align*}
+	|f_n(x) - f(x)| &= \lim_{m\to \infty}|f_n(x) - f_m(x)| \le \limsup_{m\to \infty} |f_n(x) - f_m(x)| \\
+	&\le\limsup_{m\to \infty} \left(\sup_{x\in X}|f_n(x) - f_m(x)|\right) = \limsup_{m\to \infty}\|f_n-f_m\|_\infty.
+	\end{align*}
+	Since $x\in X$ was arbitrary, we obtain
+	\[
+	\|f_n-f\|_\infty \le \limsup_{m\to \infty}\|f_n-f_m\|_\infty.
+	\]
+	By assumption, $(f_n)_{n\in\N}$ is a Cauchy sequence, hence for any $\varepsilon>0$, there exists $N\in \N$ such that $n\ge N$ implies (why?)
+	\[
+	\limsup_{m\to\infty}\|f_n-f_m\|_\infty < \varepsilon.
+	\]
+	This shows (why? Students fill in details) that $f_n$ converges uniformly to $f$ on $X$. According to~\Cref{prop:unif_cvg_cts}, we obtain \textcolor{blue}{$f \in C(X)$.} In particular, from the discussion before this result, we conclude \textcolor{blue}{$f_n$ converges to $f$ in $C(X)$ with respect to $d_\infty$.}
+\end{proof}
+We also demonstrate another proof by looking at
+\[
+\mathcal{B}(X) = \left\{f:X\to \R \, | \, \sup_{x\in X}|f(x)| < +\infty\right\}.
+\]
+\begin{ex}
+The pair $(\mathcal{B}(X),d_\infty)$ where
+\[
+d_\infty(f,g) := \sup_{x\in X}|f(x)-g(x)|,\quad f,g\in \mathcal{B}(X)
+\]
+is a metric space.
+\end{ex}
+More interesting is the following result.
+\begin{prop}
+\label{prop:B_comp}
+$(\mathcal{B}(X),d_\infty)$ is a complete metric space.
+\end{prop}
+\begin{proof}
+Fix $(f_n)_{n\in\N}\subset \mathcal{B}(X)$, a Cauchy sequence of bounded functions. We aim to demonstrate that this sequence converges and we proceed in a few steps.
+\begin{enumerate}
+\item \ul{Candidate for the limit:} For every $x\in X$, the sequence (of real numbers) $(f_n(x))_{n\in\N}$ is Cauchy just like in~\Cref{prop:C^0_complete}. Since $\R$ is complete, we see that each sequence $(f_n(x))_{n\in\N}$ converges to some real number which we label $f(x)$. Equivalently, this defines the pointwise limit $f:X\to\R$ where
+\[
+f(x) = \lim_{n\to\infty} f_n(x).
+\]
+This is our candidate for the limit and the remaining steps of this proof will be dedicated to showing that it is also a bounded function and that it is the uniform limit of $(f_n)_{n\in\N}$.
+\item \ul{$f \in \mathcal{B}(X)$:} Since $(f_n)_{n\in\N}$, for the choice of $\varepsilon = 1>0$, there exists some $N\in\N$ such that $\sup_{x\in X}|f_n(x) - f_m(x)| < 1$ for every $n,m\ge N$. In particular, we see that
+\[
+|f_N(x) - f_m(x)|\le 1,\quad \forall x\in X,\, \forall m \ge N.
+\]
+Since $f(x) = \lim_{m\to \infty}f_m(x)$, we pass to the limit $m\to\infty$ in the above inequality to obtain
+\[
+|f_N(x) - f(x)|\le 1,\quad \forall x\in X.
+\]
+Since $f_N\in \mathcal{B}(X)$, there exists some $M>0$ such that
+\[
+|f_N(x)|\le M,\quad \forall x\in X.
+\]
+Putting the previous two points together with the triangle inequality gives
+\[
+|f(x)| \le |f(x) - f_N(x)| + |f_N(x)| = M+1,\quad \forall x\in X.
+\]
+This shows that $f\in \mathcal{B}(X)$.
+\item \ul{$f_n\to f$ uniformly:} Fix $\varepsilon>0$. Since $(f_n)_{n\in\N}$ is Cauchy, there exists $N\in \N$ such that
+\[
+n\ge N \implies \sup_{x\in X}|f_n(x) - f_N(x)|<\frac{\varepsilon}{2}.
+\]
+Being that $f$ is the pointwise limit of $(f_n)_{n\in\N}$, for any $x\in X$, we see that
+\[
+|f_N(x) - f(x)| = \lim_{m\to\infty}|f_N(x) - f_m(x)| < \frac{\varepsilon}{2},\quad \forall x \in X.
+\]
+Putting the previous two parts together with the triangle inequality, we obtain
+\[
+|f_n(x) - f(x)| \le |f_n(x) - f_N(x)| + |f_N(x) - f(x)| < \varepsilon,\quad \forall x\in X.
+\]
+This demonstrates the uniform convergence $f_n \to f$.
+\end{enumerate}
+\end{proof}
+With~\Cref{prop:B_comp} in hand, we can present a different proof of~\Cref{prop:C^0_complete}.
+\begin{proof}[Alternative proof of~\Cref{prop:C^0_complete}]
+We aim to show that $C(X)$ is a closed subspace of $\mathcal{B}(X)$. Then, \Cref{prop:comp_clos} will allow us to conclude that $C(X)$ is complete. 
+
+Let $(f_n)_{n\in\N} \subset C(X)$ be any sequence such that it converges to $f\in \mathcal{B}(X)$ (valid when $X$ is compact by the Extreme Value Theorem). Since convergence with respect to $d_\infty$ is the same as uniform convergence, we have that $(f_n)_{n\in\N}$ uniformly converges to $f$. Since each $f_n$ is continuous, we can apply~\Cref{prop:unif_cvg_cts} to deduce that $f$ is continuous i.e. $f \in C(X)$. Thus, by~\Cref{lem:closed_lim}, we see that $C(X)$ is closed.
+\end{proof}

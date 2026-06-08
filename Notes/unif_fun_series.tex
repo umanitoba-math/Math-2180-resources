@@ -1,0 +1,110 @@
+\section{Uniform convergence with series of functions}
+\label{sec:unif_fun_series}
+We turn to objects of the form
+\[
+\sum_{n=1}^\infty f_n(x)
+\]
+and we will make sense of this analogously to~\Cref{defn:ptwise} and~\Cref{defn:unif_cvg}.
+\begin{defn}[Pointwise and uniform convergence of series of functions]
+	\label{defn:series_cvg}
+	Let $S$ be a set and $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$ for each $n\in\N$. Let $f:S\to \R$ be a function. We define the \textit{partial sum of the series $\sum f_n$} to be
+	\[
+	s_n(x):= \sum_{j=1}^nf_j(x),\quad x \in S.
+	\]
+	We say that:
+	\begin{itemize}
+		\item \textit{$\sum f_n$ converges pointwise to $f$ on $S$} provided $s_n$ converges pointwise to $f$ on $S$. In this case, we write
+		\[
+		f(x) = \sum_{n=1}^\infty f_n(x),\quad\text{pointwise on }S.
+		\]
+		\item \textit{$\sum f_n$ converges uniformly to $f$ on $S$} provided $s_n$ converges uniformly to $f$ on $S$. In this case, we write
+		\[
+		f(x) = \sum_{n=1}^\infty f_n(x),\quad \text{uniformly on }S.
+		\]
+	\end{itemize}
+\end{defn}
+\begin{thm}[Cauchy criterion for uniform convergence of function series]
+	\label{thm:unif_cauchy_series}
+	Let $S$ be a set and $(f_n)_{n\in\N}$ be a sequence of functions $f_n:S\to \R$ for each $n\in \N$. TFAE:
+	\begin{itemize}
+		\item There exists $f:S\to \R$ such that $\sum f_n$ converges uniformly to $f$ on $S$.
+		\item $\forall \varepsilon>0,\exists N\in\N$ such that
+		\[
+		m\ge n\ge N \implies \left|
+		\sum_{j=n}^mf_j(x)
+		\right|<\varepsilon,\quad \forall x \in S.
+		\]
+	\end{itemize}
+\end{thm}
+\begin{proof}
+	$\implies$: Assuming that $\sum f_n$ converges uniformly to $f$ on $S$, this means that the partial sums $s_n(x) = \sum_{j=1}^nf_j(x)$ converges uniformly to $f$ on $S$. \textcolor{blue}{Fix any $\varepsilon>0$.} Since $s_n\to f$ uniformly, we know that there exists $N_*\in\N$ such that
+	\[
+	n \ge N_* \implies |s_n(x) - f(x)|<\frac{\varepsilon}{2},\quad \forall x \in S.
+	\]
+	\textcolor{blue}{Define $N = N_*+1$ and fix $m\ge n\ge N$.} We certainly have that $m,n-1 \ge N_*$ and so the previous part together with the triangle inequality gives
+	\[
+	\textcolor{blue}{\left|\sum_{j=n}^mf_j(x)\right|} = \left|\sum_{j=1}^mf_j(x) - \sum_{j=1}^{n-1}f_j(x)\right| = |s_m(x) - s_{n-1}(x)| \le |s_m(x) - f(x)| + |s_{n-1}(x) - f(x)| \textcolor{blue}{<}\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon.}
+	\]
+	We used the triangle inequality above.
+	
+	$\impliedby$: We will show that $(s_n)_{n\in\N}$ satisfies the Cauchy criterion for uniform convergence of sequences of functions. \textcolor{blue}{Fix any $\varepsilon>0$}, by assumption, we know that \textcolor{blue}{there exists $N\in \N$} such that
+	\[
+	m\ge n\ge N\implies |s_m(x) - s_{n-1}(x)|<\varepsilon,\quad \forall x \in S.
+	\]
+	In particular, \textcolor{blue}{for any $m,n\ge N$}, let us assume without loss of generality that $m\ge n$ (otherwise swap their labels) and we certainly have $n+1 \ge n \ge N$. Hence, we see that
+	\[
+	\textcolor{blue}{|s_m(x)-s_n(x)|<\varepsilon,\quad \forall x \in S.}
+	\]
+	The text in \textcolor{blue}{blue} shows that $(s_n)_{n\in\N}$ satisfies the Cauchy criterion in~\Cref{thm:unif_cauchy}. Hence, there exists a function $f:S\to \R$ such that $s_n\to f$ uniformly on $S$. According to~\Cref{defn:series_cvg}, this is exactly what it means for $\sum f_n$ to converge to $f$ on $S$.
+\end{proof}
+We will use the following variation of~\Cref{thm:unif_cauchy_series}.
+\begin{ex}
+	\label{ex:unif_abs_series}
+	In the context of~\Cref{thm:unif_cauchy_series}, TFAE:
+	\begin{itemize}
+		\item There exists a function $f:S\to \R$ such that $\sum f_n$ is absolutely convergent and $\sum f_n$ converges uniformly to $f$ on $S$.
+		\item For every $\varepsilon>0$, there exists $N\in\N$ such that
+		\[
+		m\ge n \ge N\implies \sum_{j=n}^m |f_j(x)| < \varepsilon,\quad \forall x\in S.
+		\]
+	\end{itemize}
+\end{ex}
+\begin{thm}[Weierstrass $M$-test]
+	\label{thm:m_test}
+	Let $S$ be a set and $(f_n)_{n\in\N}$ a sequence of functions $f_n:S\to \R$ for each $n\in\N$. Assume that $(M_n)_{n\in\N}\subset [0,+\infty)$ is a sequence satisfying
+	\[
+	\sup_{x\in S}|f_n(x)| \le M_n,\quad \forall n\in\N.
+	\]
+	Moreover, assume that $\sum M_n$ is a convergent series. Then, $\sum f_n$ converges absolutely and uniformly to some function $f:S\to \R$.
+\end{thm}
+\begin{proof}
+	We will use~\Cref{ex:unif_abs_series}. \textcolor{blue}{Fix any $\varepsilon>0$.} Since $\sum M_n$ is a convergent series, the Cauchy criterion for it gives \textcolor{blue}{the existence of some $N\in\N$} such that
+	\[
+	m\ge n \ge N \implies \left|
+	\sum_{j=n}^m M_j
+	\right| = \sum_{j=n}^m M_j <\varepsilon.
+	\]
+	In particular, \textcolor{blue}{for any $m\ge n\ge N$, we have}
+	\[
+	\textcolor{blue}{ \sum_{j=n}^m |f_j(x)|} \le \sum_{j=n}^m M_j \textcolor{blue}{< \varepsilon, \text{ for every }x\in S.}
+	\]
+	The text in \textcolor{blue}{blue} allows us to apply~\Cref{ex:unif_abs_series} and conclude the result.
+\end{proof}
+We return to one of the motivations which was the interchange of derivatives with series. 
+\begin{thm}[Uniformly convergent series of differentiable functions]
+	\label{thm:unif_cvg_series_diff}
+	Let $(a,b)\subset \R$ be an open and bounded interval. Let $(f_n)_{n\in\N}$ be a sequence of functions $f_n:(a,b)\to \R$ satisfying the following assumptions:
+	\begin{enumerate}
+		\item For every $n\in\N$, the function $f_n$ is differentiable on $(a,b)$.
+		\item There exists a point $x_0\in(a,b)$ such that the series $\sum f_n(x_0)$ converges.
+		\item There exists a function $g:(a,b)\to \R$ such that $\sum f_n'$ converges uniformly to $g$ on $(a,b)$.
+	\end{enumerate}
+	Then, we obtain the following:
+	\begin{enumerate}
+		\item There exists a function $f:(a,b)\to \R$ such that $\sum f_n$ converges uniformly to $f$ on $(a,b)$.
+		\item The function $f$ is differentiable on $(a,b)$ and $f' = g$.
+	\end{enumerate}
+\end{thm}
+\begin{proof}
+	This is a simple application of~\Cref{thm:unif_cvg_diff} after unpacking the definitions with the partial sums.
+\end{proof}

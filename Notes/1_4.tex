@@ -1,0 +1,167 @@
+\section{Cauchy sequences and completeness}
+\label{sec:Cauchy}
+You learned from Math 131A about Cauchy sequences on $\R$: $(a_n)_{n\in\N}\subset \R$ is said to be Cauchy iff
+\[
+\forall \varepsilon>0,\exists N\in\N\text{ s.t. }\forall n,m\ge N, \, |a_n-a_m|<\varepsilon.
+\]
+Perhaps you can already see how this easily generalises to metric spaces. Before writing down the formal definition in general metric spaces, let us remind ourselves of some of the intuition behind (real) Cauchy sequences.
+\begin{rem}
+	\begin{itemize}
+		\item Cauchy sequences describe the idea that `eventually, the elements of a Cauchy sequence get arbitrarily close to \textit{each other}.' This is in contrast with convergent sequences where the idea is that `eventually, the elements of a convergent sequence get arbitrarily close to \textit{the limit}.'
+		\item You proved in Math 131A that Cauchy sequences and convergent sequences on $\R$ are the same thing. In practice, if you wanted to show a sequence is convergent but did not have a good guess for what the limit is, it is much easier to try and prove that it is Cauchy.
+		\item However, in general metric spaces it is \textbf{not} true that Cauchy sequences and convergent sequences are the same.
+	\end{itemize}
+\end{rem}
+\begin{defn}[Cauchy]
+\label{defn:Cauchy}
+Let $(X,d)$ be a metric space and $(a_n)_{n\in\N}\subset X$ is a sequence. We say that $(a_n)_{n\in\N}$ is a \textit{Cauchy sequence} iff the following statement is true:
+\[
+\forall \varepsilon>0,\exists N\in\N\text{ such that }\forall n,m\ge N, \, d(a_n,a_m)<\varepsilon.
+\]
+\end{defn}
+\begin{lemma}[Convergent $\implies$ Cauchy]
+	\label{lem:cvg_imp_cauchy}
+Let $(X,d)$ be a metric space and assume that $(a_n)_{n\in\N}\subset X$ is a convergent sequence with limit $a\in X$. Then, $(a_n)_{n\in\N}$ is Cauchy.
+\end{lemma}
+\begin{proof}
+\textcolor{blue}{Fix any $\varepsilon>0$.} Since $(a_n)_{n\in\N}$ is convergent, \textcolor{blue}{we can find $N\in\N$} such that
+\[
+n\ge N \implies d(a_n,a)<\frac{\varepsilon}{2}.
+\]
+In particular, using~\ref{m:tri}, \textcolor{blue}{for any $n,m\ge N$, we have}
+\[
+\textcolor{blue}{d(a_n,a_m)} \le d(a_n,a) + d(a_m,a) \textcolor{blue}{<}\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon}.
+\]
+The text in \textcolor{blue}{blue} is precisely what it means for $(a_n)_{n\in\N}$ to be Cauchy.
+\end{proof}
+As remarked earlier in this section, for general metric spaces, it is \textbf{not} true that Cauchy sequences and convergent sequences are the same. This means that the converse to~\Cref{lem:cvg_imp_cauchy} does not hold, in general.
+\begin{eg}[The rationals]
+Let us consider the rationals $\Q$ as a metric space with the usual Euclidean metric $d(x,y) = |x-y|$. Let us consider the following sequence
+\[
+3,\, 3.1, \, 3.14, \, 3.141, \, 3.1415, \, 3.14159,\, \dots
+\]
+i.e. finite decimal approximations of $\pi\notin \Q$. This is a Cauchy sequence, however it is not a convergent sequence.
+\end{eg}
+The metric spaces where Cauchy sequences are convergent sequences deserve special terminology.
+\begin{defn}[Complete metric spaces]
+\label{defn:complete}
+We say that a metric space $(X,d)$ is \textit{complete} iff every Cauchy sequence of $(X,d)$ is, in fact, also convergent in $(X,d)$.
+\end{defn}
+We will revisit in detail the importance of complete metric spaces particularly when we deal with metric spaces of \textit{functions}. For now, let us reformulate the previous example with this new term.
+\begin{eg}
+From what you learned in Math 131A, you saw that $\R$ is a complete metric space. From the previous example, we see that $\Q$ is not complete.
+\end{eg}
+We saw in~\Cref{sec:rel_top} that the notions of open and closed sets can change depending on the ambient space. Complete metric spaces, however, will always remain closed no matter what ambient space they are viewed in. This is the content of the following result.
+\begin{prop}[Completeness and closedness]
+\label{prop:comp_clos}
+Let $(X,d)$ be a metric space and let $Y\subset X$.
+\begin{enumerate}
+	\item \label{comp_clos_1} Assume that $(Y,d|_{Y\times Y})$ is complete. Then, $Y$ is closed in $X$.
+	\item \label{comp_clos_2} Assume that $(X,d)$ is complete and that $Y$ is closed in $X$. Then, $(Y,d|_{Y\times Y})$ is complete.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+	\item To prove this, we will use~\Cref{lem:closed_lim}. \textcolor{blue}{Fix $(x_n)_{n\in\N}\subset Y$ such that it converges to a limit $x\in X$.} For any $\varepsilon>0$, since $x_n\to x$, we know that there exists some $N\in\N$ such that
+	\[
+	n\ge N \implies d(x_n,x)<\frac{\varepsilon}{2}.
+	\]
+	In particular, using~\ref{m:tri} and~\ref{m:sym}, we have
+	\[
+	n,m\ge N \implies d|_{Y\times Y}(x_n,x_m) = d(x_n,x_m) \le d(x_n,x) + d(x,x_m) < \varepsilon.
+	\]
+	Thus, we have shown that $(x_n)_{n\in\N}\subset Y$ is a Cauchy sequence. Since we assume that $(Y,d|_{Y\times Y})$ is complete, the sequence must also be convergent to some limit $y\in Y\subset X$. Limits are unique and so \textcolor{blue}{$x= y\in Y$}. By~\Cref{lem:closed_lim}, the text in \textcolor{blue}{blue} asserts that $Y$ is closed in $X$.
+	\item \textcolor{blue}{Fix $(y_n)_{n\in\N}\subset Y$ to be a Cauchy sequence}. Since $Y\subset X$, we can view $(y_n)_{n\in\N}$ as a Cauchy sequence in $X$. By assumption, $(X,d)$ is complete, so \textcolor{blue}{$(y_n)_{n\in\N}$ converges} to some limit $y\in X$. Again, by assumption, since $Y$ is closed in $X$, \Cref{lem:closed_lim} tells us that \textcolor{blue}{$y\in Y$}. The text in \textcolor{blue}{blue} give precisely that $(Y,d|_{Y\times Y})$ is complete.
+\end{enumerate}
+\end{proof}
+\subsection{Subsequences}
+\label{sec:subseq}
+Another aspect of importance is that of subsequences which we review.
+\begin{defn}[Subsequences]
+Let $(X,d)$ be a metric space and suppose $(x_n)_{n\in \N}\subset X$ is a sequence. Suppose that $n: j\in \N \mapsto n_j \in \N$ is strictly increasing i.e.
+\[
+1 \le n_1 < n_2 < n_3 < \dots
+\]
+We define $(x_{n_j})_{j\in\N}$ to be a \textit{subsequence} of the original sequence $(x_n)_{n\in\N}$.
+\end{defn}
+So subsequences are built by taking an infinite subset of the original sequence and keeping the same order.
+\begin{eg}
+\label{eg:seq_alt}
+On $\R$, consider $a_n = (-1)^n$ so that it reads
+\[
+1,-1,1,-1,1,-1,\dots
+\]
+By taking $n_j = 2j$, we have the subsequence
+\[
+a_{n_j} = 1,\quad \forall j\in\N.
+\]
+Alternatively, we could take $n_j = 2j+1$ to get the subsequence
+\[
+a_{n_j} = -1,\quad \forall j\in\N.
+\]
+\end{eg}
+\begin{eg}
+Consider the sequence defined by $a_n := \left(\frac{1}{n},\frac{1}{n^2}\right)\in \R^2$. Then, by taking $n_j = j^2$, one obtains a subsequence
+\[
+a_{n_j} = \left(\frac{1}{j^2},\, \frac{1}{j^4}\right),\quad j\in \N.
+\]
+\end{eg}
+The following result says that all subsequences of a convergent sequence are also convergent (and to the same limit).
+\begin{lemma}
+\label{lem:cvg_imp_sub_cvg}
+Let $(X,d)$ be a metric space and suppose $(x_n)_{n\in\N}\subset X$ is a convergent sequence with limit $x\in X$. Then, every subsequence of $(x_n)_{n\in\N}$ also converges to $x\in X$.
+\end{lemma}
+\begin{proof}
+This is an exercise. It is an easy generalisation of what you learned in the case $X = \R$ from Math 131A.
+\end{proof}
+On the other hand, it is entirely possible for a sequence to not be convergent yet it might have multiple subsequences which are convergent (to different limits too!). We already saw an example of this in~\Cref{eg:seq_alt}. In order to deal with subsequences and possibly multiple limits therein, we define a familiar term.
+\begin{defn}[(Subsequential) limit point]
+\label{defn:subseq_lim}
+Let $(X,d)$ be a metric space and suppose $(x_n)_{n\in\N}\subset X$ is a sequence with $x\in X$. We say that $x$ is a \textit{(subsequential) limit point of $(x_n)_{n\in\N}$} iff the following holds:
+\[
+\forall \varepsilon>0,\forall N\in\N, \exists n\ge N\text{ such that }d(x_n,x)<\varepsilon.
+\]
+\end{defn}
+\begin{rem}
+\begin{itemize}
+	\item Notice the distinction between this definition and that of~\Cref{defn:cvg_metric} and~\Cref{defn:Cauchy}. The quantifier around `$N$' is `for all' instead of `there exists.'
+	\item Returning to~\Cref{eg:seq_alt}, the sequence $a_n = (-1)^n$ has two (subsequential) limit points, namely 1 and -1.
+	\item The notion of (subsequential) limit points in~\Cref{defn:subseq_lim} is deliberately written to remind us of limit points from~\Cref{defn:int_lim_pts}. Momentarily we will connect these two.
+\end{itemize}
+\end{rem}
+\begin{prop}
+\label{prop:subseq_lim}
+Let $(X,d)$ be a metric space and suppose $(x_n)_{n\in\N}\subset X$ is a sequence with $x\in X$. TFAE:
+\begin{enumerate}
+	\item \label{subseq_lim_1} $x$ is a (subsequential) limit point of $(x_n)_{n\in\N}$ in the sense of~\Cref{defn:subseq_lim}.
+	\item \label{subseq_lim_2} $x$ is a limit point of $\{x_n\}_{n\in\N}$ in the sense of~\Cref{defn:int_lim_pts}.
+	\item \label{subseq_lim_3} There exists a subsequence $(x_{n_j})_{j\in\N}\subset (x_n)_{n\in\N}$ such that $x_{n_j}\overset{j\to \infty}{\to}x$.
+\end{enumerate}
+\end{prop}
+Owing to the equivalence between~\ref{subseq_lim_1} and~\ref{subseq_lim_2}, we will just say `limit point' from now on.
+\begin{proof}
+Notice (convince yourself as an exercise) that~\Cref{lem:lim_pts} immediately gives us the equivalence~\ref{subseq_lim_2} $\iff$ \ref{subseq_lim_3}. We therefore only need to show~\ref{subseq_lim_1} $\iff$ \ref{subseq_lim_3}.
+
+\ref{subseq_lim_1} $\implies$ \ref{subseq_lim_3}: By assumption that $x$ is a (subsequential) limit point for $(x_n)_{n\in\N}$, we can construct the following.
+\begin{enumerate}
+	\item Set $\varepsilon = 1$ and $N = 1\in \N$. There must exist some \textcolor{blue}{$n_1 \ge N = 1$} such that $d(x_{n_1},x)<1$.
+	\item Set $\varepsilon = \frac{1}{2}$ and $N = n_1 + 1 \in \N$. There must exist some $n_2 \ge N = n_1+1 > n_1$ such that $d(x_{n_2},x)<\frac{1}{2}$.
+	\item Set $\varepsilon = \frac{1}{3}$ and $N = n_2 + 1\in\N$. There must exist some $n_3 \ge N = n_2 + 1 > n_2$ such that $d(x_{n_3},x)<\frac{1}{3}$.
+	\item Repeat this process so that, at step $j\in\N$, with $\varepsilon = \frac{1}{j}$, we can find \textcolor{blue}{$n_j > n_{j-1}$} such that $d(x_{n_j},x)<\frac{1}{j}$.
+\end{enumerate}
+Of course, we see that $d(x_{n_j},x)\overset{j\to \infty}{\to} 0$ which, according to~\Cref{ex:cvg_metric}, yields \textcolor{blue}{$x_{n_j}\overset{j\to \infty}{\to} x$.} The text in \textcolor{blue}{blue} outline precisely the construction of the desired subsequence.
+
+\ref{subseq_lim_3} $\implies$ \ref{subseq_lim_1}: \textcolor{blue}{Fix $\varepsilon>0$ and $N\in\N$.} By assumption, we know that there exists some $J\in\N$ such that
+\[
+j\ge J \implies d(x_{n_j},x)<\varepsilon.
+\]
+In particular, let us define $K = \max(J,N)$ and consider $n:=n_K$. Certainly, since $K \ge J$, we have \textcolor{blue}{$d(x_n,x)<\varepsilon$.} Moreover, since $n:j\in \N \mapsto n_j\in\N$ is strictly increasing, we have $n_K \ge K \ge N$. Hence, \textcolor{blue}{$n\ge N$.} The text in \textcolor{blue}{blue} is precisely the criteria in~\Cref{defn:subseq_lim}.
+\end{proof}
+We end this section with a result which connects the ideas of Cauchy sequences and subsequences.
+\begin{lemma}
+\label{lem:cauchy_sub_cvg}
+Let $(X,d)$ be a metric space and $(x_n)_{n\in\N}\subset X$ is a Cauchy sequence. Assume that there is some subsequence $(x_{n_j})_{j\in\N}\subset (x_n)_{n\in\N}$ which is convergent to a limit $x\in X$. Then, the original sequence $(x_n)_{n\in\N}$ converges to $x$.
+\end{lemma}
+\begin{proof}
+This is an exercise. It is an easy generalisation of what you learned in the case $X = \R$ from Math 131A.
+\end{proof}

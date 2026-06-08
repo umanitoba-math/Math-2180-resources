@@ -1,0 +1,125 @@
+\section{Relative topology}
+\label{sec:rel_top}
+\textcolor{ForestGreen}{Skip on first reading.}
+When we introduced open sets in~\Cref{defn:open_closed}, the concept depended on the choice of metric (since the definition involves balls which, as we saw in~\Cref{eg:ball_metric}, changes depending on metric). For instance, on $\R$, the singleton $\{1\}$ is not open with respect to the Euclidean metric $d(x,y) = |x-y|$. However, $\{1\}$ is open with respect to the discrete metric (exercise).
+
+Beyond just the choice of metric, the choice of \textit{ambient space} $X$ comes into play. Let us begin with a motivating example.
+\begin{eg}[axis of $\R^2$ isomorphic to $\R$]
+Let us consider the plane $\R^2$ with the Euclidean metric $d_2$. Within the plane, we define the $x$-axis as $X:= \{(x,0)\, :\, x\in \R\}\subset \R^2$. On the one hand, we can view $X$ as `essentially' $\R$ (it is just a 1-dimensional axis). On the other hand, we can also view it as a subspace of $\R^2$ and we will shortly return to this.
+
+Let us consider the restriction of $d_2$ onto $X$. To recall notation, $\left.d_2\right|_{X\times X}$ means the restriction of $d_2$ to $X\times X$ i.e.
+\[
+\left. d_2\right|_{X\times X}: (a,b) \in X\times X \mapsto d_2(a,b)\in [0,\infty).
+\]
+If $a=(a_1,0) \in X$ and $b = (b_1,0) \in X$, then the restriction is nothing other than
+\[
+\left.d_2\right|_{X\times X}(a,b) = |a_1-b_1|.
+\]
+This restriction has given us two metric spaces: we have $(\R^2,d_2)$ and $(X,\left.d_2\right|_{X\times X})$ (Exercise: verify that this latter object is indeed a metric space).
+Let us now consider another subset given by
+\[
+E = \{(x,0) \in \R^2\, : \, -1 < x < 1\}.
+\]
+Notice that $E \subset X$ and $E \subset \R^2$. When we view $E$ as a subspace of $\R^2$, it is \textbf{not} open. For instance, the origin $(0,0) \in E$, however any ball $B_{(\R^2,d_2)}((0,0),r)$ for $r>0$ will always contain the point $(0,\frac{r}{2})\notin E$. Although $(0,0)\in E$, it fails to be an interior point \textit{with respect to to $d_2$}.
+
+On the other hand, when we view $E$ as a subspace of $X$, it is open \textit{with respect to $\left.d_2\right|_{X\times X}$}. For example, $(0,0)\in E$ is indeed an interior point with respect to $\left.d_2\right|_{X\times X}$. We can take, for example $r = \frac{1}{2}$ and so
+\begin{align*}
+B_{(X,\left.d_2\right|_{X\times X})}\left((0,0),\frac{1}{2}\right) &= \left\{
+x=(x_1,0)\in X \, : \, \left.d_2\right|_{X\times X}(x,(0,0))<\frac{1}{2}
+\right\} = \left\{
+(x_1,0)\in X \, : \, |x_1| < \frac{1}{2}
+\right\} 	\\
+&= \left\{
+(x_1,0) \in \R^2 \, : \, -\frac{1}{2}< x_1 < \frac{1}{2}
+\right\} \subset E.
+\end{align*}
+\end{eg}
+So changing the ambient space can change the open / closed property of a set.
+\begin{eg}[Subspaces of $\R$]
+Consider $\R$ with the Euclidean metric $d_2$ and define $X := (-1,1)$. By restricting $d_2$ to $X\times X$, we now have two metric spaces $(\R,d_2)$ and $(X, \left.d_2\right|_{X\times X})$. Let us consider the following set
+\[
+E:= [0,1).
+\]
+Similar to the example after~\Cref{defn:open_closed}, we see that $E$ is neither open nor closed \textit{with respect to $(\R,d_2)$}. In particular, 1 is a limit point of $E$ (exercise) but $1 \notin E$ and so (c.f.~\Cref{lem:closed_lim}) $E$ is not closed.
+
+On the other hand, with respect to $(X,\left.d_2\right|_{X\times X})$, 1 does not even belong to $X$, so 1 is not a limit point of $E$. With respect to $(X,\left.d_2\right|_{X\times X})$, the set $E$ contains all its limit points.
+\end{eg}
+Let us formalise this phenomena in general.
+\begin{defn}[Subspace / Relative topology]
+\label{defn:rel_top}
+Let $(X,d)$ be a metric space and consider subsets $E \subset Y \subset X$. By restricting $d$ to $Y\times Y$, we view $(Y,d|_{Y\times Y})$ as a metric space (distinct from $(X,d)$). We say that $E$ is \textit{relatively open / closed with respect to $Y$} iff $E$ is open / closed in the metric subspace $(Y,d|_{Y\times Y})$.
+\end{defn}
+To get a better understanding of relative open-ness, we start off with describing the relation between open balls.
+\begin{lemma}[Relatively open balls]
+\label{lem:rel_ball}
+Let $(X,d)$ be a (non-empty) metric space with a (non-empty) subset $Y\subset X$ and let $y \in Y$ with $r>0$. We have
+\[
+B_{(Y,d|_{Y\times Y})}(y,r) = B_{(X,d)}(y,r)\cap Y.
+\]
+\end{lemma}
+$B_{(Y,d|_{Y\times Y})}(y,r)$ is open in $Y$ and $B_{(X,d)}(y,r)$ is open in $X$. The content of~\Cref{lem:rel_ball} is that the former can (and should) be viewed as the latter intersected with $Y$.
+\begin{proof}
+\begin{align*}
+x \in B_{(Y,d|_{Y\times Y})}(y,r) &\iff x\in \left\{
+z \in Y \, : \, d|_{Y\times Y}(z,y)<r
+\right\} \iff x\in \left\{
+z \in Y \, : \, d(z,y)<r
+\right\} 	\\
+&\iff x \in Y \text{ and }d(x,y)<r 	\iff x \in Y\text{ and }x \in B_{(X,d)}(y,r) 	\\
+&\iff x \in B_{(X,d)}(y,r) \cap Y.
+\end{align*}
+\end{proof}
+The previous lemma will be used and generalised in the following result. Essentially, the role of the balls in~\Cref{lem:rel_ball} will be replaced by open sets while keeping track of what is meant by `open'.
+\begin{prop}[Relatively open / closed sets]
+\label{prop:rel_top}
+Let $(X,d)$ be a metric space and consider subsets $E\subset Y \subset X$. Then, we have the following.
+\begin{enumerate}
+	\item \label{rel_top_open} $E$ is relatively open with respect to $Y$ iff there exists some $V \subset X$ which is open in $X$ and $E = V \cap Y$.
+	\item \label{rel_top_closed} $E$ is relatively closed with respect to $Y$ iff there exists some $K\subset X$ which is closed in $X$ and $E = K \cap Y$.
+\end{enumerate}
+\begin{proof}
+	We will only prove the equivalence in \ref{rel_top_open} and leave the proof of \ref{rel_top_closed} as an exercise.
+	
+	$\implies$: We assume that $E$ is relative open with respect to $Y$ and the goal is to construct some open $V \subset X$ such that $E = V \cap Y$. By definition, for every $x\in E$, we can find a radius $r_x>0$ (the radius depends on $x$ and we emphasise this dependence by writing $r_x$) such that $B_{(Y,d|_{Y\times Y})}(x,r_x) \subset E$. \textcolor{blue}{We construct the following set
+	\[
+	V := \bigcup_{x\in E} B_{(X,d)}(x,r_x).
+	\]
+	} Of course, we see that \textcolor{blue}{$V \subset X$}. Moreover, by~\ref{prop_top_7} in~\Cref{prop:defn_top}, as $V$ is the union of balls (which are open), we see that \textcolor{blue}{$V$ is open.} It remains to show that $E = V \cap Y$.
+	
+	Fix any $x\in E$. Since $E\subset Y$, we immediately obtain $x\in Y$. Moreover, since $x \in B_{(X,d)}(x,r_x)$, we also have $x\in V$. Hence, \textcolor{blue}{$E\subset V\cap Y$}.
+	
+	For the other containment, let us fix any $y \in V \cap Y$. Since $y \in V$, there must exist some $x\in E$ such that $y\in B_{(X,d)}(x,r_x)$. Moreover, since $y \in Y$ as well, we get that $y \in B_{(Y,d|_{Y\times Y})}(x,r_x)$. In the first paragraph, we saw that $B_{(Y,d|_{Y\times Y})}(x,r_x) \subset E$ and so $y \in E$. Hence, \textcolor{blue}{$V\cap Y \subset E$}. The text in \textcolor{blue}{blue} is precisely what was desired to prove.
+	
+	$\impliedby$: We assume that there is some open $V\subset X$ for which $E = V\cap Y$ and we wish to show that $E$ is relatively open with respect to $Y$. \textcolor{blue}{Fix any $x \in E$.} By assumption, we know that $x \in V$ (which is open in $X$) so \textcolor{blue}{we can find a radius $r>0$} such that $B_{(X,d)}(x,r)\subset V$. By intersecting both sides with $Y$, this containment implies
+	\[
+	B_{(X,d)}(x,r)\cap Y \subset V \cap Y = E.
+	\]
+	On the other hand, by~\Cref{lem:rel_ball} we have
+	\[
+	B_{(X,d)}(x,r)\cap Y = B_{(Y,d|_{Y\times Y})}(x,r).
+	\]
+	Putting the previous equations together gives \textcolor{blue}{$B_{(Y,d|_{Y\times Y})}(x,r) \subset E$.} According to~\Cref{defn:rel_top}, the text in \textcolor{blue}{blue} is precisely what it means for $E$ to be relatively open with respect to $Y$.
+\end{proof}
+\end{prop}
+The pathology described in the first example of this section can be ruled out in the following case.
+\begin{prop}
+\label{prop:triple_rel}
+Let $(X,d)$ be a metric space and consider subsets $E\subset Y \subset X$. We have the following.
+\begin{enumerate}
+\item \label{triple_rel_open} If $Y$ is open (with respect to $X$), then we have the equivalence:
+\[
+E\text{ is (relatively) open in }Y \iff E\text{ is open in }X.
+\]
+\item \label{triple_rel_closed} If $Y$ is closed (with respect to $X$), then we have the following equivalence:
+\[
+E\text{ is (relatively) closed in }Y \iff E\text{ is closed in }X.
+\]
+\end{enumerate}
+\end{prop}
+\begin{proof}
+We only prove~\Cref{triple_rel_open} as the other case is very similar and also uses~\Cref{prop:rel_top} (replace all instances of the word `open' with `closed' below). 
+
+$\implies$: If $E$ is (relatively) open in $Y$, then~\Cref{prop:rel_top} guarantees that $E = U\cap Y$ for some open $U\subset X$. Since both $Y,U$ are open in $X$, the finite intersection $E = U \cap Y$ is also open in $X$.
+
+$\impliedby$: If $E$ is open in $X$, then since $E\subset Y$ we can write $E = E \cap Y$. In other words, we have expressed $E$ as the intersection between $Y$ and an open subset of $X$. Again by~\Cref{prop:rel_top}, we deduce that $E$ is (relatively) open in $Y$.
+\end{proof}

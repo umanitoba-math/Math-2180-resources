@@ -1,0 +1,60 @@
+\section{Continuous functions on compact spaces}
+\label{sec:cpct_cts}
+In this (short) section, we prove some results for continuous functions on compact metric spaces.
+\begin{prop}[Continuous image of compact sets is compact]
+	\label{prop:cts_image_cpct}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces with $f:X\to Y$ continuous. If $K\subset X$ is compact, then the image $f(K)$ is compact.
+\end{prop}
+\begin{rem}
+	\begin{itemize}
+		\item Compare~\Cref{prop:cts_image_cpct} with~\Cref{ex:cts_im}.
+		\item The proof of~\Cref{prop:cts_image_cpct} below is deliberately written without explicit reference to any metrics.
+	\end{itemize}
+\end{rem}
+\begin{proof}[Proof of~\Cref{prop:cts_image_cpct}]
+	We will use the characterisation of continuous functions in~\Cref{prop:cts_pre_open} for this proof. \textcolor{blue}{Let $\{V_\alpha\}_{\alpha\in A}$ be an open cover of $f(K)$.} We have
+	\[
+	f(K) \subset \bigcup_{\alpha \in A}V_\alpha \iff K \subset f^{-1}\left(\bigcup_{\alpha \in A}V_\alpha\right) \iff K \subset \bigcup_{\alpha \in A}f^{-1}(V_\alpha).
+	\]
+	According to~\Cref{prop:cts_pre_open}, since each $V_\alpha$ is open, we have that every $f^{-1}(V_\alpha)$ is also open. We see that $\{f^{-1}(V_\alpha)\}_{\alpha \in A}$ is therefore an open cover of $K$. Since $K$ is compact, \textcolor{blue}{there must exist a finite subset $F\subset A$} such that $\{f^{-1}(V_\alpha)\}_{\alpha \in F}$ covers $K$. Following the same equivalences above, we obtain
+	\[
+	K \subset \bigcup_{\alpha \in F}f^{-1}(V_\alpha) \iff K \subset f^{-1}\left(\bigcup_{\alpha \in F}V_\alpha\right) \iff \textcolor{blue}{f(K) \subset \bigcup_{\alpha \in F}V_\alpha}.
+	\]
+	The third inclusion demonstrates that \textcolor{blue}{$\{V_\alpha\}_{\alpha \in F}$ is an open over of $f(K)$.}
+\end{proof}
+An application of~\Cref{prop:cts_image_cpct} is the Extreme Value Theorem.
+\begin{thm}[Extreme Value Theorem]
+	\label{thm:EVT}
+	Let $(X,d)$ be a non-empty compact metric space and $f:X\to \R$ be continuous. Then, there exist (possibly the same) $x_m,x_M\in X$ such that
+	\[
+	f(x_m)= \min_{x\in X}f(x)\quad\text{and }f(x_M)=\max_{x\in X}f(x).
+	\]
+\end{thm}
+\begin{proof}
+	According to~\Cref{prop:cts_image_cpct}, we know that $f(X)$ is a non-empty compact subset of $\R$. By~\Cref{thm:hb_real} and~\Cref{thm:cpct_equiv}, $f(X)$ is also a closed and bounded subset of $\R$. Finally, \Cref{ex:r_closed_bdd} completes the proof.
+\end{proof}
+\begin{prop}
+	\label{prop:cpct+cts_imp_unif}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be two metric spaces and $f:X\to Y$ a function. Assume that $X$ is non-empty and compact and $f$ is continuous. Then, $f$ is uniformly continuous.
+\end{prop}
+\begin{rem}
+	Compare~\Cref{prop:cpct+cts_imp_unif} with~\Cref{ex:cts_counter} and~\Cref{lem:cty_hierarchy}.
+\end{rem}
+\begin{proof}[Proof of~\Cref{prop:cpct+cts_imp_unif}]
+	\textcolor{blue}{Fix any $\varepsilon>0$.} Since $f$ is continuous, we know that, for every $a\in X$, there exists $\delta_a>0$ (emphasis on the dependence of $\delta$ with respect to $a$) such that 
+	\[
+	d_X(x,a) < \delta_a \implies d_Y(f(x),f(a))<\frac{\varepsilon}{2}.
+	\]
+	The collection of balls $\{B_{\frac{\delta_a}{2}}(a)\}_{a\in X}$ forms an open cover of $X$. By assumption that $X$ is compact, there exists $N\in\N$ and finitely many $\{a_i\}_{i=1}^N \subset X$ such that
+	\[
+	X = \bigcup_{i=1}^N B_{\frac{\delta_{a_i}}{2}}(a_i).
+	\]
+	\textcolor{blue}{Define $\delta := \frac{1}{2}\min_{i=1,\dots, N}\delta_{a_i}>0$. Fix any $x_1,x_2\in X$ such that $d_X(x_1,x_2)<\delta$.} There is some index $j=1,\dots, N$ such that $x_1 \in B_{\frac{\delta_{a_j}}{2}}(a_j)$. Moreover, the triangle inequality gives
+	\[
+	d_X(x_2,a_j)\le d_X(x_2,x_1) + d_X(x_1,a_j) < \delta + \frac{\delta_{a_j}}{2} \le \frac{\delta_{a_j}}{2} + \frac{\delta_{a_j}}{2} = \delta_{a_j}.
+	\]
+	Hence, we have $x_2 \in B_{\delta_{a_j}}(a_j)$. Using the triangle inequality again, we have
+	\[
+	\textcolor{blue}{d_Y(f(x_1),f(x_2))}\le d_Y(f(x_1),f(a_j)) + d_Y(f(a_j),f(x_2)) \textcolor{blue}{<}\frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon.}
+	\]
+\end{proof}

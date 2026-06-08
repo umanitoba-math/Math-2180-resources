@@ -1,0 +1,265 @@
+\documentclass[12pt]{book}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{refcheck}
+\usepackage{refcount}
+\usepackage{soul}
+\usepackage{subfiles}
+
+\allowdisplaybreaks
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^d}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{ax}{Axiom}
+\newtheorem{cor}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}[section]
+\theoremstyle{definition}
+\newtheorem{eg}{Example}[section]
+\newtheorem{ex}{Exercise}[section]
+\newtheorem{defn}{Definition}[section]
+\newtheorem{q}{Question}[section]
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+
+\title{Math 2180 -- Real Analysis 1 notes}
+\author{Jeremy Wu}
+\date{\today}
+\doublespacing
+
+\begin{document}
+	\maketitle
+	
+	\textcolor{blue}{Introduction to metric spaces including connectedness, compactness and continuity; topics in infinite series of numbers, and sequences and series of functions. - U of M}
+	To do:
+	\begin{itemize}
+		\item Write down product of complete / compact is complete / compact.
+		\item Function spaces -- completeness of $C(X)$.
+	\end{itemize}
+	
+	\tableofcontents
+	
+	\pagestyle{fancy}
+	\lhead{Math 2180 Lecture notes}
+	\section{Introduction and motivation}
+	\label{sec:intro}
+	These lecture notes cover the Math 2180 -- Real Analysis 1 course at the University of Manitoba. In particular, they will hopefully introduce some of the basic concepts of Analysis. The first part of this course covering abstract metric spaces and topology will follow selected sections from Wilson A. Sutherland's `Introduction to Metric and Topological Spaces.'
+	
+	My personal bias leans towards differential equations, thus these notes emphasise completeness (\Cref{sec:Cauchy}) and compactness (\Cref{sec:cpct_met_spaces}) \textcolor{blue}{and function spaces}. Connectedness (\Cref{sec:connected}) is relatively underappreciated here (my apologies to algebraic topology).
+	
+	To give a brief motivation of what these notes cover and why, I will begin by assuming that you, the reader, have already taken a course equivalent to Math 2080 -- Introduction to Analysis. There you learned (among other things) the rigorous meaning of the following statements:
+	\begin{enumerate}
+		\item A sequence of \textit{real numbers} $(a_n)_{n\in\N}\subset \R$ converges to $a\in\R$ as $n\to \infty$.
+		\item A series of, again, \textit{real numbers} $\sum_{j=1}^na_j$ converges to $\sum_{j=1}^\infty a_j\in\R$.
+	\end{enumerate}
+	In the huge universe of the mathematical sciences, we don't always work with just real numbers. We deal with vectors, matrices, functions, \dots This course is meant to generalise the above items to more than just real numbers. For example, from your probability / statistics courses, you may have encountered (a version of) the \textbf{law of large numbers}. It says the following: If $X_1,X_2,\dots$ are independently and identically distributed random variables with $\mathbb{E}[X_1] = \mathbb{E}[X_2]=\dots = \mu$, then the sample average given by
+	\[
+	\bar{X}_n = \frac{1}{n}\sum_{j=1}^nX_j
+	\]
+	`converges' as $n\to \infty$ to the mean: $\bar{X}_n \to \mu$ as $n\to \infty$. Here, I have written `converges' with quotation marks because this notion of convergence is \textit{not} the same as the notion of convergence from Math 2080. Moreover, depending on which assumptions are made, the meaning of convergence in the above statement is different:
+	\begin{itemize}
+		\item For the \href{https://en.wikipedia.org/wiki/Law_of_large_numbers#Weak_law}{\textit{weak} law of large numbers}, the sample mean converges \textit{in probability}.
+		\item For the \href{https://en.wikipedia.org/wiki/Law_of_large_numbers#Strong_law}{\textit{strong} law of large numbers}, the sample mean converges \textit{almost surely}.
+	\end{itemize}
+	The point that I want to emphasise here is that the above example with the law of large numbers uses different notions of convergence for sequences of \textit{random variables}. The \href{https://en.wikipedia.org/wiki/Law_of_large_numbers#Differences_between_the_weak_law_and_the_strong_law}{Wikipedia page} for the law of large numbers explains the difference between the weak and strong versions.
+	
+	Concerning the convergence of series, you have definitely studied \textbf{Taylor series} and you may have learned something about \textbf{Fourier series}. Both of these ideas have the same framework: You have a function $f(x)$ and the goal is to represent this function by a sequence of functions $f_n(x)$ in the following way.
+	\begin{equation}
+		\label{eq:intro_series_function}
+	f(x) = \sum_{n=0}^\infty f_n(x).
+	\end{equation}
+	For example, if $f:[-\pi,\pi]\to \R$, then
+	\begin{itemize}
+		\item the Maclaurin series (Taylor series around the origin) representation takes the form
+		\[
+		f_n(x) = \frac{f^{(n)}(0)}{n!}x^n.
+		\]
+		\item The Fourier series representation takes the form
+		\[
+		f_n(x) = a_n \cos (nx) + b_n \sin (nx)
+		\]
+		where
+		\[
+		a_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x) \cos nx \,\mathrm{d}x\text{ and }b_n = \frac{1}{\pi}\int_{-\pi}^\pi f(x) \sin nx\,\mathrm{d}x.
+		\]
+	\end{itemize}
+	Returning to~\eqref{eq:intro_series_function}, a fundamental question is to understand what is meant by
+	\[
+	f(x) = \lim_{n\to \infty}\sum_{j=0}^nf_j(x)?
+	\]
+	One of the convenient (but not completely obvious nor rigorous!) things about~\eqref{eq:intro_series_function} is that we may be tempted to perform a computation like
+	\[
+	\frac{df}{dx} = \frac{d}{dx}\left(\sum_{n=0}^\infty f_n(x)\right) \overset{!}{=}\sum_{n=0}^\infty \frac{df_n}{dx}.
+	\]
+	This is very handy but is not always true! The possible failure or legitimacy of the above operation is sensitive to the notion of \textit{convergence} of the series~\eqref{eq:intro_series_function}.
+	
+	As we will see in this course, it is important to understand the precise notion of convergence. To recap: in Math 2080, you learned what it meant for a sequence / series of \textit{real numbers} to converge. This course is meant to generalise, from those principles, what it means for a sequence / series of \textit{mathematical objects} (real numbers, vectors, matrices, functions, random variables, \dots) to converge. In analogy to the previous two points summarising Math 2080, we aim to answer the following questions in this course.
+	\begin{enumerate}
+		\item Let $(a_n)_{n\in\N}$ and $a$ be mathematical objects belonging to a set $X$ (of real numbers, or of functions, or \dots). What does it mean for $a_n \to a$ as $n\to \infty$ and what is the role of $X$ in this definition?
+		\item Let $(f_n)_{n\in\N}$ and $f$ be real-valued functions (but their inputs may belong in some abstract set $X$). What does it mean for $\sum_{j=1}^nf_j\to f$ as $n\to \infty$?
+	\end{enumerate}
+	\begin{ex}[Failure of convergence of Taylor Series]
+	Consider the function
+	\[
+	f(x) = \left\{
+	\begin{array}{cl}
+		0,	&\text{if }x\le 0 	\\
+		e^{-\frac{1}{x}},	&\text{if }x>0
+	\end{array}
+	\right..
+	\]
+	You may use the following result (it is also a good exercise to prove it!):
+	\begin{equation}
+		\label{eq:intro_seq_exp}
+		\lim_{x\to \infty} x^p e^{-x} = 0,\quad \forall p\ge 0.
+	\end{equation}
+	This exercise concerns the Taylor series of $f$ around the point $x=0$.
+	\begin{enumerate}
+		\item Sketch $f$.
+		\item Prove that $f$ is continuous at $x=0$.
+		\item Let $n\in\N$ and remember that we use the symbol $f^{(n)}(a)$ to denote the value of the $n$th derivative of $f$ evaluated at $a$. Calculate $f^{(n)}(0)$. \textit{Hint: }They are all the same value.
+		\item Let $n\in\N$ and, using the previous part, write down the $n$th order Taylor series of $f$.
+		\item Let $x>0$. Based on the previous part, is it true or false that $f(x)$ equals its infinite Taylor series expansion around 0? In other words, is the following formula valid?
+		\[
+		f(x) \overset{?}{=} \sum_{n=0}^\infty \frac{f^{(n)}(0)}{n!}x^n.
+		\]
+	\end{enumerate}
+	\end{ex}
+%	\section{Comments (to an instructor)}
+%	As mentioned in~\Cref{sec:intro}, these notes largely follow Terence Tao's `Analysis II' but I should clarify one large distinction especially pertaining to chapters 1 and 2 of his book. In his book, all notions of topology are made in reference to some metric and this is how he introduced many definitions. Where possible, I have elected to introduce definitions with as little reliance on metric-exclusive ideas as possible. That being said, these notes do not cover topological spaces in general, only metric topology.
+	\section{Some notations}
+	I will use various abbreviations and symbols which you have hopefully seen from earlier foundational (pure) maths courses.
+	\[
+	\begin{array}{c|c}
+	\text{Symbol} 	&\text{Meaning} 	\\\hline
+	\text{s.t.} 	&\text{such that} 	\\
+	\text{iff} 		&\text{if and only if, }\iff 	\\
+	\text{TFAE} 	&\text{the following are equivalent} 	\\
+	\text{wlog} 	&\text{without loss of generality} 	\\
+	\forall 		&\text{for every, for all, for any, \dots} 	\\
+	\exists 		&\text{there exists, there is, \dots} 	\\
+	\subset 	&\text{(not necessarily strict )subset of\dots }
+	\end{array}
+	\]
+	Most, if not all, results here about a metric (or topological) space $X$ implicitly assume $X\neq \emptyset$. I have explicitly and redundantly stated this non-emptiness as an assumption in a lot of results only to emphasise its importance in those results. For simplicity, the reader may just assume that all metric spaces are non-empty unless otherwise stated.
+	\section{Reader's guide}
+	\label{sec:guide}
+	These notes are written in a different order than how I would, personally, deliver a lecture course. In particular, these notes cover (strictly) more than I would have time to lecture on in a 1-semester / term / quarter course.
+	
+	\Cref{ch:metric_spaces} introduces the concepts of metric spaces. As mentioned in~\Cref{sec:intro}, completeness, compactness, and connectedness  (\Cref{sec:Cauchy}, \Cref{sec:cpct_met_spaces}, and~\Cref{sec:connected} respectively) with an emphasis on the first two due to my own bias. The length of~\Cref{sec:cpct_met_spaces} reflects my attempt at proving results with \textit{minimal reliance on metrics}. This is meant to pre-emptively illustrate the flavour of \textit{topological spaces}, the generalization of metric spaces. Similarly, \Cref{sec:connected} relies entirely on topological arguments, rather than explicit metric structures. Finally, this chapter focuses on metric spaces in isolation \textbf{without relation to continuous functions yet.}
+	
+	\Cref{ch:cts_met} introduces and discusses continuous functions on metric spaces. This chapter also investigates the interplay between continuous functions and complete / compact / connected spaces. In a lecture course, I would (probably) discuss this interplay at the same time as I introduce the notions of complete / compact / connectedness to some extent. In other words, my lectures would likely \textbf{jump back and forth between the first two chapters.}
+	\chapter{Metric Spaces}
+	\label{ch:metric_spaces}
+	This chapter is dedicated to an introduction to the theory of metric spaces. For all students, I strongly suggest reading Wilson A. Sutherland's `Introduction to Metric and Topological Spaces' which is the basis for this.
+	\input{def_met}
+	\input{point_set}
+	\input{rel_top}
+	\input{cauchy}
+	\input{cpct_met_spaces}
+	\input{connected}
+%	\chapter{Series on $\R$}
+%	\label{ch:series_R}
+%	\textcolor{ForestGreen}{Some / all of this chapter may have already been taught in Math 2080.} It is intended to cover much more than is necessary in order to deal with series of functions later on.
+%	\input{series_R}
+	\chapter{Continuous functions on metric spaces}
+	\label{ch:cts_met}
+	This chapter follows up from~\Cref{ch:metric_spaces} by generalising the notion of continuity for functions defined on and with values in metric spaces. Recall that $f:\R\to \R$ is said to be continuous at $x_0\in\R$ iff the following is true:
+	\[
+	\forall \varepsilon>0,\exists \delta>0\text{ s.t. }\forall x\text{ satisfying }|x-x_0|<\delta,\text{ we have }|f(x)-f(x_0)|<\varepsilon.
+	\]
+	In~\Cref{sec:def_met}, we saw how we can view $\R$ as a metric space with
+	\[
+	d(x,y) = |x-y|.
+	\]
+	Of course, we can now generalise the absolute value terms $|x-x_0|$ and $|f(x) - f(x_0)|$ with metrics. Moreover, we can consider functions $f:X \to Y$ where $X,Y$ are two (possibly different) metric spaces.
+	\input{cts_fun}
+	\input{strong_cts}
+	\input{basic_prop_cts}
+	\input{cpct_cts}
+	\input{comp_cts}
+	\input{connected_cts}
+	\chapter{Metric space of continuous functions}
+	\label{ch:C^zero}
+	This chapter focuses on the setting when $(X,d)$ is a metric space \textit{whose elements are (continuous) functions.} This chapter will combine what we have learned previously while also developing insights into function spaces. 
+	
+	We will discuss extremely useful results about function spaces which appear in modern research.
+%	
+%	To set the notation for this chapter, given metric spaces $(S,d_S),(Y,d_Y)$, we will denote the set
+%	\[ 
+%	C(S,Y) := \{\text{continuous functions }f:S\to Y\}.
+%	\]
+%	Specifically, $f\in C(S,Y)$ means that $f$ is a function from $S$ to $Y$ which is continuous in the sense of~\Cref{defn:cty}. In the event that $Y = \R$, we will abbreviate $C(S) := C(S,\R)$. We will often explicitly identify the metric spaces $S,Y$, but our standing assumptions this chapter will be:
+%	\begin{itemize}
+%		\item $S$ is a \textbf{compact} metric space and
+%		\item $Y=\R$. In particular, $Y$ is \textbf{complete}.
+%	\end{itemize}
+%	With this in mind, we will focus on the \textit{sup metric} defined by
+%	\[
+%	d(f,g):= \sup_{x\in S}|f(x) - g(x)|,\quad \forall f,g \in C(S).
+%	\]
+%	\begin{ex}
+%		Show that $d:C(S)\times C(S)\to [0,+\infty)$ satisfies being a metric as in~\Cref{defn:metric}, hence $(C(S),d)$ is a metric space. \textit{Note:} What prevents $d(f,g)$ from attaining $+\infty$?
+%	\end{ex}
+%	The role of $Y = \R$ of course makes the sup metric well-defined. The completeness property of it will be exploited later on.
+%	
+%	For notational convenience, we will also use the \textit{sup norm} which is any of
+%	\[
+%	\|f - g\|,\text{ or }\|f-g\|_\infty,\text{ or }\|f - g\|_{C(S)},
+%	\]
+%	all of the above referring to $d(f,g)$.
+%	
+%	Another space which we will not focus on is the following:
+%	\[
+%	B(S,Y):= \{
+%	\text{bounded functions }f:S\to Y
+%	\}.
+%	\]
+%	This set consists of functions $f:S\to Y$ such that the image set $f(S)\subset Y$ is bounded (c.f.~\Cref{defn:bdd}).
+%	\begin{ex}
+%		Let $(S,d_S)$ be a metric space. Show that $(B(S,\R),d)$ is a metric space. Here, $B(S,\R)$ is also equipped with the sup metric.
+%	\end{ex}
+%	\begin{prop}[$C(S,Y)$ is complete]
+%		\label{prop:C^0_complete}
+%		Let $(S,d_S)$ be a compact metric space and $Y = \R^d$ for any $d\ge 1$. Then $C(S,Y)$ equipped with the sup metric is a complete metric space.
+%	\end{prop}
+%	\begin{proof}
+%		\textcolor{blue}{Let $(f_n)_{n\in\N}\subset C(S,Y)$ be a Cauchy sequence.} This means that, for any $\varepsilon>0$, there exists $N\in\N$ such that
+%		\[
+%		n,m\ge N \implies \sup_{x\in S}|f_n(x) - f_m(x)|<\varepsilon.
+%		\]
+%		For any fixed $x\in S$, in particular, we see that the sequence $(f_n(x))_{n\in\N}$ of real vectors is a Cauchy sequence. By completeness of $\R^d$, this sequence admits a limit which we shall denote $f(x)$, emphasising the dependence on $x\in S$. Specifically, we can view this as a function \textcolor{blue}{$f:X \to Y$.} We now seek to show that this object $f$ belongs to $C(S,Y)$.
+%	\end{proof}
+	\input{cvg_cts}
+	\input{unif_int}
+	\input{unif_diff}
+	\input{unif_fun_series}
+	\input{power_series}
+	\input{Taylor}
+	\input{C^0}
+%	\subfile{C^0}
+	\input{Picard}
+\end{document}

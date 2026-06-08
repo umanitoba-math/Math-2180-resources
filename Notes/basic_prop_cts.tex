@@ -1,0 +1,118 @@
+\section{Basic properties of continuous functions}
+\label{sec:basic_prop_cts}
+\begin{prop}[Composition of continuous functions is continuous]
+	\label{prop:comp_cts}
+	Let $(X,d_X),(Y,d_Y),(Z,d_Z)$ be metric spaces. Let $f:X\to Y$ and $g:Y \to Z$ be functions. Let $a\in X$ and assume $f$ is continuous at $a$ and $g$ is continuous at $f(a)$. Then, the composition $g\circ f$ is continuous at $a$.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix $\varepsilon>0$.} Since $g$ is continuous at $f(a)$ then according to~\Cref{defn:cty}, there must exist some $\delta_1>0$ such that
+	\[
+	\forall y \in Y \text{ satisfying }d_Y(y,f(a))<\delta_1,\text{ we have }d_Z(g(y),g(f(a)))<\varepsilon.
+	\]
+	For this $\delta_1>0$, according to~\Cref{defn:cty}, \textcolor{blue}{there must exist some $\delta>0$} such that
+	\[
+	\forall x \in X\text{ satisfying }d_X(x,a) < \delta,\text{ we have }d_Y(f(x),f(a))<\delta_1.
+	\]
+	Putting together the previous implications in particular yields
+	\[
+	\textcolor{blue}{\forall x \in X\text{ satisfying }d_X(x,a)<\delta,\text{ we have }d_Z(g(f(x)),g(f(a)))<\varepsilon.}
+	\]
+\end{proof}
+The next few results will involve product metric spaces. Given metric spaces $(X,d_X)$ and $(Y,d_Y)$, we will endow the product $X\times Y$ with the following metric
+\[
+d_{X\times Y}((x_1,y_1),\,(x_2,y_2)):= d_X(x_1,x_2) + d_Y(y_1,y_2).
+\]
+\begin{prop}[Tensor product of continuous functions is continuous]
+	\label{prop:tens_prod_cts}
+	Let $(X,d_X),(X'd_{X'}),(Y,d_Y)$, and $(Y',d_{Y'})$ be metric spaces with $a\in X$ and $b\in Y$. Let $f:X\to X'$ and $g:Y \to Y'$ be continuous at $a$ and $b$, respectively. Then, the tensor product map $f\times g :X\times Y \to X'\times Y'$ defined by
+	\[
+	(f\times g)(x,y) := (f(x),\,g(y)),\quad x\in X,\,y \in Y,
+	\]
+	is continuous at $(a,b) \in X\times Y$.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix $\varepsilon>0$.} Since $f$ and $g$ are continuous at $a$ and $b$, respectively, we can find $\delta_1,\delta_2>0$ such that
+	\[
+	d_X(x,a)<\delta_1\implies d_{X'}(f(x),f(a))<\frac{\varepsilon}{2}\quad\text{and }d_Y(y,b)<\delta_2\implies d_{Y'}(g(y),g(b))<\frac{\varepsilon}{2}.
+	\]
+	\textcolor{blue}{Define $\delta=\min(\delta_1,\delta_2)$ and fix any $(x,y) \in X\times Y$ such that $d_{X\times Y}((x,y),\,(a,b))<\delta$.} We have
+	\[
+	d_{X\times Y}((x,y),\,(a,b)) = d_X(x,a) + d_Y(y,b)<\delta \implies d_X(x,a)<\delta_1\text{ and }d_Y(y,b) < \delta_2.
+	\] 
+	Hence, we get
+	\begin{align*}
+		&\quad \textcolor{blue}{d_{X'\times Y'}((f(x),g(y)),(f(a),g(b)))} 	\\
+		&= d_{X'}(f(x),f(a)) + d_{Y'}(g(y),g(b)) 	\\
+		&\textcolor{blue}{<} \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \textcolor{blue}{\varepsilon.}
+	\end{align*}
+\end{proof}
+Given metric spaces $(X,d_X)$ and $(Y,d_Y)$, we define the projections
+\[
+p_X:(x,y)\in X\times Y \mapsto x \in X,\quad p_Y:(x,y)\in X\times Y \mapsto y\in Y.
+\]
+\begin{prop}[Projections are continuous]
+	The maps $p_X$ and $p_Y$ are continuous.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix $\varepsilon>0$ and any $(a,b)\in X\times Y$. We define $\delta = \varepsilon$. Fix any $(x,y)\in X\times Y$ such that $d_{X\times Y}((x,y),(a,b))<\delta$.} We see that
+	\[
+	\textcolor{blue}{d_X(p_X(x,y),p_X(a,b))} = d_X(x,a) \le d_{X\times Y}((x,y),(a,b)) \textcolor{blue}{<\delta = \varepsilon.}
+	\]
+	A nearly identical argument shows that $p_Y$ is continuous.
+\end{proof}
+\begin{defn}
+	\label{defn:diag_map}
+	Given a metric space $(X,d_X)$, the \textit{diagonal map} is the function
+	\[
+	\Delta : x\in X \mapsto (x,x)\in X\times X.
+	\]
+\end{defn}
+\begin{prop}[Diagonal map is continuous]
+	For any metric space $(X,d_X)$, the diagonal map in~\Cref{defn:diag_map} is continuous.
+\end{prop}
+\begin{proof}
+	\textcolor{blue}{Fix any $\varepsilon>0$ and any $a\in X$. We define $\delta = \frac{\varepsilon}{2}$. For every $x\in X$ such that $d_X(x,a) < \delta$, we have the following.}
+	\[
+	\textcolor{blue}{d_{X\times X}(\Delta(x),\Delta(a))} = d_{X\times X}((x,x),(a,a)) = d_X(x,a) + d_X(x,a) \textcolor{blue}{< 2\delta = \varepsilon.}
+	\]
+\end{proof}
+We conclude this section with an introductory connection between continuity and some of the metric space concepts we've learned previously. In particular, the following result should be very familiar. I encourage you to compare the proof of the result below with what you've seen previously for functions $f:\R \to \R$.
+\begin{prop}[Continuity and convergent sequences]
+	\label{prop:cty_cvg_seq}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces with $a \in X$ and a function $f:X\to Y$. TFAE:
+	\begin{enumerate}
+		\item \label{cty_cvg_seq_1} $f$ is continuous at $a$.
+		\item \label{cty_cvg_seq_2} If $(x_n)_{n\in\N}\subset X$ is a sequence converging to $a$, then $(f(x_n))_{n\in\N}\subset Y$ converges to $f(a)$.
+	\end{enumerate}
+\end{prop}
+\begin{rem}
+	\Cref{prop:cty_cvg_seq} is not true in the more general setting of \textit{topological spaces}.
+\end{rem}
+\begin{proof}
+	\ul{$\implies$:} \textcolor{blue}{Fix any sequence $(x_n)_{n\in\N}\subset X$ such that $x_n \to a$.} We wish to show that $f(x_n)\to f(a)$. \textcolor{blue}{Fix any $\varepsilon>0$.} By assumption that $f$ is continuous at $a$, we know that there exists some $\delta>0$ such that
+	\[
+	d_X(x,a) < \delta \implies d_Y(f(x),f(a))<\varepsilon.
+	\]
+	For this $\delta>0$, since $x_n \to a$, \textcolor{blue}{there exists $N\in\N$} such that
+	\[
+	n\ge N \implies d_X(x_n,a)<\delta.
+	\]
+	In particular, we see that
+	\[
+	\textcolor{blue}{n\ge N\implies} d_X(x_n,a)<\delta \implies \textcolor{blue}{d_Y(f(x_n),f(a))<\varepsilon}.
+	\]
+	\ul{$\impliedby$:} We will sketch the proof by contradiction. Suppose, for a contradiction, that $f$ is not continuous at $a$. This means that there exists some $\varepsilon>0$ such that
+	\begin{equation}
+		\label{eq:cty_cvg_seq_cont}
+		\forall \delta>0,\exists x\in X\text{ s.t. }d_X(x,a)<\delta\text{ but }d_Y(f(x),f(a))\ge \varepsilon.
+	\end{equation}
+	In particular, for every $n\in\N$, we apply~\eqref{eq:cty_cvg_seq_cont} with $\delta = \frac{1}{n}$. This gives a sequence $(x_n)_{n\in\N}\subset X$ such that
+	\[
+	d_X(x_n,a)<\frac{1}{n}\text{ but }d_Y(f(x_n),f(a))\ge \varepsilon,\quad \forall n\in\N.
+	\]
+	By construction, we see that $x_n\to a$ since $d_X(x_n,a) \to 0$ (c.f.~\Cref{ex:cvg_metric}). By assumption, this implies that $f(x_n)\to f(a)$. There must exist some $N\in\N$ such that
+	\[
+	d_Y(f(x_N),f(a))<\varepsilon.
+	\]
+	This is the desired contradiction.
+\end{proof}

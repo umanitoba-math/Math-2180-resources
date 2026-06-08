@@ -1,0 +1,114 @@
+\section{Connectedness}
+\label{sec:connected}
+This section introduces the topological notion of connectedness. Intuitively, a connected space is one which `should not break into two (or more) disjoint parts.'
+\begin{defn}[Connected]
+	\label{defn:connected}
+	A (non-empty) metric space $(X,d)$ is said to be \textit{connected} provided the following holds. If $A,B\subset X$ are open subsets such that $\emptyset \neq A \neq X$ and $\emptyset \neq B \neq X$, then at least one of the following statements:
+	\[
+	A\cup B = X\quad\text{or }A\cap B = \emptyset
+	\]
+	must be false. By convention, the empty set is connected.
+\end{defn}
+In practice, it may be difficult to check the criteria in~\Cref{defn:connected} to determine connectedness. We will come back to this later.
+\begin{lemma}
+	\label{lem:closed_connect}
+	A metric space $(X,d)$ is connected iff the word `open' in~\Cref{defn:connected} is replaced by `closed.'
+\end{lemma}
+\begin{proof}
+	\ul{$\implies$:} Let us assume that $(X,d)$ is connected and \textcolor{blue}{fix any closed sets $C,D\subset X$ such that $C,D\neq \emptyset$ and $C,D \neq X$}. According to~\Cref{defn:open_closed}, this means that the complements $A:= X\setminus C$ and $B:= X\setminus D$ are open and $A,B\neq \emptyset$ and $A,B\neq X$. Now, we use De Morgan's laws (exercise) to obtain
+	\[
+	A \cup B = (X\setminus C)\cup (X \setminus D) = X \setminus (C\cap D).
+	\]
+	And similarly, $A\cap B = X\setminus (C \cup D)$. Since $A$ and $B$ are open, we deduce that
+	\[
+	X = A\cup B \iff C\cap D = \emptyset\quad\text{and}\quad\emptyset = A \cap B \iff C \cup D = X.
+	\]
+	Thus, we see that \textcolor{blue}{at least one of $C \cup D = X$ or $C\cap D = \emptyset$ must be false.}
+	
+	\ul{$\impliedby$:} One can repeat the above argument in reverse.
+\end{proof}
+Recall from the last few points of~\Cref{eg:R_open_closed} that the notion of open and closed sets need not be negations of each other. Sets can be both open and closed (sometimes called `clopen'), exactly one of open or closed, or neither. In a \textit{connected} metric spaces, however, one can remove most of these possibilities.
+\begin{prop}
+	\label{prop:clopen_connected}
+	Let $(X,d)$ be a metric space. TFAE:
+	\begin{itemize}
+		\item $X$ is connected.
+		\item The only subsets of $X$ which are both open and closed are $X$ and $\emptyset$.
+	\end{itemize}
+\end{prop}
+\begin{proof}
+	\ul{$\implies$:} Suppose, for a contradiction, that $A\subset X$ is a non-empty set such that $A\neq X$ and $A$ is both open and closed. We can define $B:= X\setminus A$ which is open (and closed) and non-empty. We would then see that both
+	\[
+	A \cup B = X\quad\text{and}\quad A\cap B = \emptyset,
+	\]
+	which is a contradiction.
+	
+	\ul{$\impliedby$:} Let $A,B\subset X$ be non-empty open subsets of $X$. Assume, for a contradiction, that we have both
+	\[
+	A\cup B = X\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+	This implies that $B = A^\complement$ and $A = B^\complement$. Thus, both $A$ and $B$ are also closed. This is a contradiction.
+\end{proof}
+We will have more to say about connected spaces especially in relation to continuous functions. This will be done later. For now, we end this with a close study of connectedness for $\R$ to confirm our intuition. 
+\begin{defn}[Connectedness of subspaces]
+	\label{defn:connect_sub}
+	Let $(X,d)$ be a non-empty metric space and let $A\subset X$ be non-empty. We say that $A$ is \textit{connected} provided that $(A,d|_A)$ is a connected metric space (c.f.~\Cref{eg:sub_met}).
+\end{defn}
+\subsection{Connectedness on $\R$}
+\label{sec:connect_R}
+Our intuition on $\R$ about connectedness is very much linked with intervals. Given $a<b$ (we shall allow $a = -\infty$ and / or $b = +\infty$), intervals take on one of the following four forms:
+\begin{equation}
+	\label{eq:intervals}
+	(a,b),\,(a,b],\,[a,b),\,\text{or }[a,b].
+\end{equation}
+Of course, the sets in~\eqref{eq:intervals} are connected (in the intuitive sense) and~\Cref{thm:connected_interval} below shows that is consistent with connectedness in the sense of~\Cref{defn:connected}. For technical convenience, we shall identify $\emptyset = (a,a)$.
+\begin{thm}[On $\R$, connected $\iff$ interval]
+	\label{thm:connected_interval}
+	$I \subset \R$ is connected iff $I\subset \R$ is an interval in the form of~\eqref{eq:intervals}.
+\end{thm}
+We will first need to prove some other results.
+\begin{prop}
+	\label{prop:char_int}
+	Let $I\subset \R$ be non-empty. TFAE:
+	\begin{itemize}
+		\item $I$ is an interval in the form of~\eqref{eq:intervals}.
+		\item $I$ satisfies the property:
+		\begin{equation}
+			\label{eq:char_int}
+			\text{Let }x,y\in I.\text{ If }z\in \R\text{ satisfies }x < z < y,\text{ then }z \in I.
+		\end{equation}
+	\end{itemize}
+\end{prop}
+\begin{proof}
+	\ul{$\implies$:} This is immediate.
+	
+	\ul{$\impliedby$:} We define
+	\[
+	\begin{array}{ccc}
+		a = \inf I 	&\text{or }-\infty, 	&\text{if $I$ is not bounded below,} 	\\
+		b = \sup I &\text{or }+\infty, 	&\text{if $I$ is not bounded above.}
+	\end{array}
+	\]
+	We will show that $(a,b)\subset I \subset [a,b]$ with the convention that $[$ or $]$ adjacent to $\pm \infty$ means the same as $($ or $)$ adjacent to $\pm \infty$. Again, we identify $\emptyset = (a,a)$. We would then be done (why?). By definition of $a,b$ we already have $I\subset [a,b]$ so it remains to show $(a,b) \subset I$.
+	
+	\textcolor{blue}{Fix $z \in (a,b)$.} By definition, we have $z> a = \inf I$ and / or $z >-\infty$ (if $I$ is not bounded below). In either case, \textcolor{blue}{there exists $x \in I$ such that $x<z$.} Similarly, since $z < b$, \textcolor{blue}{there exists $y\in I$ such that $z < y$.} By assumption that $I$ satisfies~\eqref{eq:char_int}, we conclude that \textcolor{blue}{$z \in I$.}
+\end{proof}
+The characterisation of intervals in~\Cref{prop:char_int} sets us up to prove~\Cref{thm:connected_interval}.
+\begin{proof}[Proof of~\Cref{thm:connected_interval}]
+	\ul{$\implies$:} Suppose, for a contradiction, that $I\subset \R$ is connected, but not an interval of the form~\eqref{eq:intervals}. According to~\Cref{prop:char_int}, there must exist $x,y\in I$ and $z \notin I$ such that $x < z < y$. We now define $A:= (-\infty,z) \cap I$ and $B:= (z,\infty) \cap I$. These are \textcolor{blue}{both (relatively) open and non-empty subsets of $I$ with $A,B\neq I$. We also see that both the following are true:
+	\[
+	A \cup B = I\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+}
+	This is a contradiction to~\Cref{defn:connected}.
+	
+	\ul{$\impliedby$:} Let $I\subset \R$ be an interval of the form~\eqref{eq:intervals} and suppose, for a contradiction, that $I$ is not connected. More specifically, we assume that there exist non-empty $A,B\subsetneq I$ which are open and closed (relative to $I$) such that
+	\[
+	A\cup B = I\quad\text{and}\quad A\cap B = \emptyset.
+	\]
+	Let us take $a\in A, b\in B$ and assume, wlog, that $a<b$ (otherwise we just exchange the roles of $A,B$). Since $a,b\in I$ and $I$ is an interval of the form~\eqref{eq:intervals}, we know by~\Cref{prop:char_int} that $[a,b] \subset I$.
+	
+	We now define $A' = A\cap [a,b]$ and $B' = B \cap [a,b]$. Note that $a\in A'$ and $b\in B'$. We see that both $A,B$ are (relatively) closed in $I$ and $[a,b]$ is relatively closed in $I$. Since $A',B'$ are intersections of (relatively) closed subsets of $I$, we deduce that $A',B'$ are (relatively) closed in $I$. Since $A',B'\subset [a,b]$, we can use~\Cref{prop:triple_rel} to deduce that $A',B'$ are (relatively) closed in $[a,b]$. Finally, since $[a,b]$ is closed in $\R$, we see (again, by~\Cref{prop:triple_rel}) that $A',B'$ are also closed in $\R$. 
+	
+The Completeness Axiom gives $c:=\sup A' \in A'$ (why?). Now, $c \le b$ because $c \in A' \subset [a,b]$ and, moreover, $c \neq b$ because $A' \cap B' = \emptyset$ and $b \in B'$. Hence, we deduce $c < b$. Since $A$ is open in $I$, we have that $A'$ is relatively open in $[a,b]$. But this implies that there exists some $\delta>0$ such that $(c-\delta,c+\delta)\cap [a,b] \subset A'$. Since $c < b$, there must exist some points in $(c,c+\delta)\cap [a,b]\subset A'$ which contradicts $c = \sup A'$.
+\end{proof}

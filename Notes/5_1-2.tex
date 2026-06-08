@@ -1,0 +1,214 @@
+\section{Definitions and examples}
+\label{sec:5_1-2}
+Recall from Math 2080 the following definition for the convergence of a sequence of real numbers.
+\begin{defn}[Convergence - sequence of real numbers]
+	\label{defn:cvg_real}
+	Let $(a_n)_{n\in\N}\subset \R$ and $a\in \R$. We say that $(a_n)_{n\in\N}$ \textit{converges to }$a$, written $a_n\overset{n\to \infty}{\to}a$, if and only if the following statement is true:
+	\[
+	\forall \varepsilon>0,\exists N\in\N\text{ such that }\forall n\ge N, \, |a_n - a|<\varepsilon.
+	\]
+\end{defn}
+Before you took Math 2080, you may have informally described convergence as something like `the points $a_n$ \textit{get closer} to $a$ as $n$ gets larger.' Within~\Cref{defn:cvg_real}, the rigorous notion of `closeness' is captured precisely by
+\[
+|a_n-a| = \text{`distance between }a_n\text{ and }a\text{'}
+\]
+We want to generalise~\Cref{defn:cvg_real} when $a_n$ and $a$ are not necessarily real numbers. In order to do so, we need to be able to estimate the \textit{distance} between $a_n$ and $a$, whatever kind of mathematical object they may be. This motivates our first definition.
+\begin{defn}[Metric spaces]
+	\label{defn:metric}
+	Let $X$ be a set and $d:X\times X \to [0,+\infty)$ a function. We say that the pair $(X,d)$ is a \textit{metric space} provided the function $d$ satisfies the following:
+	\begin{enumerate}[label = \textbf{M\arabic*)}]
+		\item (Non-negativity) For any $x,y\in X$, we have $d(x,y)\ge 0$. Moreover, $d(x,y) = 0 \iff x=y$. \label{m:pos}
+		\item (Symmetry) For any $x,y\in X$, we have $d(x,y) = d(y,x)$. \label{m:sym}
+		\item (Triangle inequality) For any $x,y,z\in X$, we have
+		\[
+		d(x,z) \le d(x,y) + d(y,z).
+		\]
+		\label{m:tri}
+	\end{enumerate}
+	In this case, we refer to the function $d$ as the \textit{metric} or \textit{distance}. We will also call the elements of $X$ \textit{points}.
+\end{defn}
+Sometimes we refer to $X$ as a metric space if the metric is clear or given from context. A set $X$ may or may not have many distinct metrics associated to it. The motivation for studying metric spaces is that distance function allows us to quantify how far two elements are from each other. Before listing (many) examples of metric spaces, we will generalise~\Cref{defn:cvg_real} to metric spaces.
+\begin{defn}[Convergence in a metric space]
+	\label{defn:cvg_metric}
+Let $(X,d)$ be a metric space be given together with a sequence $(a_n)_{n\in\N}\subset X$ and a point $a\in X$. We say that $(a_n)_{n\in\N}$ \textit{converges to }$a$ \textit{(with respect to the metric $d$)}, written $a_n\overset{n\to \infty}{\to} a$, if and only if the following statement is true:
+\[
+\forall \varepsilon>0,\exists N\in\N\text{ such that }\forall n\ge N, \, d(a_n,a)<\varepsilon.
+\]
+\end{defn}
+Let us start with the most familiar example of a metric space.
+\begin{eg}[The reals]
+\label{eg:real_metric}
+Let $d:\R\times\R\to [0,+\infty)$ be defined by $d(x,y) := |x-y|$. Then, the pair $(\mathbb{R}, d)$ is a metric space. Thus, \Cref{defn:cvg_metric} is equivalent to~\Cref{defn:cvg_real} in this case.
+\end{eg}
+\begin{eg}[Euclidean spaces]
+Let $n\in\N$ be a natural number and denote $\R^n$ the vector space of $n$-tuples of real numbers:
+\[
+\R^n := \left\{
+(x_1,x_2,\dots, x_n)\, : \, x_i\in\R \, \forall i=1,\dots, n
+\right\}.
+\]
+We define the \textit{Euclidean metric} (also called the $\ell^2$ metric) $d_2:\R^n\times \R^n\to [0,+\infty)$ by
+\begin{align*}
+d_2((x_1,x_2,\dots, x_n),\,(y_1,y_2,\dots, y_n))&:= \sqrt{(x_1-y_1)^2 + (x_2-y^2)^2 + \dots + (x_n-y_n)^2} 	\\
+&= \left(\sum_{i=1}^n (x_i-y_i)^2\right)^\frac{1}{2}.
+\end{align*}
+The pair $(\R^n,\, d_2)$ is a metric space. Usually, when we work in $\R^n$, we will refer to $d_2$ as the \textit{standard metric} (on $\R^n$).
+\end{eg}
+\begin{eg}[$\ell^1$ and $\ell^\infty$ metrics on $\R^n$]
+Again, let $n\in\N$ be a natural number and consider $\R^n$ the vector space of $n$-tuples of real numbers. Let $x,y\in\R^n$ be vectors with components
+\[
+x=(x_1,x_2,\dots, x_n)\text{ and }y = (y_1,y_2,\dots, y_n).
+\]
+\begin{enumerate}
+	\item The \textit{taxi-cab metric} (also called the $\ell^1$ metric) is defined by
+	\begin{align*}
+	d_1(x,y) 	&:= |x_1-y_1| + |x_2-y_2| + \dots + |x_n - y_n| = \sum_{i=1}^n|x_i-y_i|.
+	\end{align*}
+	For example, if $n=2$, then $d_1((1,6),(4,2)) = |1 - 4| + |6 - 2| = 3 + 4 = 7$. Intuitively, the $\ell^1$ metric models the distance it takes for a taxi-cab to get from one point to another by only moving up / right / down / left (North / East / South / West) since most North American cities have streets built on a grid system which prevents diagonal movement.
+	\item The \textit{sup norm metric} (also called the $\ell^\infty$ metric) is defined by
+	\begin{align*}
+		d_\infty(x,y) 	&:= \sup_{i=1,\dots, n}|x_i-y_i|
+	\end{align*}
+	For example, if $n=2$, then $d_\infty((1,6),(4,2)) = \sup (3,4) = 4$.
+\end{enumerate}
+\end{eg}
+Notice from the previous example in $\R^2$ that we had
+\[
+d_1((1,6),(4,2)) = 7,\quad d_\infty((1,6),(4,2)) = 4,\quad d_2((1,6),(4,2)) = 5.
+\]
+So all three metrics $d_1,d_\infty, d_2$ measure the distance between the points $(1,6)$ and $(4,2)$ on the plane in different ways. However, they are all \textit{equivalent} in the following sense (which we shall hopefully revisit).
+\begin{prop}
+[Equivalence of $d_1,d_2,d_\infty$ on $\R^n$]
+\label{prop:equiv_d12inf}
+Fix $n\in\N$ and let $(a_j)_{j\in\N}\subset \R^n$ and $a\in \R^n$. The following are equivalent:
+\begin{itemize}
+	\item $a_j\overset{j\to \infty}{\to}a$ with respect to $d_1$.
+	\item $a_j\overset{j\to \infty}{\to}a$ with respect to $d_2$.
+	\item $a_j\overset{j\to \infty}{\to}a$ with respect to $d_\infty$.
+\end{itemize}
+\end{prop}
+In words, \Cref{prop:equiv_d12inf} is saying that if $a_j$ converges to $a$ in any one of the metrics $d_1 / d_2 / d_\infty$, then $a_j$ converges to $a$ in \textit{all} three metrics.
+\begin{proof}
+We will take the following inequalities for granted (see the first problem sheet for a proof of~\eqref{eq:hold_1} and~\eqref{eq:hold_2}).
+\begin{equation}
+	\label{eq:hold_1}
+	d_2(x,y) \le d_1(x,y)\le \sqrt{n} d_2(x,y),\quad \forall x,y\in\R^n,
+\end{equation}
+and
+\begin{equation}
+	\label{eq:hold_2}
+	\frac{1}{\sqrt{n}}d_2(x,y)\le d_\infty(x,y)\le d_2(x,y),\quad\forall x,y\in\R^n.
+\end{equation}
+We will just prove that $a_j \to a$ in $d_1$ if and only if $a_j\to a$ in $d_2$.
+
+Let $a_j\overset{j\to \infty}{\to}a$ in $d_1$. Now, \textcolor{blue}{fix $\varepsilon>0$.} By assumption, we know that \textcolor{blue}{there exists $N\in\N$ such that $j\ge N$} implies
+\[
+d_1(a_j,a)<\varepsilon.
+\]
+But the left inequality of~\eqref{eq:hold_1} says $d_2(x,y)\le d_1(x,y)$ and so when $j\ge N$, we have
+\[
+{\color{blue}
+d_2(a_j,a)<\varepsilon.
+}
+\]
+The text in \textcolor{blue}{blue} shows that $a_j \overset{j\to \infty}{\to} a$ in $d_2$. A similar argument with the other inequality of~\eqref{eq:hold_1} shows that $d_2$ convergence implies $d_1$ convergence.
+
+In order to show the equivalence of $d_2$ and $d_\infty$ convergence, one uses~\eqref{eq:hold_2}.
+\end{proof}
+\begin{eg}
+	\label{eg_diag_vanish}
+	Let us work in $\R^2$ with the standard metric $d_2$ and consider the sequence $(a_j)_{j\in\N}\subset \R^2$ defined by
+	\[
+	a_j := \left(\frac{1}{j},\frac{1}{j}\right).
+	\]
+	We claim and prove that $a_j\to (0,0)$ with respect to $d_2$ (hence, by~\Cref{prop:equiv_d12inf}, $a_j$ also converges to $(0,0)$ in $d_1$ and $d_\infty$). Before setting $\varepsilon>0$ and $\delta>0$, let's work backwards and calculate, informally, what we need to show.
+	
+	After fixing $\varepsilon>0$, we need to find some $N\in\N$ such that, whenever $j\ge N$, we have
+	\[
+	d_2(a_j,(0,0))<\varepsilon.
+	\]
+	We can explicitly calculate
+	\[
+	d_2(a_j,(0,0)) = \sqrt{\left(\frac{1}{j} - 0\right)^2 + \left(\frac{1}{j} - 0\right)^2} = \sqrt{\frac{2}{j^2}} = \frac{\sqrt{2}}{j}\overset{j\to \infty}{\to}0.
+	\]
+	In words, the ($\ell^2$) distance between $a_j$ and the origin is vanishing as $j\to \infty$.
+	\begin{proof}
+		\textcolor{blue}{Fix $\varepsilon>0$.} We know from Math 2080 / Introduction to Analysis that $\frac{\sqrt{2}}{j}\overset{j\to \infty}{\to} 0$. Hence, \textcolor{blue}{there exists $N\in\N$ such that $j\ge N$ implies}
+		\[
+		\left|\frac{\sqrt{2}}{j} - 0\right| = \frac{\sqrt{2}}{j} < \varepsilon.
+		\]
+		By the calculation done just before this proof, we therefore have, whenever $j\ge N$, that
+		\[
+		{\color{blue}d_2(a_j,(0,0))} = \frac{\sqrt{2}}{j} {\color{blue}<\varepsilon.}
+		\]
+		The text in \textcolor{blue}{blue} is precisely what it means for $a_j\to (0,0)$ according to~\Cref{defn:cvg_metric}.
+	\end{proof}
+\end{eg}
+\begin{eg}[The discrete metric]
+\label{eg:disc_metric}
+Given any set $X$, we define the \textit{discrete metric} $d_\text{disc}:X\times X \to [0,\infty)$ by
+\[
+d_\text{disc}(x,y) := \left\{
+\begin{array}{cl}
+	0, 	&\text{if }x=y 	\\
+	1, 	&\text{if }x\neq y
+\end{array}
+\right..
+\]
+This example shows that every set has at least one metric (the discrete metric) on it. However, in terms of measuring distance between points, the discrete metric is not great and is usually only considered for pedagogical purposes.
+
+Let us return to the previous example of $\R^2$ with the sequence $a_j = \left(\frac{1}{j},\frac{1}{j}\right)_{j\in\N}$. This time, however, we will work the discrete metric $d_\text{disc}$. We see that
+\[
+d_\text{disc}(a_j,(0,0)) = 1,\quad \forall j\in\N.
+\]
+Hence, the discrete distance between $a_j$ and the origin can \textit{never} be less than $\varepsilon$ for any $0<\varepsilon<1$ nor any $j\in\N$. In this way, the sequence $a_j$ does \textit{not} converge to $(0,0)$ in the discrete metric.
+\end{eg}
+\Cref{eg:disc_metric} highlights two points:
+\begin{enumerate}
+	\item Every set has at least one metric on it -- the discrete metric.
+	\item The convergence of a sequence \textbf{depends on the metric}.
+\end{enumerate}
+\begin{eg}[Metric subspaces]
+	Given a metric space $(X,d)$ and a subset $A\subset X$, we can define a metric on $A$ by restricting $d$ to $A\times A$. In detail, we define
+	\[
+	d_A:A\times A \to [0,+\infty),\quad d_A(x,y) = d(x,y),\quad x,y\in A.
+	\]
+	Of course, $(A,d_A)$ is a metric space according to~\Cref{defn:metric} since~\Cref{m:pos,m:sym,m:tri} hold for $d$ and so they are also true of $d_A$. We will refer to the metric space $(A,d_A)$ as a \textit{(metric) subspace of }$(X,d)$ and $d_A$ as the \textit{metric on $A$ induced by $d$}. When the metric $d$ is clear, we may just say that $A$ is a subspace of $X$. For subsets $A\subset \R^d$, we will refer to $A$ as a metric space with the assumption that the Euclidean metric $d_2$ is used.
+	
+	It is, however, often the case that we may assign a distance function $d_A$ to $A$ which is \textbf{not} the restriction of $d$ onto $A\times A$.
+	
+	We will revisit this notion of subspaces in depth later on.
+\end{eg}
+\begin{eg}[Product spaces]
+	Suppose we have two metric spaces $(X,d_X)$ and $(Y,d_Y)$. We can define several metrics on the product space $X\times Y$. Fix $x_1,x_2\in X$ and $y_1,y_2\in Y$. We may define, for example:
+	\begin{itemize}
+		\item $d_1((x_1,y_1),\,(x_2,y_2)):= d_X(x_1,x_2) + d_Y(y_1,y_2)$, or
+		\item $d_2((x_1,y_1),\,(x_2,y_2)):= \left(d_X(x_1,x_2)^2 + d_Y(y_1,y_2)^2\right)^\frac{1}{2}$, or
+		\item $d_\infty((x_1,y_1),\,(x_2,y_2)):= \max\left\{d_X(x_1,x_2),\,d_Y(y_1,y_2)\right\}$.
+	\end{itemize}
+	As an exercise, show that all such functions $d_1,d_2,d_\infty$ are indeed metrics on $X\times Y$.
+\end{eg}
+Finally, we leave as an exercise the following result.
+\begin{ex}
+\label{ex:cvg_metric}
+Let $(X,d)$ be a metric space with a sequence $(a_n)_{n\in\N}\subset X$ and a point $a\in X$. TFAE:
+\begin{enumerate}
+	\item $a_n\overset{n\to \infty}{\to} a$.
+	\item $d(a_n,a)\overset{n\to \infty}{\to}0$.
+\end{enumerate}
+\end{ex}
+\begin{proof}
+	This is an exercise from~\Cref{defn:cvg_metric}.
+\end{proof}
+Before concluding, we will introduce below function spaces as metric spaces. We will leave a detailed discussion for later. Perhaps the most important point to grasp, if this is the first exposure to function spaces, is that we will consider elements of $X$ to be functions (as opposed to merely numbers or vectors).
+\begin{eg}[Sup norm for continuous functions]
+	Let $a<b$ and we consider
+	\[
+	X:= \left\{f:[a,b]\to \R\, : \, f\text{ is continuous}\right\}.
+	\]
+	Given two elements $f,g\in X$, we define
+	\[
+	d(f,g):= \sup_{x\in[a,b]}|f(x) - g(x)|.
+	\]
+	According to the Extreme Value Theorem (see Math 2080), the right-hand side exists.
+\end{eg}

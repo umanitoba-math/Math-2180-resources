@@ -1,0 +1,184 @@
+\section{Power series}
+\label{sec:power_series}
+\begin{defn}[Power series]
+	\label{defn:power_series}
+	An infinite series of the form
+	\[
+	\sum_{n=0}^\infty a_n (x-x_0)^n
+	\]
+	is called a \textit{power series} centred at $x_0$.
+\end{defn}
+For a power series, we typically think of $(a_n)_{n\in\N}$ and $x_0$ as given numbers i.e. constants. Conversely, we treat $x$ as an independent variable so that the power series is actually a function of $x$. It is clear that a power series converges at least at $x=x_0$ (not that interesting). What is more interesting is whether there are other points $x\neq x_0$ for which it converges.
+\begin{rem}
+	Suppose that a power series converges absolutely at some point $x=x_1$. Then, it must also converge absolutely at all other points $x$ satisfying $|x-x_0|\le |x_1-x_0|$ i.e. all points which are closer to $x_0$.
+	
+	Indeed, for any fixed $n\in \N\cup\{0\}$, we have
+	\[
+	|a_n(x-x_0)^n| \le |a_n||x_1-x_0|^n.
+	\]
+	By the comparison test, we obtain convergence.
+\end{rem}
+\begin{thm}[Convergence of a power series]
+	\label{thm:cvg_power}
+	Consider a power series $\sum_{n=0}^\infty a_n(x-x_0)^n$ and set
+	\[
+	\lambda:= \limsup_{n\to \infty}|a_n|^\frac{1}{n}.
+	\]
+	The following statements holds.
+	\begin{enumerate}
+		\item If $\lambda = +\infty$, then the series converges only for $x=x_0$.
+		\item If $0<\lambda < +\infty$, then:
+		\begin{enumerate}
+			\item the power series converges absolutely for any $x$ satisfying $|x-x_0|< \frac{1}{\lambda}$.
+			\item the power series diverges for any $x$ such that $|x-x_0|>\frac{1}{\lambda}$.
+		\end{enumerate}
+		Moreover, the convergence is uniform on any closed interval contained in $\left(x_0 - \frac{1}{\lambda},x_0 + \frac{1}{\lambda}\right)$.
+		\item If $\lambda = 0$, then the series converges absolutely for all $x\in\R$. Moreover, the convergence is uniform on any closed bounded interval.
+	\end{enumerate}
+\end{thm}
+The quantity $r = \frac{1}{\lambda}$ (with $r = 0$ when $\lambda = +\infty$ and $r=+\infty$ when $\lambda=0$) is called the \textit{radius of convergence}. The interval $(x_0-r,x_0+r)$ is called the \textit{disk / interval of convergence}.
+\begin{proof}
+	We will apply the root test to the power series. Recall that, for a series $\sum b_n$ with $\rho = \limsup_{n\to\infty}|b_n|^\frac{1}{n}$, the root test says
+	\begin{enumerate}
+		\item If $\rho <1$, then $\sum b_n$ converges absolutely.
+		\item If $\rho>1$, then $\sum b_n$ diverges.
+	\end{enumerate}
+	We apply the root test with $b_n = a_n(x-x_0)^n$ so that
+	\[
+	\limsup_{n\to\infty}|a_n(x-x_0)^n|^\frac{1}{n} = |x-x_0|\limsup_{n\to\infty}|a_n|^\frac{1}{n} = \lambda|x-x_0|.
+	\]
+	Therefore, we see that the power series converges absolutely if $|x-x_0|<\frac{1}{\lambda}$ and diverges if $|x-x_0|> \frac{1}{\lambda}$. We now turn to the uniform convergence statements.
+	
+	Fix any closed and bounded interval $[a,b]$ within the disk of convergence i.e.
+	\[
+	[a,b] \subset (x_0 - r,x_0+r).
+	\]
+	There exists (why?) $0<\delta < r$ such that
+	\[
+	[a,b] \subset [x_0 - r + \delta, x_0 + r - \delta].
+	\]
+	Define now $y:= x_0 - r + \delta$. For every $x\in[a,b]$, we have
+	\[
+	|a_n(x-x_0)^n| \le |a_n| |y - x_0|^n =:M_n.
+	\]
+	Observe that $|y - x_0| = r - \delta < r = \frac{1}{\lambda}$. Applying the root test to $\sum M_n$ gives
+	\[
+	\limsup_{n\to\infty}|M_n|^\frac{1}{n} = \limsup_{n\to\infty}|a_n|^\frac{1}{n}|y-x_0| = |y-x_0|\limsup_{n\to\infty}|a_n|^\frac{1}{n} < 1.
+	\]
+	We see that $\sum M_n$ converges (absolutely) and, owing to~\Cref{thm:m_test}, we conclude uniform convergence on $[a,b]$.
+\end{proof}
+Anything can happen at the boundary of the disk of convergence.
+\begin{ex}
+	Consider the series (with centres $x_0 = 0$)
+	\[
+	\sum_{n=0}^\infty x^n,\, \sum_{n=0}^\infty \frac{x^n}{n},\text{ and }\sum_{n=0}^\infty \frac{x^n}{n^2}.
+	\]
+	Verify that the radius of convergence of all of these series is 1. What happens at $x=\pm 1$ for these series?
+\end{ex}
+\begin{thm}
+	\label{thm:cty_power}
+	Suppose that a power series $\sum_{n=0}^\infty a_n(x-x_0)^n$ has a strictly positive radius of convergence i.e.
+	\[
+	r = \frac{1}{\lambda}>0\iff \lambda = \limsup_{n\to \infty}|a_n|^\frac{1}{n} < +\infty.
+	\]
+	Then, the function $f:(x_0 - r,x_0+r)\to \R$ defined by
+	\[
+	f(x) = \sum_{n=0}^\infty a_n(x-x_0)^n
+	\]
+	is continuous on its domain.
+\end{thm}
+\begin{proof}
+	\textcolor{blue}{Fix any $y\in (x_0-r,x_0+r)$}. We consider the following closed and bounded interval $I$ defined by
+	\[
+	(x_0-r,x_0+r)\supset I = \left\{
+	\begin{array}{cl}
+		[x_0-|y-x_0|,\,x_0+|y-x_0|], 	&\text{if }y\neq x_0 	\\
+		\left[x_0 - \frac{\min(1,r)}{2},\,x_0 + \frac{\min(1,r)}{2}\right], 	&\text{if }y = x_0
+	\end{array}
+	\right..
+	\]
+	Hence, by~\Cref{thm:cvg_power}, the power series converges uniformly to $f$ on $I$. Since the partial sums $\sum_{j=0}^n a_j (x-x_0)^j$ are polynomials (which are continuous), we have by~\Cref{prop:unif_cvg_cts} that $f$ is continuous on $I$. In particular, $y\in I$ and so \textcolor{blue}{$f$ is continuous at $y$.}
+\end{proof}
+While working within the interval of convergence in the previous result, we extrapolated from the continuity of (finite degree) polynomials to deduce continuity of the infinite power series. Since polynomials are also differentiable, we would also like to deduce differentiability of the infinite power series.
+\begin{cor}[Differentiability of convergent power series]
+	\label{cor:diff_power}
+	Under the same setting as~\Cref{thm:cty_power}, the function $f$ is differentiable on $(x_0 - r,x_0+r)$. Moreover, we have
+	\[
+	f'(x) = \sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n.
+	\]
+	The radius of convergence of this power series is also $r$.
+\end{cor}
+\begin{proof}
+	\ul{Uniform convergence of $\sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n$:} Recall that $\lim_{n\to\infty} n^\frac{1}{n} =1$. Moreover, this allows to deduce (exercise) that
+	\[
+	\limsup_{n\to \infty}|na_{n+1}|^\frac{1}{n} = \limsup_{n\to\infty}|a_{n+1}|^\frac{1}{n}.
+	\]
+	Hence, the radius of convergence of $\sum_{n=1}^\infty na_n(x-x_0)^n$ is also $r$. Dividing by $(x-x_0)$, we see that $\sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n$ also has radius of convergence equal to $r$. Owing to~\Cref{thm:cvg_power}, we see that
+	\begin{equation}
+		\label{eq:diff_power}
+		\sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n\text{ converges uniformly on any closed interval contained in }(x_0-r,x_0+r).
+	\end{equation}
+	\ul{Derivative of $f$ through partial sums:} Let us denote the following
+	\[
+	f_n(x):= \sum_{j=0}^n a_j(x-x_0)^j,\quad g(x) = \sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n.
+	\]
+	We will apply~\Cref{thm:unif_cvg_diff} (or~\Cref{thm:unif_cvg_series_diff} if you like). \textcolor{blue}{Fix any $y \in (x_0-r,x_0+r)$.} We consider the closed bounded interval
+	\[
+	(x_0-r,x_0+r)\supset I = \left\{
+	\begin{array}{cl}
+		[x_0-|y-x_0|,\,x_0+|y-x_0|], 	&\text{if }y\neq x_0 	\\
+		\left[x_0 - \frac{\min(1,r)}{2},\,x_0 + \frac{\min(1,r)}{2}\right], 	&\text{if }y = x_0
+	\end{array}
+	\right..
+	\]
+	For every $n\in\N$, the function $f_n$ is a polynomial, hence~\ref{unif_cvg_diff_1} is satisfied. Certainly at $x=x_0$, the series $f_n(x_0) = a_0$ is convergent so~\ref{unif_cvg_diff_2} is true. Moreover, the previous paragraph (in particular~\eqref{eq:diff_power}) shows that $f_n'$ converges uniformly to $g$ on $I$ so~\ref{unif_cvg_diff_3} is true. The hypothesis of~\Cref{thm:unif_cvg_diff} is true and we conclude that $f$ is differentiable on $I$ and its derivative is given by
+	\[
+	f'(x) = g(x) = \sum_{n=0}^\infty (n+1)a_{n+1}(x-x_0)^n.
+	\]
+	In particular, \textcolor{blue}{$f$ is differentiable at $y\in I$. Since $y\in(x_0-r,x_0+r)$ was arbitrary, we see that $f$ is differentiable in the interval of convergence.}
+\end{proof}
+By successively differentiating, we can repeat~\Cref{cor:diff_power} over and over to deduce infinitely many derivatives.
+\begin{cor}[Infinite differentiability of power series]
+	\label{cor:analytic}
+	Under the same setting as~\Cref{thm:cty_power}, the function $f$ has infinitely many derivatives. In other words, for every $k\in\N$, the $k$th order derivative $f^{(k)}$ exists and is given by
+	\[
+	f^{(k)}(x) = \sum_{n=k}^\infty \frac{n!}{(n-k)!}a_n(x-x_0)^{n-k},\quad \forall x\in (x_0-r,x_0+r).
+	\]
+	In particular, we have $f^{(k)}(x_0) = k!a_k$ for every $k\in\N\cup \{0\}$.
+\end{cor}
+In anticipation of~\Cref{sec:taylor}, another way of self-expressing the power series in~\Cref{cor:analytic} is
+\[
+f(x) = \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n,\quad \forall x\in(x_0-r,x_0+r).
+\]
+One consequence of~\Cref{cor:analytic} is that convergent power series are uniquely determined by the coefficients $(a_n)_{n\in\N\cup\{0\}}$.
+\begin{cor}[Uniqueness of power series]
+	\label{cor:uniq_analytic}
+	Suppose that $\sum_{n=0}^\infty b_n (x-x_0)^n$ is a convergent power series. Let $\sum_{n=0}^\infty a_n(x-x_0)^n$ and $r>0$ be as in~\Cref{thm:cty_power} and assume that there exists some $\delta>0$ such that
+	\[
+	\sum_{n=0}^\infty a_n (x-x_0)^n = \sum_{n=0}^\infty b_n (x-x_0)^n,\quad \forall x \in (x_0-r,x_0+r)\cap (x_0-\delta,x_0+\delta).
+	\]
+	Then, $a_n = b_n$ for every $n\in\N\cup \{0\}$.
+\end{cor}
+\begin{proof}
+	Let $f(x) = \sum_{n=0}^\infty a_n(x-x_0)^n$. Then, \Cref{cor:analytic} says $f^{(k)}(x_0) = k!a_k$ for every $k\in\N\cup\{0\}$. But by assumption, we also see that $f^{(k)}(x_0) = k!b_k$ for every $k\in\N\cup\{0\}$. This implies the result.
+\end{proof}
+\begin{rem}
+	\Cref{cor:uniq_analytic} is the core of what is sometimes referred to as `analytic continuation' or `analytic extension.' In practice, it allows one to possibly expand the disk of convergence of $\sum_{n=0}^\infty b_n (x-x_0)^n$ when more information about $\sum_{n=0}^\infty a_n (x-x_0)^n$ is present. This~\href{https://www.youtube.com/watch?v=sD0NjbwqlYw&pp=ygUhYW5hbHl0aWMgY29udGludWF0aW9uIDNibHVlMWJyb3du}{link} is a famous pop science video summarising analytic continuation. If you're interested in learning more, you should take a course on Complex Analysis. One peculiarity of analytic continuation is the following weird looking equation
+	\[
+	\sum_{n=1}^\infty n \overset{!}{=} -\frac{1}{12}.
+	\]
+	Strictly speaking, the above is false so do not use it. The rough explanation is that one considers the \textit{Riemann zeta function} defined by
+	\[
+	R(\zeta) = \sum_{n=1}^\infty \frac{1}{n^\zeta}.
+	\]
+	We have already seen that $R(1)$ is the harmonic series which diverges. In the theory of complex analysis, one considers $R(\zeta)$ for $\zeta$ belonging to a subset of $\mathbb{C}$, the complex numbers. In principle, then, $R(\zeta)$ is only well-defined provided that the Re$(\zeta)>1$. However, a result from complex analysis is the following:
+	\begin{enumerate}
+		\item There exists a function $f(\zeta)$ which is infinitely differentiable on a subset of $\mathbb{C}$ containing $\zeta = -1$.
+		\item Moreover, $f = R$ in the intersection of their domains.
+	\end{enumerate}
+	Analytic continuation then provides a meaning for $R(-1)$ by saying
+	\[
+	R(-1) := f(-1).
+	\]
+	The \textit{series representation} of $R(\zeta)$ does not make sense at $\zeta = -1$. However, we can still define the function at $\zeta = -1$ through $f$. Again, if you're interested in learning more, you should take a course on Complex Analysis (followed up by Analytic Number Theory).
+\end{rem}

@@ -1,0 +1,330 @@
+\section{Some point-set topology of metric spaces}
+\label{sec:point_set}
+\begin{defn}[Balls]
+\label{defn:ball}
+Let $(X,d)$ be a metric space with $x_0\in X$ and $r>0$. We define the \textit{(open) ball of radius $r$ centred around $x_0$} to be the following set
+\[
+B_r(x_0):= \left\{
+x\in X \, : \, d(x,x_0)<r
+\right\}.
+\]
+\end{defn}
+\begin{rem}
+	\begin{itemize}
+		\item The notation for balls is sometimes written as $B_{(X,d)}(x_0,r) =B(x_0,r) = B_r(x_0)$. The first expression is meant to emphasise the role of the metric. See~\Cref{eg:ball_metric} where the metric can change the shape of the ball.
+		\item On $\R$ (equipped with the metric $d(x,y) = |x-y|$), balls are open intervals (see below in~\Cref{eg:ball_R}):
+		\[
+		B_r(x_0) = (x_0-r,x_0+r).
+		\]
+		\item Conversely, for abstract metric spaces $(X,d)$, balls generalise the notion of (open) intervals.
+	\end{itemize}
+\end{rem}
+\begin{eg}[Balls on $\R$]
+	\label{eg:ball_R}
+	As we saw in the remarks above, balls on $\R$ are just open intervals:
+	\begin{proof}
+	\begin{align*}
+		x \in B_r(x_0) 	&\iff d(x,x_0)< r \iff |x-x_0| < r 	\\
+		&\iff -r < x-x_0 < r \iff x_0-r<x<x_0+r 	\\
+		&\iff x\in (x_0-r,x_0+r).
+	\end{align*}
+	Hence, we have proven both inclusions $B_r(x_0) \subset (x_0-r,x_0+r)$ and $B_r(x_0) \supset (x_0-r,x_0+r)$ which verifies $B_r(x_0) = (x_0-r,x_0+r)$.
+	\end{proof}
+\end{eg}
+\begin{eg}[Balls on $\R^2$]
+	\label{eg:ball_metric}
+	Take $x_0$ to be the origin in the plane (denoted by $0 = (0,0)$) and $r=1$. Then, the ball $B_{(\R^2,d_2)}(0,1)$ (notice the $d_2$ metric) is the open \textbf{disc}
+	\[
+	B_{(\R^2,d_2)}(0,1) = \left\{
+	x = (x_1,x_2) \in \R^2 \, : \, x_1^2 + x_2^2 < 1 
+	\right\}.
+	\]
+	Indeed, the inequality $d_2(x,0) < 1$ can equivalently be expressed as
+	\[
+	d_2(x,0) < 1 \iff \sqrt{(x_1-0)^2 + (x_2-0)^2}< 1 \iff x_1^2 + x_2^2 < 1.
+	\]
+	On the other hand, the shape of the ball can change with a \textit{different} metric. If we use the $d_1$ metric, then the ball $B_{(\R^2,d_1)}(0,1)$ has a \textbf{diamond} shape
+	\[
+	B_{(\R^2,d_1)}(0,1) = \left\{
+	x = (x_1,x_2)\in \R^2 \, : \, |x_1| + |x_2| < 1
+	\right\}.
+	\]
+	Exercise: Draw $B_{(\R^2,d_1)}(0,1)$.
+\end{eg}
+\begin{ex}
+	Verify in the previous example that
+	\[
+	B_{(\R^2,d_1)}(0,1) = \left\{
+	x = (x_1,x_2)\in \R^2 \, : \, |x_1| + |x_2| < 1
+	\right\}.
+	\]
+\end{ex}
+\begin{eg}[Balls with the discrete metric]
+	Let $X$ be a non-empty set and suppose $x\in X$. Let's endow $X$ with the discrete metric and set $d = d_\text{disc}$. Then, we have
+	\[
+	B_{(X,d)}(x,1) = \{ x \}.
+	\]
+	Now, if we increase the radius by choosing $r>1$, we obtain
+	\[
+	B_{(X,d)}(x,r) = X.
+	\]
+\end{eg}
+\begin{ex}
+	Verify the previous example.
+\end{ex}
+The next notion we will introduce is that of \textit{open} and \textit{closed} sets. The informal idea of open sets is that at every point, one can `fit balls inside' them.
+\begin{defn}
+	\label{defn:open_closed}
+	Let $(X,d)$ be a metric space and let $A\subset X$. We say that $A$ is
+	\begin{itemize}
+		\item \textit{open} iff:
+		\[
+		\forall x \in A, \exists r>0\text{ such that }B_r(x) \subset A.
+		\]
+		\item \textit{closed} iff $X\setminus A$ is open. Here, $X\setminus A$ means the \textit{complement} of $A$ (with respect to $X$) i.e.
+		\[
+		X\setminus A = A^\complement = \{x \in X \, : \, x \notin A\}.
+		\]
+	\end{itemize}
+\end{defn}
+\begin{eg}
+	\label{eg:R_open_closed}
+	Consider $\R$ with the Euclidean metric. We usually refer to $(a,b)$ as an open interval and $[a,b]$ as a closed interval. The adjectives `open' and `closed' are consistent with~\Cref{defn:open_closed}.
+\begin{itemize}
+	\item The interval $(a,b)$ is open in the sense that it satisfies the definition in~\Cref{defn:open_closed}. 
+	\begin{proof}
+	\textcolor{blue}{Fix any $x \in (a,b)$}. Then, let us \textcolor{blue}{define}
+	\[
+	\textcolor{blue}{r:= \min (x-a,b-x)>0}.
+	\]As we saw in~\Cref{eg:ball_R}, we have
+	\[
+	B_r(x) = (x-r,x+r).
+	\]
+	Since $r \le x-a$, we see that $a \le x-r$. Similarly, since $r\le b-x$, we have $x+r \le b$. These inequalities show that
+	\[
+	\textcolor{blue}{B_r(x)} = (x-r,x+r)\textcolor{blue}{\subset (a-b).} 
+	\]
+	The text in \textcolor{blue}{blue} yields precisely the criteria that $(a,b)$ is open.
+	\end{proof}
+	\item The interval $[a,b]$ is closed because its complement is $(-\infty,a)\cup (b,\infty)$ which is open according to~\Cref{defn:open_closed}. The verification of this is left as an exercise.
+	\item The interval $(a,b]$ is \textit{neither open nor closed}. Exercise: Why?
+	\item The empty set $\emptyset$ and $\R$ are \textit{both open and closed}. Exercise: Why?
+	\item The previous points highlight that the notions of open and closed are \textbf{not} negations of each other. \textit{Sets can be exactly one of, neither of, or both of open and closed.}
+\end{itemize}
+\end{eg}
+\begin{eg}
+	\label{eg:balls_are_open}
+	Let $(X,d)$ be a non-empty metric space. For any $x_0 \in X$ and $\delta>0$, the ball $B_\delta(x_0)$ is open according to~\Cref{defn:open_closed}.
+	\begin{proof}
+		\textcolor{blue}{Fix any $x\in B_\delta(x_0)$.} If $x=x_0$, then we are done because \textcolor{blue}{we can take $r = \delta$ and so $B_r(x) = B_\delta(x_0)$.} Assume then that $x\neq x_0$ which implies (c.f.~\ref{m:pos}) that $d(x,x_0)>0$. \textcolor{blue}{We set $r:= \delta - d(x,x_0)>0$ and fix any $y \in B_r(x)$.} By definition, this means that $d(x,y) < r$. According to~\ref{m:tri}, we have
+		\[
+		d(y,x_0) \le d(y,x) + d(x,x_0) < \delta - d(x,x_0) + d(x,x_0) = \delta. 
+		\]
+		This shows that \textcolor{blue}{$y\in B_\delta(x_0)$, hence $B_r(x) \subset B_\delta(x_0)$.}
+	\end{proof}
+\end{eg}
+The notions of open and closed sets in~\Cref{defn:open_closed} might appear very abstract. These actually play a fundamental role in \textit{topological spaces} (generalisations of metric spaces) which we may study, time permitting. We will return to more intuitive characterisations of them. For now, let us discuss other terminology which will eventually be linked to open and closed sets.
+\begin{defn}[Interior and limit points]
+	\label{defn:int_lim_pts}
+Let $(X,d)$ be a metric space and let $A\subset X$. We say that a point $x\in X$ is
+\begin{itemize}
+	\item an \textit{interior point of $A$} iff:
+	\[
+	\exists r>0\text{ such that }B_r(x) \subset A.
+	\]
+	\item a \textit{limit point of $A$} iff:
+	\[
+	\forall r>0, B_r(x) \cap A \neq \emptyset.
+	\]
+\end{itemize}
+\end{defn}
+During lecture, I will (hopefully remember to) illustrate these concepts. In words, $x\in X$ is an interior point of $A$ if one can always find a positive radius $r$ for which the ball $B_r(x)$ is a subset of $A$. Intuitively, one can `wiggle' $x$ by a distance $r>0$ and still remain in $A$. As for limit points, we will prove later on a result which more firmly justifies the word `limit' in this definition.
+\begin{rem}
+	\label{rem:int_lim_pts}
+	Concerning interior points, here are some facts.
+	\begin{itemize}
+		\item Since $x \in B_r(x)$ for every $r>0$, it is clear that
+		\[
+		x\text{ is an interior point of }A\implies x\in A.
+		\]
+		\item $x\in A$ need \textbf{not} imply that $x$ is an interior point of $A$. A counter example, on $\R$, is $A = [a,b]$ and $x = a$ or $x=b$. Exercise: Verify this.
+		\item Let's return to~\Cref{defn:open_closed}. Another way of describing open sets (exercise) is by saying
+		\[
+		A\text{ is open }\iff \text{every element in $A$ is an interior point of $A$}.
+		\]
+	\end{itemize}
+	Concerning limit points, here are some facts.
+	\begin{itemize}
+		\item Since $x\in B_r(x)$ for every $r>0$, it is clear that
+		\[
+		x\in A \implies x\text{ is a limit point of $A$}.
+		\]
+		\item On the other hand, if $x$ is a limit point of $A$, then it is \textbf{not necessarily} an element of $A$. A counter example, on $\R$, is $A = (a,b)$ with $x = a$ or $x=b$. Exercise: Verify this.
+		\item Analogous to the previous characterisation of open sets, one can show (tricky exercise)
+		\[
+		A\text{ is closed }\iff A\text{ contains all its limit points.}
+		\]
+	\end{itemize}
+\end{rem}
+We now prove a result which characterises limit points in a way that justifies attaching the word `limit' to the term.
+\begin{lemma}[Limit points are limits of sequences]
+\label{lem:lim_pts}
+Let $(X,d)$ be a non-empty metric space with $A\subset X$ non-empty and $x\in X$. TFAE:
+\begin{enumerate}
+	\item \label{lim_pts_1}$x$ is a limit point of $A$.
+	\item \label{lim_pts_2}There exists a sequence $(x_n)_{n\in\N}\subset A$ such that $x_n \to x$ as $n\to \infty$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\ref{lim_pts_1} $\implies$ \ref{lim_pts_2}: We assume that $x$ is a limit point of $A$ and we wish to construct a sequence $(x_n)\subset A$ so that $x_n \overset{n\to \infty}{\to} x$. By~\Cref{defn:int_lim_pts}, we know the following:
+	\begin{itemize}
+		\item For $r=1>0$, we have that $B_1(x)\cap A\neq \emptyset$. This means that there is some $x_1 \in B_1(x)\cap A$. In particular, we have
+		\[
+		d(x_1,x) <1\quad\text{and}\quad x_1 \in A.
+		\]
+		\item For $r = \frac{1}{2}>0$, we have that $B_\frac{1}{2}(x)\cap A \neq \emptyset$. This means that there is some $x_2 \in B_\frac{1}{2}(x)\cap A$. In particular, we have
+		\[
+		d(x_2,x) < \frac{1}{2}\quad\text{and}\quad x_2\in A.
+		\]
+		\item \textcolor{blue}{For every $n\in\N$,} we can set $r = \frac{1}{n}>0$. We know that $B_r(x)\cap A \neq \emptyset$. Hence, this means that \textcolor{blue}{there exists some $x_n$} belonging to $B_\frac{1}{n}(x)\cap A$ yielding
+		\[
+		d(x_n,x)<\frac{1}{n}\quad\text{and}\quad\textcolor{blue}{x_n \in A.}
+		\]
+		By construction, $d(x_n,x)<\frac{1}{n}$ implies, by~\Cref{ex:cvg_metric}, that \textcolor{blue}{$x_n \overset{n\to \infty}{\to} x$.} The text in \textcolor{blue}{blue} is precisely what is demanded in this implication.
+	\end{itemize}
+	\ref{lim_pts_2} $\implies$ \ref{lim_pts_1}: Our starting assumption is that we have a sequence $(x_n)_{n\in\N}\subset A$ which converges to $x$ and we wish to prove that $x$ is a limit point of $A$. To this end, let us \textcolor{blue}{fix any $r>0$}. Since $x_n\to x$, for this $r>0$, we know that there exists some $N\in\N$ such that
+	\[
+	n\ge N \implies d(x_n,x)<r.
+	\]
+	In particular, we see that $d(x_N,x)<r$ and, since the sequence $(x_n)_{n\in\N}$ belongs in $A$, we know $x_N \in A$. Therefore, we obtain \textcolor{blue}{$B_r(x)\cap A \neq \emptyset$} since $x_N$ belongs to both sets.
+\end{proof}
+To intuitively summarise~\Cref{defn:int_lim_pts} and~\Cref{lem:lim_pts}, if $x$ is an interior point of $A$, then one can `wiggle / move' $x$ by a distance $r>0$ and still remain in $A$. If $x$ is a limit point of $A$, then one can `approximate' $x$ by constructing a sequence in $A$ which converges to $x$. The connection between interior points and open sets is quite clear from the definitions. What about limit points and closed sets?
+\begin{lemma}[Closed sets consist of limit points]
+\label{lem:closed_lim}
+Let $(X,d)$ be a non-empty metric space and let $A\subset X$. TFAE:
+\begin{enumerate}
+	\item \label{closed_lim_1} $A$ is closed.
+	\item \label{closed_lim_2} Suppose $(x_n)_{n\in\N}\subset A$ is a convergent sequence. Then, the limit $\lim_{n\to \infty}x_n$ must belong to $A$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+We will show \ref{closed_lim_1} $\implies$ \ref{closed_lim_2} by proof by contradiction. The other direction can also use proof by contradiction and is left as an exercise.
+
+Let us denote $x = \lim_{n\to \infty} x_n \in X$ and \textcolor{blue}{assume, for a contradiction, that $x \notin A$.} By assumption that $A$ is closed, we have that $X\setminus A$ is open and so there exists $r>0$ such that \textcolor{blue}{$B_r(x) \subset X\setminus A$}. However, since $(x_n)_{n\in\N}\subset A$ converges to $x$, for this $r>0$, we know that there exists some $N\in\N$ such that
+\[
+n\ge N \implies d(x_n,x)<r.
+\]
+In particular, we have \textcolor{blue}{$x_N \in B_r(x)$}. The text in \textcolor{blue}{blue} yields a contradiction because $x_N \in A$ but, simultaneously, $x_N \in B_r(x) \subset X\setminus A$.
+\end{proof}
+Given a set $A\subset X$, we may also be interested in the set of all interior points and / or the set of all limit points of $A$. These are defined now.
+\begin{defn}[Interior and closure of a set]
+	\label{defn:int_clos}
+	Let $(X,d)$ be a metric space and let $A\subset X$. We define
+	\begin{itemize}
+		\item the \textit{interior of $A$} to be the set int$(A)$ consisting of all interior points of $A$ given by
+		\[
+		\text{int}(A) := \left\{
+		x\in X \, : \, x\text{ is an interior point of }A
+		\right\}.
+		\]
+		This is sometimes written as $\mathring{A} = $ int$(A)$.
+		\item the \textit{closure of $A$} to be the set cl$(A)$ consisting of all limit points of $A$ given by
+		\[
+		\text{cl}(A):= \left\{
+		x\in X \, : \, x\text{ is a limit point of }A
+		\right\}.
+		\]
+		This is sometimes written as $\overline{A} = $ cl$(A)$.
+	\end{itemize}
+\end{defn}
+Some remarks are in order.
+\begin{rem}
+	\label{rem:int_clos}
+	Concerning the interior, we have the following facts.
+	\begin{itemize}
+		\item From~\Cref{rem:int_lim_pts}, we see that $\mathring{A} \subset A$.
+		\item $\mathring{A}$ is an open set.
+		\begin{proof}
+			\textcolor{blue}{Fix any $x\in \mathring{A}$.} By definition, $x$ is an interior point of $A$, so \textcolor{blue}{there exists $r>0$} such that $B_r(x) \subset A$. Now, to conclude $\mathring{A}$ is open, we would like to prove that $B_r(x)\subset \mathring{A}$, which is the content of the rest of this proof. \textcolor{DarkOrchid}{Fix any $y \in B_r(x)$ and define $\rho:= r - d(x,y)$.} Notice that \textcolor{DarkOrchid}{$\rho>0$} since $y \in B_r(x)$ implies $d(x,y) < r$. We claim that $B_\rho(y) \subset B_r(x)$. According to~\ref{m:tri} and~\ref{m:sym}, for any $z \in B_\rho(y)$, we see that
+			\[
+			d(z,x) \le d(z,y) + d(y,x) < \rho + d(x,y) = r - d(x,y) + d(x,y) = r.
+			\]
+			Hence, every $z\in B_\rho(y)$ also satisfies $z\in B_r(x)$ and so $B_\rho(y) \subset B_r(x)$. Since we know that $B_r(x) \subset A$, we deduce \textcolor{DarkOrchid}{$B_\rho(y)\subset A$}. The text in \textcolor{DarkOrchid}{purple} tells us that every $y\in B_r(x)$ is an interior point of $A$. Hence, we deduce \textcolor{blue}{$B_r(x) \subset \mathring{A}$.} The text in \textcolor{blue}{blue} tells us that $\mathring{A}$ is open.
+		\end{proof}
+	\end{itemize}
+	Concerning the closure, we have the following facts.
+	\begin{itemize}
+		\item From~\Cref{rem:int_lim_pts}, we see that $A \subset \overline{A}$.
+		\item $\overline{A}$ is a closed set.
+		\begin{proof}
+			This is left as an exercise.
+		\end{proof}
+	\end{itemize}
+\end{rem}
+Other ways of thinking about the interior and closure of a set are the following:
+\begin{lemma}[Interior / Closure as largest open subset / smallest closed supset]
+	\label{lem:int_large}
+	Let $(X,d)$ be a metric space with $A\subset X$. Then, $\mathring{A}$ is the largest open set contained in $A$ and $\overline{A}$ is the smallest closet set containing $A$. More precisely:
+	\begin{enumerate}
+		\item \label{int_large} Suppose $B\subset X$ is an open set such that $B \subset A$. Then, $B\subset \mathring{A}$.
+		\item \label{clos_small} Suppose $B\subset X$ is a closed set such that $B \supset A$. Then, $B \supset \overline{A}$.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	We will only prove~\ref{int_large} and leave~\ref{clos_small} as an exercise. \textcolor{blue}{Suppose $B\subset X$ is an open set such that $B\subset A$. Fix any $x\in B$.} Since $B$ is open, we know that there exists $r>0$ such that $B_r(x) \subset B$. Since $x\in B\subset A$, the previous sentence tells us that $x$ is an interior point of $A$. Hence, we see that \textcolor{blue}{$x\in \mathring{A}$.} The text in \textcolor{blue}{blue} is exactly what it means for $B\subset \mathring{A}$.
+\end{proof}
+\begin{defn}[Boundary]
+\label{defn:boundary}
+Let $(X,d)$ be a metric space and $A\subset X$. The \textit{boundary of $A$} is the set $\partial A$ defined by
+\[
+\partial A = \overline{A} \setminus \mathring{A}.
+\]
+In words, $\partial A$ consists of elements $x\in X$ such that $x\in \overline{A}$ such that $x\notin \mathring{A}$.
+\end{defn}
+\begin{eg}
+On $\R$, let's consider the interval $(a,b]$. Exercise: Verify the following statements.
+\begin{enumerate}
+	\item The interior is given by $\mathring{(a,b]} = (a,b)$.
+	\item The closure is given by $\overline{(a,b]} = [a,b]$.
+	\item The boundary is given by $\partial(a,b] = \{a,b\}$.
+\end{enumerate}
+In fact, there is nothing particular about the interval $(a,b]$: Suppose $I\subset \R$ is an interval (open / closed / half-and-half) with endpoints $-\infty < a < b < \infty$, then, we always have:
+\[
+\mathring{I} = (a,b),\quad \overline{I} = [a,b],\quad \partial I = \{a,b\}.
+\]
+So the notion of boundary, from~\Cref{defn:boundary} really does capture the intuition of `boundary' points for intervals on $\R$. Of course, \Cref{defn:boundary} applies to general metric spaces beyond $\R$.
+\end{eg}
+We end this section with some properties of the concepts introduced.
+\begin{prop}
+\label{prop:defn_top}
+Let $(X,d)$ be a (non-empty) metric space with $A\subset X$ (non-empty) and $x_0\in X$. Then, we have the following statements.
+\begin{enumerate}
+	\item \label{prop_top_1} $A$ is open iff $A = \mathring{A}$.
+	\item \label{prop_top_2} $A$ is closed iff $A = \overline{A}$.
+	\item \label{prop_top_3} For any $r>0$, the ball $B_r(x_0)$ is open. For any $r>0$, the following set is closed
+	\[
+	\{x \in X\, : \, d(x,x_0)\le r\}.
+	\]
+	\item \label{prop_top_4} The singleton set $\{x_0\}$ is closed.
+	\item \label{prop_top_5} Suppose $A_1,A_2,\dots, A_n\subset X$ are a finite number of open subsets of $X$. Then, their intersection $\bigcap_{j=1}^n A_j$ is also open.
+	\item \label{prop_top_6} Suppose $A_1,A_2,\dots, A_n \subset X$ are a finite number of closed subsets of $X$. Then, their union $\bigcup_{j=1}^n A_j$ is also closed.
+	\item \label{prop_top_7} Suppose $\{A_\alpha\}_{\alpha \in I}$ is a collection of open subsets of $X$. Here, the index set $I$ could be finite or infinite (countable or uncountable). Then, their union $\bigcup_{\alpha \in I}A_\alpha$ is also open.
+	\item \label{prop_top_8} Suppose $\{A_\alpha\}_{\alpha \in I}$ is a collection of closed subsets of $X$. Here, the index set $I$ could be finite or infinite (countable or uncountable). Then, their intersection $\bigcap_{\alpha \in I}A_\alpha$ is also closed.
+\end{enumerate}
+\end{prop}
+We will leave most of the proof as an exercise, but we will give some hints and references to the previous results which would be helpful.
+\begin{rem}
+\ref{prop_top_3} is deliberately phrased so that it does \textbf{not} suggest $\overline{B_r(x_0)} = \{x \in X \, : \, d(x,x_0)\le r\}$. It is always the case that $\overline{B_r(x_0)}$ and $\{x \in X \, : \, d(x,x_0)\le r\}$ are closed sets, but they are \textbf{not} necessarily the same set. Exercise: The classic counterexample is the discrete metric with $r = 1$, verify this.
+\end{rem}
+\begin{proof}[Proof ideas]
+\begin{enumerate}
+	\item Use~\Cref{lem:int_large} and~\Cref{rem:int_clos}.
+	\item Use~\Cref{lem:int_large} and~\Cref{rem:int_clos}.
+	\item Use~\Cref{defn:open_closed} and~\ref{m:tri}.
+	\item Use~\Cref{lem:closed_lim}.
+	\item Use~\Cref{defn:open_closed}.
+	\item Use~\Cref{defn:open_closed}.
+	\item Use~\Cref{defn:open_closed}.
+	\item Use~\Cref{defn:open_closed}.
+\end{enumerate}
+\end{proof}

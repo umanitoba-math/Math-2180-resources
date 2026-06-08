@@ -1,0 +1,82 @@
+%\section{Continuous functions}
+%\label{sec:cts_fun}
+\begin{defn}[Continuous functions]
+\label{defn:cty}
+Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\to Y$ be a function.
+\begin{itemize}
+	\item For $x_0\in X$, we say that $f$ is \textit{continuous at $x_0$} iff
+	\[
+	\forall \varepsilon>0,\exists \delta>0\text{ s.t. }\forall x\in X\text{ satisfying }d_X(x,x_0)<\delta,\text{ we have }d_Y(f(x),f(x_0))<\varepsilon.
+	\]
+	\item We saw that $f$ is \textit{continuous (on $X$)} iff $f$ is continuous at every $x_0\in X$.
+\end{itemize}
+\end{defn}
+\begin{ex}
+Suppose $f:X\to Y$ and $K\subset X$. Show that the restriction $f|_K:K\to Y$ of $f$ to $K$ is also continuous.
+\end{ex}
+\begin{defn}[Image and preimage]
+	\label{defn:preimage}
+	Given a function $f:X\to Y$ and subsets $A\subset X, B \subset Y$, we denote the \textit{image of $A$ through $f$} and the \textit{preimage of $B$ under $f$} by
+	\[
+	f(A) = \left\{
+	f(x) \, : \, x \in A
+	\right\}\quad\text{and }f^{-1}(B) := \left\{
+	x\in X\, : \, f(x) \in B
+	\right\}.
+	\]
+\end{defn}
+\begin{ex}
+	\label{ex:cts_image}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces with $a\in X$ and a function $f:X\to Y$. Prove that TFAE:
+	\begin{itemize}
+		\item $f$ is continuous at $a$.
+		\item For every $\varepsilon>0$, there exists $\delta>0$ such that
+		\[
+		f(B_\delta(a))\subset B_\varepsilon(f(a)).
+		\]
+		\item For every $\varepsilon>0$, there exists $\delta>0$ such that
+		\[
+		B_\delta(a) \subset f^{-1}(B_\varepsilon(f(a))).
+		\]
+	\end{itemize}
+\end{ex}
+The third point from~\Cref{ex:cts_image} can be generalised to open sets.
+\begin{prop}[Preimage of continuous functions]
+	\label{prop:cts_pre_open}
+	Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces with $f:X\to Y$. TFAE:
+	\begin{enumerate}
+		\item $f$ is continuous.
+		\item For every open set $A\subset Y$, the preimage $f^{-1}(A)$ is open (as a subset of $X$).
+	\end{enumerate}
+\end{prop}
+\begin{proof}
+	\ul{$\implies$:} \textcolor{blue}{Fix any open set $A\subset Y$ and element $a \in f^{-1}(A)$.} We wish to show that we can find $\delta>0$ such that $B_\delta(a) \subset f^{-1}(A)$. From the text in \textcolor{blue}{blue}, we know that there exists $\varepsilon>0$ such that
+	\[
+	B_\varepsilon(f(a))\subset A.
+	\]
+	By assumption that $f$ is continuous, \textcolor{blue}{there exists $\delta>0$} such that
+	\[
+	d_X(x,a)<\delta \implies d_Y(f(x),f(a))<\varepsilon.
+	\]
+	In terms of balls, this means
+	\[
+	x\in B_\delta(a)\implies f(x) \in B_\varepsilon(f(a)).
+	\]
+	\textcolor{blue}{Fix any $x\in B_\delta(a)$.} Since $B_\varepsilon(f(a))\subset A$, the above implies that $f(x) \in A$. In terms of balls, this means that \textcolor{blue}{$x \in f^{-1}(A)$.}
+	
+	\ul{$\impliedby$:} \textcolor{blue}{Fix any $\varepsilon>0$ and $a\in X$.} Motivated by the converse direction, we define the set $A:= B_\varepsilon(f(a))\subset Y$. Recall from~\Cref{eg:balls_are_open} that balls are open so $A$ is certainly open. By assumption, we obtain that $f^{-1}(A)$ is an open subset of $X$. Notice that $a\in f^{-1}(A)$. Hence, \textcolor{blue}{there exists some $\delta>0$} such that
+	\[
+	B_\delta(a) \subset f^{-1}(A).
+	\]
+	This means that \textcolor{blue}{for any $x\in X$ with $d_X(x,a)<\delta$}, we have $x \in f^{-1}(B_\varepsilon(f(a)))$. Specifically, this means that $f(x) \in B_\varepsilon(f(a))$ which is the same as \textcolor{blue}{$d_Y(f(x),f(a))<\varepsilon$.}
+\end{proof}
+\begin{rem}
+	In the general setting of \textit{topological spaces}, the equivalence in~\Cref{prop:cts_pre_open} is actually used as the definition of continuous functions.
+\end{rem}
+\begin{ex}
+	Prove~\Cref{prop:cts_pre_open} when the word `open' is replaced with `closed.'
+\end{ex}
+\begin{ex}
+	\label{ex:cts_im}
+	Let $f:X\to Y$ be continuous. Is it true that if $A\subset X$ is open, then $f(A)\subset Y$ is open? Answer the same question with the word `open' replaced by `closed.'
+\end{ex}
